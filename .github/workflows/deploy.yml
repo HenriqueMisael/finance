@@ -1,19 +1,21 @@
-name: CI
+name: Production Deploy
 
 on:
   push:
     branches:
-      -master
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-        # github_token: ${{ secrets.GITHUB_TOKEN }}
-        # personal_token: ${{ secrets.PERSONAL_TOKEN }}
-        publish_dir: ./build
+      - name: Deploy
+      - run: yarn install
+      - run: yarn build --if-present
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          # github_token: ${{ secrets.GITHUB_TOKEN }}
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          publish_dir: ./build
