@@ -6,5 +6,8 @@
   "parserOptions": {
     "sourceType": "module",
     "allowImportExportEverywhere": true
+  },
+  "rules": {
+    "react/jsx-wrap-multilines": "off"
   }
 }

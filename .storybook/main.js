@@ -7,5 +7,6 @@ module.exports = {
     '@storybook/addon-viewport/register',
     'storybook-addon-styled-component-theme/dist/register',
     '@storybook/addon-knobs/register',
+    'storybook-addon-i18n/register'
   ],
 };
