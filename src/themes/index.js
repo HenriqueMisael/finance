@@ -45,6 +45,7 @@ const dark = createTheme(
   },
   {
     primary: colors.grey50,
+    secondary: colors.grey200,
   },
 );
 
@@ -67,7 +68,7 @@ const light = createTheme(
       background: colors.grey400,
     },
   },
-  { primary: colors.grey900 },
+  { primary: colors.grey900, secondary: colors.grey800 },
 );
 
 const themes = {

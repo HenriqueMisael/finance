@@ -7,7 +7,7 @@ import styles from './styles';
 const Root = styled.div`
   position: relative;
   display: flex;
-  background: ${({ theme }) => theme.background.secondary};
+  background: ${({ theme }) => theme.background.primary};
   flex: 1;
   padding: 1rem;
   justify-content: center;

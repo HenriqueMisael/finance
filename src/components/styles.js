@@ -4,8 +4,13 @@ export default {
   text: css`
     font-family: 'Roboto';
   `,
-  body: css`
+  body2: ({ theme }) => css`
+    font-size: 0.75rem;
+    color: ${theme.text.secondary};
+  `,
+  body1: ({ theme }) => css`
     font-size: 1rem;
+    color: ${theme.text.primary};
   `,
   title: css`
     font-size: 1.5rem;

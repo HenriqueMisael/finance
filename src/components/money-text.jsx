@@ -6,7 +6,7 @@ import styles from './styles';
 
 const Root = styled.span(
   styles.text,
-  styles.body,
+  styles.body1,
   ({ theme, positive }) => css`
     font-weight: ${theme.font.weight.medium};
     color: ${positive ? theme.text.positive : theme.text.negative};
