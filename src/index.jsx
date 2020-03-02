@@ -1,21 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import '@csstools/normalize.css';
 
-import HomeScreen from './screens/home';
 import * as serviceWorker from './serviceWorker';
 import store from './store';
+import App from './App';
 
-import '@csstools/normalize.css';
+import './index.css';
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
-      <Switch>
-        <Route exact path="/" component={HomeScreen} />
-      </Switch>
-    </Router>
+    <App />
   </Provider>,
   document.getElementById('root'),
 );
