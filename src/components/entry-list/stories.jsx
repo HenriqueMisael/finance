@@ -1,5 +1,6 @@
 import React from 'react';
 import { withKnobs, number, text } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 
 import { Background, Centered } from '../../../.storybook/styles';
 
@@ -10,7 +11,7 @@ export default { title: 'Entry List', decorators: [withKnobs] };
 
 export const entryList = () => (
   <Background>
-    <EntryList>
+    <EntryList onGoBack={action('Clicked go back button')}>
       <EntryCard
         title="Mercado Livre"
         description="Celulares Xiaomi Redmi 7 x2"

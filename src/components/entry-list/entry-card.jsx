@@ -10,7 +10,7 @@ const Root = styled.section`
   padding: 1rem;
   border-radius: 0.25rem;
   width: 100%;
-  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
 `;
 
 const Header = styled.header`
