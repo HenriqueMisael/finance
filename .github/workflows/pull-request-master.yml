@@ -12,11 +12,9 @@ jobs:
     steps:
       - name: Checkout HEAD
         uses: actions/checkout@v2
-          with:
-            ref: ${{ github.event.pull_request.head.sha }}
       - name: Install dependencies
         run: yarn install
-      - name: Build project
-        run: yarn build
       - name: Tests
         run: yarn test
+      - name: Build project
+        run: yarn build
