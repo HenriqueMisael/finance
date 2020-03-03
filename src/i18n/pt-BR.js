@@ -1,5 +1,9 @@
+const app = {
+  title: 'Finanças',
+  menu: 'Menu',
+};
+
 export default {
-  app: {
-    title: 'Finanças',
-  },
+  screen: 'Tela',
+  app,
 };

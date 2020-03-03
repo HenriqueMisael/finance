@@ -53,8 +53,8 @@ const light = createTheme(
   'light',
   {
     default: colors.grey50,
-    primary: colors.grey100,
-    secondary: colors.grey200,
+    primary: colors.grey200,
+    secondary: colors.grey100,
     accent: colors.grey300,
   },
   {

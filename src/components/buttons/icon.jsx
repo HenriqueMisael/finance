@@ -18,7 +18,7 @@ const Root = styled.button(
     font-size: 1.5em;
     color: ${theme.text.primary};
 
-    transition: background 0.25s;
+    transition: background 0.25s ease-in-out;
 
     &:hover {
       background: ${theme.background.accent};

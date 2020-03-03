@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const Background = styled.div`
-  background: ${({ theme }) => theme.background.default};
+  background: ${({ theme, backgroundColor = theme.background.default }) =>
+    backgroundColor};
   width: 100vw;
   height: 100vh;
 `;
