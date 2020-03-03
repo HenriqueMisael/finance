@@ -28,4 +28,4 @@ MoneyText.propTypes = {
   children: PropTypes.number.isRequired,
 };
 
-export default MoneyText;
+export default React.memo(MoneyText);

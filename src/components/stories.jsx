@@ -4,7 +4,7 @@ import { number, withKnobs } from '@storybook/addon-knobs';
 import { MdMenu } from 'react-icons/md';
 import i18next from 'i18next';
 
-import { Absolute, Centered } from '../../.storybook/styles';
+import { Absolute, Background, Centered } from '../../.storybook/styles';
 
 import IconButton from './buttons/icon';
 import Header from './header';
@@ -14,7 +14,7 @@ export default { title: 'General Components | Button', decorators: [withKnobs] }
 
 export const header = () => {
   return (
-    <Absolute>
+    <Background>
       <Header
         slotButton={
           <IconButton onClick={action('Clicked menu button')}>
@@ -24,7 +24,7 @@ export const header = () => {
       >
         {i18next.t('app.title')}
       </Header>
-    </Absolute>
+    </Background>
   );
 };
 

@@ -13,7 +13,7 @@ const Root = styled.button(
     font-size: 1em;
     font-weight: ${theme.font.weight.medium};
     color: ${theme.text.primary};
-    
+
     &:hover {
       text-decoration: underline;
     }
@@ -28,7 +28,11 @@ const Root = styled.button(
 );
 
 function LinkButton({ onClick, children, disabled }) {
-  return <Root disabled={disabled} onClick={onClick}>{children}</Root>;
+  return (
+    <Root disabled={disabled} onClick={onClick}>
+      {children}
+    </Root>
+  );
 }
 
 LinkButton.propTypes = {
@@ -37,4 +41,4 @@ LinkButton.propTypes = {
   disabled: PropTypes.bool.isRequired,
 };
 
-export default LinkButton;
+export default React.memo(LinkButton);

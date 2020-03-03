@@ -6,7 +6,7 @@ import styles from '../styles';
 const Root = styled.div`
   background: ${({ theme, active }) =>
     active ? theme.background.default : 'transparent'};
-  padding: 0.5rem 1rem;
+  padding: 1rem 1rem;
   cursor: ${({active}) => active ? 'default' : 'pointer'};
   width: 100%;
 
@@ -34,4 +34,4 @@ MenuItem.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export default MenuItem;
+export default React.memo(MenuItem);

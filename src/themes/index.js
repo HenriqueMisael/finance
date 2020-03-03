@@ -50,6 +50,7 @@ const dark = createTheme(
     primary: colors.grey50,
     secondary: colors.grey200,
     disabled: colors.grey400,
+    shadow: colors.purple800,
   },
   {
     primary: colors.grey300,
@@ -77,7 +78,7 @@ const light = createTheme(
       background: colors.grey400,
     },
   },
-  { primary: colors.grey900, secondary: colors.grey800, disabled: colors.grey700 },
+  { primary: colors.grey900, secondary: colors.grey800, disabled: colors.grey700, shadow: colors.deepPurple700 },
   {
     primary: colors.grey700,
     accent: colors.grey900,

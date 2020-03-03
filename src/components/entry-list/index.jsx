@@ -1,10 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import i18next from 'i18next';
-
-import Header from '../header';
-import GoBackButton from '../buttons/go-back';
 
 const Root = styled.div`
   height: 100%;
@@ -16,12 +12,9 @@ const ItemsContainer = styled.div`
   overflow-y: auto;
 `;
 
-function EntryList({ children, onGoBack }) {
+function EntryList({ children }) {
   return (
     <Root>
-      <Header slotButton={<GoBackButton onClick={onGoBack} />}>
-        {i18next.t('entryList.title')}
-      </Header>
       <ItemsContainer>{children}</ItemsContainer>
     </Root>
   );
@@ -29,7 +22,6 @@ function EntryList({ children, onGoBack }) {
 
 EntryList.propTypes = {
   children: PropTypes.node.isRequired,
-  onGoBack: PropTypes.func.isRequired,
 };
 
-export default EntryList;
+export default React.memo(EntryList);

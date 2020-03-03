@@ -11,7 +11,7 @@ export default { title: 'Entry List', decorators: [withKnobs] };
 
 export const entryList = () => (
   <Background>
-    <EntryList onGoBack={action('Clicked go back button')}>
+    <EntryList>
       <EntryCard
         title="Mercado Livre"
         description="Celulares Xiaomi Redmi 7 x2"

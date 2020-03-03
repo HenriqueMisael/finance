@@ -7,6 +7,7 @@ import Header from '../header';
 import GoBackButton from '../buttons/go-back';
 
 const Root = styled.div`
+  opacity: 95%;
   position: absolute;
   width: 90vw;
   height: 100vh;
@@ -15,8 +16,9 @@ const Root = styled.div`
   background: ${({ theme }) => theme.background.primary};
 
   transition-property: left;
-  transition-duration: 0.75s;
-  transition-timing-function: ease-out;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+  z-index: 2;
 `;
 
 function Menu({ children, visible, onHide }) {
@@ -36,4 +38,4 @@ Menu.propTypes = {
   onHide: PropTypes.func.isRequired,
 };
 
-export default Menu;
+export default React.memo(Menu);

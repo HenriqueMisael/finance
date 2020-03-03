@@ -45,4 +45,4 @@ PrimaryButton.propTypes = {
   disabled: PropTypes.bool.isRequired,
 };
 
-export default PrimaryButton;
+export default React.memo(PrimaryButton);

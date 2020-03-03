@@ -16,4 +16,4 @@ GoBackButton.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export default GoBackButton;
+export default React.memo(GoBackButton);

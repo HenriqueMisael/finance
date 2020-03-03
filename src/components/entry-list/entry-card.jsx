@@ -47,4 +47,4 @@ EntryCard.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-export default EntryCard;
+export default React.memo(EntryCard);

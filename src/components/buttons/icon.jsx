@@ -57,4 +57,4 @@ IconButton.defaultProps = {
   disabled: false,
 };
 
-export default IconButton;
+export default React.memo(IconButton);

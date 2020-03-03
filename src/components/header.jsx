@@ -8,7 +8,6 @@ const Root = styled.div`
   position: relative;
   display: flex;
   background: ${({ theme }) => theme.background.primary};
-  flex: 1;
   padding: 1rem;
   justify-content: center;
 `;
@@ -46,4 +45,4 @@ Header.propTypes = {
   children: PropTypes.string.isRequired,
 };
 
-export default Header;
+export default React.memo(Header);

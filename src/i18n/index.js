@@ -2,7 +2,6 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 import enUsTranslations from './en-US';
-import ptBrTranslations from './pt-BR';
 
 i18n.use(LanguageDetector).init({
   resources: {
@@ -10,7 +9,7 @@ i18n.use(LanguageDetector).init({
       translations: enUsTranslations,
     },
     ptBR: {
-      translations: ptBrTranslations,
+      translations: enUsTranslations,
     },
   },
   fallbackLng: 'enUS',
