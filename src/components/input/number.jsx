@@ -37,22 +37,50 @@ const RightButtonContainer = styled(ButtonContainer)`
 
 let timeoutID;
 
-function NumberInput({ initialValue, disabled, onSubmitChange }) {
+function NumberInput({ initialValue, minValue, maxValue, disabled, onSubmitChange }) {
   const [value, setValue] = useState(initialValue);
+  const [displayValue, setDisplayValue] = useState('');
 
   const handleChange = useCallback(
     ({ target }) => {
-      setValue(target.value);
+      setDisplayValue(target.value);
     },
-    [setValue],
+    [setDisplayValue],
   );
 
-  timeoutID = useDebounce(timeoutID, value, initialValue, onSubmitChange);
+  const isMinimumValueReached = value === minValue;
+  const isMaximumValueReached = value === maxValue;
 
+  const handleBlur = useCallback(
+    ({ target }) => {
+      const actualValue = Number(target.value);
+      if (actualValue <= minValue) {
+        setValue(minValue);
+        setDisplayValue(minValue.toString());
+      } else if (actualValue >= maxValue) {
+        setValue(maxValue);
+        setDisplayValue(maxValue.toString());
+      } else if (Number.isFinite(actualValue)) setValue(actualValue);
+      else {
+        setValue(Number.NaN);
+        setDisplayValue('');
+      }
+    },
+    [isMinimumValueReached, isMaximumValueReached, minValue, maxValue],
+  );
+
+  useEffect(() => {
+    setDisplayValue(value.toString());
+  }, [value]);
+
+  timeoutID = useDebounce(timeoutID, value, initialValue, onSubmitChange);
   return (
     <Root disabled={disabled}>
       <LeftButtonContainer>
-        <IconButton disabled={disabled} onClick={() => setValue(value - 1)}>
+        <IconButton
+          disabled={disabled || isMinimumValueReached}
+          onClick={() => setValue(value - 1)}
+        >
           <MdRemove />
         </IconButton>
       </LeftButtonContainer>
@@ -61,13 +89,17 @@ function NumberInput({ initialValue, disabled, onSubmitChange }) {
         inputmode="numeric"
         pattern="[0-9]*"
         disabled={disabled}
-        value={value}
+        value={displayValue}
         onChange={handleChange}
+        onBlur={handleBlur}
         width="6rem"
         center
       />
       <RightButtonContainer>
-        <IconButton disabled={disabled} onClick={() => setValue(value + 1)}>
+        <IconButton
+          disabled={disabled || isMaximumValueReached}
+          onClick={() => setValue(value + 1)}
+        >
           <MdAdd />
         </IconButton>
       </RightButtonContainer>
@@ -78,6 +110,8 @@ function NumberInput({ initialValue, disabled, onSubmitChange }) {
 NumberInput.propTypes = {
   disabled: PropTypes.bool,
   initialValue: PropTypes.number.isRequired,
+  minValue: PropTypes.number.isRequired,
+  maxValue: PropTypes.number.isRequired,
   onSubmitChange: PropTypes.func.isRequired,
 };
 

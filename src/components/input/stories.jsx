@@ -1,5 +1,5 @@
 import React from 'react';
-import { boolean, withKnobs } from '@storybook/addon-knobs';
+import { boolean, number, withKnobs } from '@storybook/addon-knobs';
 
 import { Centered } from '../../../.storybook/styles';
 
@@ -12,15 +12,24 @@ export default {
   decorators: [withKnobs],
 };
 
-export const text = () => (
+export const textInput = () => (
   <Centered secondary padding>
-    <TextInput initialValue="" disabled={boolean('Disabled', false)} onSubmitChange={action('Submitting')} />
+    <TextInput
+      disabled={boolean('Disabled', false)}
+      initialValue=""
+      onSubmitChange={action('Submitting')}
+    />
   </Centered>
 );
 
-
-export const number = () => (
+export const numberInput = () => (
   <Centered secondary padding>
-    <NumberInput initialValue={0} disabled={boolean('Disabled', false)} onSubmitChange={action('Submitting')} />
+    <NumberInput
+      disabled={boolean('Disabled', false)}
+      initialValue={0}
+      minValue={number('Minimum value', 0)}
+      maxValue={number('Maximum value', 999)}
+      onSubmitChange={action('Submitting')}
+    />
   </Centered>
 );

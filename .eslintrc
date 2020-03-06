@@ -8,6 +8,9 @@
     "allowImportExportEverywhere": true
   },
   "rules": {
-    "react/jsx-wrap-multilines": "off"
-  }
+    "react/jsx-wrap-multilines": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error"
+  },
+  "plugins": ["react-hooks"]
 }
