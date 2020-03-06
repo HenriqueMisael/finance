@@ -15,7 +15,7 @@ export const menu = () => (
     <Menu onHide={action('Clicked hide button')} visible={boolean('Visible', true)}>
       <MenuItem
         active={number('Active screen', 0) === 0}
-        onClick={`Clicked menu item for ${i18next.t('screen')} 0`}
+        onClick={action(`Clicked menu item for ${i18next.t('screen')} 0`)}
       >
         {`${i18next.t('screen')} 0`}
       </MenuItem>

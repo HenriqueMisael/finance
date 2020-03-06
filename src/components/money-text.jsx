@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
+import format from '../utils/format';
+
 import styles from './styles';
 
 const Root = styled.span(
@@ -14,14 +16,9 @@ const Root = styled.span(
 );
 
 function MoneyText({ children }) {
-  const moneyValue = Math.abs(children)
-    .toFixed(2)
-    .replace('.', ',')
-    .replace(/(\d)(?=(\d{3})+,)/g, '$1.');
+  const moneyValue = format.money(Math.abs(children));
 
-  return (
-    <Root positive={children > 0}>{`R$ ${moneyValue}`}</Root>
-  );
+  return <Root positive={children > 0}>{`R$ ${moneyValue}`}</Root>;
 }
 
 MoneyText.propTypes = {

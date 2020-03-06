@@ -6,7 +6,7 @@ import { Background } from '../../../.storybook/styles';
 
 import ConfirmationModal from './confirmation';
 
-export default { title: 'Modal', decorators: [withKnobs] };
+export default { title: 'General Components | Modal', decorators: [withKnobs] };
 
 export const confirmationModal = () => (
   <Background>

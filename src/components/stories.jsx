@@ -4,13 +4,13 @@ import { number, withKnobs } from '@storybook/addon-knobs';
 import { MdMenu } from 'react-icons/md';
 import i18next from 'i18next';
 
-import { Absolute, Background, Centered } from '../../.storybook/styles';
+import { Background, Centered } from '../../.storybook/styles';
 
 import IconButton from './buttons/icon';
 import Header from './header';
 import MoneyText from './money-text';
 
-export default { title: 'General Components | Button', decorators: [withKnobs] };
+export default { title: 'General Components | Other', decorators: [withKnobs] };
 
 export const header = () => {
   return (
@@ -28,7 +28,7 @@ export const header = () => {
   );
 };
 
-export const moneyInput = () => (
+export const moneyText = () => (
   <Centered>
     <MoneyText>{number('Valor esquerdo', 43200.85)}</MoneyText>
     <MoneyText>{number('Valor direito', -3300.9)}</MoneyText>

@@ -37,7 +37,7 @@ const RightButtonContainer = styled(ButtonContainer)`
 
 let timeoutID;
 
-function NumberInput({ initialValue, minValue, maxValue, disabled, onSubmitChange }) {
+function IntegerInput({ initialValue, minValue, maxValue, disabled, onSubmitChange }) {
   const [value, setValue] = useState(initialValue);
   const [displayValue, setDisplayValue] = useState('');
 
@@ -53,20 +53,22 @@ function NumberInput({ initialValue, minValue, maxValue, disabled, onSubmitChang
 
   const handleBlur = useCallback(
     ({ target }) => {
-      const actualValue = Number(target.value);
+      const actualValue = Number.parseInt(target.value, 10);
       if (actualValue <= minValue) {
         setValue(minValue);
         setDisplayValue(minValue.toString());
       } else if (actualValue >= maxValue) {
         setValue(maxValue);
         setDisplayValue(maxValue.toString());
-      } else if (Number.isFinite(actualValue)) setValue(actualValue);
-      else {
+      } else if (Number.isFinite(actualValue)) {
+        setValue(actualValue);
+        setDisplayValue(actualValue.toString());
+      } else {
         setValue(Number.NaN);
         setDisplayValue('');
       }
     },
-    [isMinimumValueReached, isMaximumValueReached, minValue, maxValue],
+    [minValue, maxValue],
   );
 
   useEffect(() => {
@@ -93,7 +95,7 @@ function NumberInput({ initialValue, minValue, maxValue, disabled, onSubmitChang
         onChange={handleChange}
         onBlur={handleBlur}
         width="6rem"
-        center
+        textAlign="center"
       />
       <RightButtonContainer>
         <IconButton
@@ -107,7 +109,7 @@ function NumberInput({ initialValue, minValue, maxValue, disabled, onSubmitChang
   );
 }
 
-NumberInput.propTypes = {
+IntegerInput.propTypes = {
   disabled: PropTypes.bool,
   initialValue: PropTypes.number.isRequired,
   minValue: PropTypes.number.isRequired,
@@ -115,4 +117,8 @@ NumberInput.propTypes = {
   onSubmitChange: PropTypes.func.isRequired,
 };
 
-export default NumberInput;
+IntegerInput.defaultProps = {
+  disabled: false,
+};
+
+export default IntegerInput;
