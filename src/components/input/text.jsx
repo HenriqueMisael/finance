@@ -1,7 +1,8 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
+import useDebounce from '../../hooks/use-debounce';
 import styles from '../styles';
 
 const Root = styled.input(
@@ -13,7 +14,9 @@ const Root = styled.input(
   `,
 );
 
-function TextInput({ initialValue = '', disabled }) {
+let timeoutID;
+
+function TextInput({ initialValue, disabled, onSubmitChange }) {
   const [value, setValue] = useState(initialValue);
 
   const handleChange = useCallback(
@@ -23,12 +26,15 @@ function TextInput({ initialValue = '', disabled }) {
     [setValue],
   );
 
+  timeoutID = useDebounce(timeoutID, value, initialValue, onSubmitChange);
+
   return <Root type="text" disabled={disabled} value={value} onChange={handleChange} />;
 }
 
 TextInput.propTypes = {
-  initialValue: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
+  initialValue: PropTypes.string.isRequired,
+  onSubmitChange: PropTypes.func.isRequired,
 };
 
 export default TextInput;

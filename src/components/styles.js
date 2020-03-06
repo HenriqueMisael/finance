@@ -7,10 +7,18 @@ export default {
   body2: ({ theme }) => css`
     font-size: 0.75rem;
     color: ${theme.text.secondary};
+
+    &[disabled] {
+      color: ${({ theme }) => theme.text.disabled};
+    }
   `,
   body1: ({ theme }) => css`
     font-size: 1rem;
     color: ${theme.text.primary};
+
+    &[disabled] {
+      color: ${({ theme }) => theme.text.disabled};
+    }
   `,
   title: css`
     font-size: 1.5rem;
@@ -41,15 +49,15 @@ export default {
     padding: 0.25rem 0.5rem;
 
     background-color: ${theme.background.primary};
-    &:hover, :focus {
+    &:hover,
+    :focus-within {
       background-color: ${theme.background.secondary};
     }
 
     &[disabled] {
-      color: ${theme.text.disabled};
       background-color: ${theme.background.disabled};
-      &:hover, :focus {
-        color: ${theme.text.disabled};
+      &:hover,
+      :focus-within {
         background-color: ${theme.background.disabled};
       }
     }
