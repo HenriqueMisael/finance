@@ -62,4 +62,15 @@ export default {
       }
     }
   `,
+  modal: ({ theme }) => css`
+    z-index: 2;
+    opacity: 95%;
+    position: absolute;
+
+    background: ${theme.background.primary};
+
+    transition-property: left, top, bottom, right;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
+  `,
 };

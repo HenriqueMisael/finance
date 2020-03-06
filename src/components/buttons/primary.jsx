@@ -36,13 +36,21 @@ const Root = styled.button(
 );
 
 function PrimaryButton({ onClick, children, disabled }) {
-  return <Root disabled={disabled} onClick={onClick}>{children}</Root>;
+  return (
+    <Root disabled={disabled} onClick={onClick}>
+      {children}
+    </Root>
+  );
 }
 
 PrimaryButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
+};
+
+PrimaryButton.defaultProps = {
+  disabled: false,
 };
 
 export default React.memo(PrimaryButton);

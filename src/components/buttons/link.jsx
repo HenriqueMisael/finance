@@ -38,7 +38,11 @@ function LinkButton({ onClick, children, disabled }) {
 LinkButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
+};
+
+LinkButton.defaultProps = {
+  disabled: false,
 };
 
 export default React.memo(LinkButton);

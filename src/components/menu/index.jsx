@@ -1,25 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import i18next from 'i18next';
 
+import styles from '../styles';
 import Header from '../header';
 import GoBackButton from '../buttons/go-back';
 
-const Root = styled.div`
-  opacity: 95%;
-  position: absolute;
-  width: 90vw;
-  height: 100vh;
-  left: ${({ visible }) => (visible ? 0 : '-100vw')};
-
-  background: ${({ theme }) => theme.background.primary};
-
-  transition-property: left;
-  transition-duration: 0.5s;
-  transition-timing-function: ease-in-out;
-  z-index: 2;
-`;
+const Root = styled.div(
+  styles.modal,
+  css`
+    width: 90vw;
+    height: 100vh;
+    left: ${({ visible }) => (visible ? 0 : '-100vw')};
+  `,
+);
 
 function Menu({ children, visible, onHide }) {
   return (

@@ -7,14 +7,22 @@ import { normalize } from './model/entry';
  * @typedef {Object} CoreState
  * @property {Immutable.Map<string, EntryModel>} entry
  *
- * @type {Readonly<CoreState>}
+ * @type {CoreState}
  */
 export const initialState = Object.freeze({
   entry: Map(),
 });
 
+/**
+ * @returns {CoreState}
+ */
 const clear = () => ({ ...initialState });
 
+/**
+ * @param {CoreState} state
+ * @param {{entry: EntryModel}} action
+ * @returns {CoreState}
+ */
 const upsertEntry = (state, { entry }) => {
   const normalized = normalize(entry);
   const id = normalized.result;
@@ -26,6 +34,11 @@ const upsertEntry = (state, { entry }) => {
   };
 };
 
+/**
+ * @param {CoreState} state
+ * @param {{entryID: string}} action
+ * @returns {CoreState}
+ */
 const deleteEntry = (state, { entryID }) => ({
   ...state,
   entry: state.entry.remove(entryID),

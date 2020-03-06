@@ -13,6 +13,8 @@ const entryList = {
 
 export default {
   screen: 'Screen',
+  yes: 'Yes',
+  no: 'No',
   app,
   home,
   entryList,

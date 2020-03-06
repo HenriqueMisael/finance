@@ -3,6 +3,7 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
 import core from './core';
+import modal from './modal';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -13,7 +14,7 @@ function* rootSagas() {
 }
 
 export default createStore(
-  combineReducers({ core: core.reducers }),
+  combineReducers({ core: core.reducers, modal: modal.reducers }),
   composeEnhancers(applyMiddleware(sagaMiddleware)),
 );
 
