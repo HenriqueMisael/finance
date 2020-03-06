@@ -26,4 +26,32 @@ export default {
     -moz-appearance: none;
     outline: transparent;
   `,
+  input: ({ theme }) => css`
+    border-color: #616161;
+    border-radius: 0.25rem;
+    border-width: 1px;
+    border-style: solid;
+
+    outline: none;
+
+    transition-property: background;
+    transition-duration: 0.25s;
+    transition-timing-function: ease-in-out;
+
+    padding: 0.25rem 0.5rem;
+
+    background-color: ${theme.background.primary};
+    &:hover, :focus {
+      background-color: ${theme.background.secondary};
+    }
+
+    &[disabled] {
+      color: ${theme.text.disabled};
+      background-color: ${theme.background.disabled};
+      &:hover, :focus {
+        color: ${theme.text.disabled};
+        background-color: ${theme.background.disabled};
+      }
+    }
+  `,
 };

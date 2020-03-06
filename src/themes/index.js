@@ -5,12 +5,13 @@ import colors from './colors';
  * @property {{}} background
  * @property {{}} button
  * @property {{}} text
+ * @property {{}} border
  */
 
 /**
  * @returns {Theme}
  */
-function createTheme(name, background, button, text) {
+function createTheme(name, background, button, text, border) {
   return {
     name,
     background,
@@ -21,6 +22,7 @@ function createTheme(name, background, button, text) {
         medium: 500,
       },
     },
+    border,
   };
 }
 
@@ -31,6 +33,7 @@ const dark = createTheme(
     primary: colors.grey900,
     secondary: colors.grey800,
     accent: colors.grey700,
+    disabled: colors.grey700,
   },
   {
     primary: {
@@ -46,6 +49,11 @@ const dark = createTheme(
   {
     primary: colors.grey50,
     secondary: colors.grey200,
+    disabled: colors.grey400,
+  },
+  {
+    primary: colors.grey300,
+    accent: colors.grey100,
   },
 );
 
@@ -56,6 +64,7 @@ const light = createTheme(
     primary: colors.grey200,
     secondary: colors.grey100,
     accent: colors.grey300,
+    disabled: colors.grey400,
   },
   {
     primary: {
@@ -68,7 +77,11 @@ const light = createTheme(
       background: colors.grey400,
     },
   },
-  { primary: colors.grey900, secondary: colors.grey800 },
+  { primary: colors.grey900, secondary: colors.grey800, disabled: colors.grey700 },
+  {
+    primary: colors.grey700,
+    accent: colors.grey900,
+  },
 );
 
 const themes = {

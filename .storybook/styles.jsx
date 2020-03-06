@@ -1,8 +1,13 @@
 import styled from 'styled-components';
 
 export const Background = styled.div`
-  background: ${({ theme, backgroundColor = theme.background.default }) =>
-    backgroundColor};
+  background: ${({ theme, primary, secondary }) =>
+    primary
+      ? theme.background.primary
+      : secondary
+      ? theme.background.primary
+      : theme.background.default};
+  padding: ${({ padding }) => (padding ? '1rem' : 0)};
   width: 100vw;
   height: 100vh;
 `;

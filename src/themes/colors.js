@@ -7,6 +7,7 @@ export default {
   grey400: '#BDBDBD',
   grey700: '#616161',
   grey800: '#424242',
+  grey850: '#313131',
   grey900: '#212121',
   green700: '#388E3C',
   red700: '#d32f2f',
