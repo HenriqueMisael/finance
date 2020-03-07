@@ -8,10 +8,19 @@ const Strategy = {
   SEQUENTIAL: (current) => (Number.parseInt(current, 10) + 1).toString(),
 };
 
-export const initialState = Object.freeze({
+/**
+ * @typedef {Object} CoreState
+ * @property {Immutable.Map<string, EntryModel>} entry
+ * @property {Map<string, string>} spareIDs
+ */
+
+/**
+ * @type {CoreState}
+ */
+export const initialState = {
   entry: Map(),
   spareIDs: Map([['1', 'SEQUENTIAL']]),
-});
+};
 
 const clear = () => ({ ...initialState });
 
