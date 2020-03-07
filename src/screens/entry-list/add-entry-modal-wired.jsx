@@ -37,7 +37,7 @@ function AddEntryModalWired({ visible }) {
   const dispatch = useDispatch();
 
   const handleConfirm = useCallback(() => {
-    dispatch(entryList.creators.entryListAddAsync(name, description, totalValue));
+    dispatch(entryList.creators.entryListInsertionSubmitAsync(name, description, totalValue));
     dispatch(modal.creators.modalClose('AddEntryModalWired'))
   }, [dispatch, name, description, totalValue]);
 

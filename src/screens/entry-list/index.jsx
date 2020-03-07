@@ -1,15 +1,20 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdAdd } from 'react-icons/md';
+import styled from 'styled-components';
 
 import entryList from '../../store/entry-list';
 import modal from '../../store/modal';
+import ListItemButton from '../../components/buttons/list-item';
 
 import EntryList from './components';
 import EntryCardWired from './entry-card-wired';
-import ListItemButton from '../../components/buttons/list-item';
 
 const { getEntryIDs } = entryList.selectors;
+
+const ButtonContainer = styled.div`
+  padding: 0.5rem 0;
+`;
 
 function EntryListScreen() {
   const entryIDs = useSelector(getEntryIDs);
@@ -23,11 +28,13 @@ function EntryListScreen() {
   return (
     <EntryList>
       {entryIDs.map((entryID) => (
-        <EntryCardWired entryID={entryID} />
+        <EntryCardWired key={entryID} entryID={entryID} />
       ))}
-      <ListItemButton onClick={handleAdd}>
-        <MdAdd />
-      </ListItemButton>
+      <ButtonContainer>
+        <ListItemButton onClick={handleAdd}>
+          <MdAdd />
+        </ListItemButton>
+      </ButtonContainer>
     </EntryList>
   );
 }

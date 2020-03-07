@@ -2,7 +2,9 @@ import {createSelector} from '../util';
 
 const getState = (state) => state.core;
 
-const getNextID = createSelector([getState], state => state.spareIDs.get(0));
+const getSpareIDs = createSelector([getState], state => state.spareIDs.keySeq().toOrderedSet());
+
+const getNextID = createSelector([getSpareIDs], spareIDs => spareIDs.first());
 
 const getEntryByEntryID = createSelector([getState], (state) => state.entry);
 

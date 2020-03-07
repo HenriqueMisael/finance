@@ -1,39 +1,37 @@
-import { Map, Set } from 'immutable';
+import { Map } from 'immutable';
 import { createActions, createReducer, Types as defaultypes } from 'reduxsauce';
 import { identity } from 'lodash-es';
 
 import { normalize } from './model/entry';
 
-/**
- * @typedef {Object} CoreState
- * @property {Immutable.Map<string, EntryModel>} entry
- * @property {Immutable.Set<string>} spareIDs
- *
- * @type {CoreState}
- */
+const Strategy = {
+  SEQUENTIAL: (current) => (Number.parseInt(current, 10) + 1).toString(),
+};
+
 export const initialState = Object.freeze({
   entry: Map(),
-  spareIDs: Set(['1']),
+  spareIDs: Map([['1', 'SEQUENTIAL']]),
 });
 
-/**
- * @returns {CoreState}
- */
 const clear = () => ({ ...initialState });
 
-const consumeSpareID = (state, { id }) => ({
-  ...state,
-  spareIDs: state.spareIDs.remove(id),
-});
+const registerID = (state, { id }) => {
+  const generatorStrategy = state.spareIDs.get(id);
+  let spareIDs = state.spareIDs.filterNot((_, spareID) => spareID === id);
 
-/**
- * @param {CoreState} state
- * @param {{entry: EntryModel}} action
- * @returns {CoreState}
- */
+  if (generatorStrategy) {
+    const newID = Strategy[generatorStrategy](id);
+    spareIDs = spareIDs.set(newID, generatorStrategy);
+  }
+
+  return {
+    ...state,
+    spareIDs,
+  };
+};
+
 const upsertEntry = (state, { entry }) => {
   const normalized = normalize(entry);
-  console.log({normalized});
   const id = normalized.result;
   const added = Map([[id, normalized.entities.entry[id]]]);
 
@@ -43,11 +41,6 @@ const upsertEntry = (state, { entry }) => {
   };
 };
 
-/**
- * @param {CoreState} state
- * @param {{entryID: string}} action
- * @returns {CoreState}
- */
 const deleteEntry = (state, { entryID }) => ({
   ...state,
   entry: state.entry.remove(entryID),
@@ -56,7 +49,7 @@ const deleteEntry = (state, { entryID }) => ({
 
 export const { Types, Creators } = createActions({
   coreClear: [],
-  coreConsumeSpareID: ['id'],
+  coreRegisterId: ['id'],
   coreUpsertEntry: ['entry'],
   coreDeleteEntry: ['entryID'],
 });
@@ -64,7 +57,7 @@ export const { Types, Creators } = createActions({
 export default createReducer(initialState, {
   [defaultypes.DEFAULT]: identity,
   [Types.CORE_CLEAR]: clear,
-  [Types.CORE_CONSUME_SPARE_ID]: consumeSpareID,
+  [Types.CORE_REGISTER_ID]: registerID,
   [Types.CORE_UPSERT_ENTRY]: upsertEntry,
   [Types.CORE_DELETE_ENTRY]: deleteEntry,
 });

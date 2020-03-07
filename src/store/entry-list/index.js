@@ -1,6 +1,6 @@
 import Selectors from './selectors';
-import { Creators } from './duck';
-import Sagas from './sagas';
+import { Creators } from './insertion/duck';
+import Sagas from './insertion/sagas';
 
 export const entryListSagas = Sagas;
 
