@@ -22,7 +22,7 @@ function EntryListScreen() {
   const dispatch = useDispatch();
 
   const handleAdd = useCallback(() => {
-    dispatch(modal.creators.modalOpen('AddEntryModalWired'));
+    dispatch(modal.creators.modalOpen('AddEntryModal'));
   }, [dispatch]);
 
   return (

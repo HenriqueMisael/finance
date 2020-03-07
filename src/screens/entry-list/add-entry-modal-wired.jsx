@@ -15,11 +15,11 @@ function AddEntryModalWired({ visible }) {
 
   const handleConfirm = useCallback(() => {
     dispatch(entryList.insertion.creators.entryListInsertionSubmitAsync());
-    dispatch(modal.creators.modalClose('AddEntryModalWired'));
+    dispatch(modal.creators.modalClose('AddEntryModal'));
   }, [dispatch]);
 
   const handleDeny = useCallback(() => {
-    dispatch(modal.creators.modalClose('AddEntryModalWired'));
+    dispatch(modal.creators.modalClose('AddEntryModal'));
   }, [dispatch]);
 
   return (
