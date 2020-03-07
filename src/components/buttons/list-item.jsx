@@ -9,36 +9,42 @@ const Root = styled.button(
   ({ theme }) => css`
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    opacity: 50%;
+    transition-property: opacity;
 
     padding: 0.5rem 1rem;
     border-radius: 0.25rem;
-    background: ${theme.button.primary.background};
+    background: ${theme.background.primary};
 
-    font-size: 1em;
+    font-size: 1.75rem;
     font-weight: ${theme.font.weight.medium};
     color: ${theme.button.primary.text};
 
     &:hover {
-      box-shadow: inset 0 0 1.5rem ${theme.button.primary.active};
+      opacity: 60%;
     }
     &:active {
-      background: ${theme.button.primary.active};
+      opacity: 80%;
     }
     &[disabled] {
       cursor: not-allowed;
-      background: ${theme.button.disabled.background};
-      color: ${theme.button.disabled.text};
+      background: ${theme.background.disabled};
+      color: ${theme.text.disabled};
+      opacity: 30%;
       &:hover {
-        box-shadow: none;
+        opacity: 30%;
       }
       &:active {
-        background: none;
+        opacity: 30%;
       }
     }
   `,
 );
 
-function PrimaryButton({ onClick, children, disabled }) {
+function ListItemButton({ onClick, children, disabled }) {
   return (
     <Root disabled={disabled} onClick={onClick}>
       {children}
@@ -46,14 +52,14 @@ function PrimaryButton({ onClick, children, disabled }) {
   );
 }
 
-PrimaryButton.propTypes = {
+ListItemButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
 };
 
-PrimaryButton.defaultProps = {
+ListItemButton.defaultProps = {
   disabled: false,
 };
 
-export default React.memo(PrimaryButton);
+export default React.memo(ListItemButton);

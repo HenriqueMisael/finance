@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
 import styled, { ThemeProvider } from 'styled-components';
-import { useDispatch } from 'react-redux';
 
-import modal from './store/modal';
-
-import i18next from './i18n';
-import themes from './themes';
-import MainHeaderWired from './wired/main-header-wired';
-import HomeScreen from './screens/home';
-import EntryListScreen from './screens/entry-list';
-import ModalsWired from './wired/modals-wired';
+import i18next from '../../i18n';
+import themes from '../../themes';
+import MainHeaderWired from './main-header-wired';
+import HomeScreen from '../home';
+import EntryListScreen from '../entry-list';
+import ModalsWired from './modals-wired';
 
 const AppRoot = styled.div`
   position: relative;

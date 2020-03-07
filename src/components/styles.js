@@ -9,7 +9,7 @@ export default {
     color: ${theme.text.secondary};
 
     &[disabled] {
-      color: ${({ theme }) => theme.text.disabled};
+      color: ${theme.text.disabled};
     }
   `,
   body1: ({ theme }) => css`
@@ -17,11 +17,16 @@ export default {
     color: ${theme.text.primary};
 
     &[disabled] {
-      color: ${({ theme }) => theme.text.disabled};
+      color: ${theme.text.disabled};
     }
   `,
-  title: css`
+  head: ({ theme }) => css`
     font-size: 1.5rem;
+    color: ${theme.text.primary};
+
+    &[disabled] {
+      color: ${theme.text.disabled};
+    }
   `,
   button: css`
     display: inline-block;

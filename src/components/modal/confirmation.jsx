@@ -9,12 +9,12 @@ import LinkButton from '../buttons/link';
 
 const Root = styled.div(
   styles.modal,
-  ({ visible }) => css`
-    bottom: ${visible ? 0 : '-6rem'};
+  ({ visible, height }) => css`
+    bottom: ${visible ? 0 : `-${height}`};
     right: 0;
     left: 0;
     display: flex;
-    height: 6rem;
+    height: ${height};
     padding-top: 1rem;
     align-items: center;
     flex-direction: column;
@@ -23,15 +23,13 @@ const Root = styled.div(
 
 const Footer = styled.footer`
   display: flex;
-  padding-top: 1rem;
+  padding: 1rem 0;
 `;
 
-const Text = styled.span(styles.text, styles.body1);
-
-function ConfirmationModal({ message, onConfirm, onDeny, visible }) {
+function ConfirmationModal({ children, onConfirm, onDeny, visible, height }) {
   return (
-    <Root visible={visible}>
-      <Text>{message}</Text>
+    <Root visible={visible} height={height}>
+      {children}
       <Footer>
         <PrimaryButton onClick={onConfirm}>{i18next.t('yes')}</PrimaryButton>
         <LinkButton onClick={onDeny}>{i18next.t('no')}</LinkButton>
@@ -42,7 +40,8 @@ function ConfirmationModal({ message, onConfirm, onDeny, visible }) {
 
 ConfirmationModal.propTypes = {
   visible: PropTypes.bool.isRequired,
-  message: PropTypes.string.isRequired,
+  height: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
   onConfirm: PropTypes.func.isRequired,
   onDeny: PropTypes.func.isRequired,
 };

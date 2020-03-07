@@ -75,7 +75,7 @@ function IntegerInput({ initialValue, minValue, maxValue, disabled, onSubmitChan
     setDisplayValue(value.toString());
   }, [value]);
 
-  timeoutID = useDebounce(timeoutID, value, initialValue, onSubmitChange);
+  useDebounce(value, initialValue, onSubmitChange);
   return (
     <Root disabled={disabled}>
       <LeftButtonContainer>

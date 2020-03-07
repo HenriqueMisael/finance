@@ -13,6 +13,7 @@ const Root = styled.div(
   styles.input,
   css`
     position: relative;
+    width: 8rem;
   `,
 );
 
@@ -30,8 +31,6 @@ const CurrencyText = styled.span(
     align-items: center;
   `,
 );
-
-let timeoutID;
 
 function MoneyInput({ initialValue, disabled, onSubmitChange }) {
   const [value, setValue] = useState(initialValue);
@@ -55,11 +54,15 @@ function MoneyInput({ initialValue, disabled, onSubmitChange }) {
     }
   }, []);
 
+  const handleFocus = useCallback(() => {
+    if (value === 0) setDisplayValue('');
+  }, [value, setDisplayValue]);
+
   useEffect(() => {
     setDisplayValue(format.money(value));
   }, [value]);
 
-  timeoutID = useDebounce(timeoutID, value, initialValue, onSubmitChange);
+  useDebounce(value, initialValue, onSubmitChange);
   return (
     <Root disabled={disabled}>
       <CurrencyText disabled={disabled}>R$</CurrencyText>
@@ -70,7 +73,8 @@ function MoneyInput({ initialValue, disabled, onSubmitChange }) {
         value={displayValue}
         onChange={handleChange}
         onBlur={handleBlur}
-        width="6rem"
+        onFocus={handleFocus}
+        width="100%"
         textAlign="right"
         step="0.01"
       />

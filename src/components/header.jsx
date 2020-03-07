@@ -20,12 +20,12 @@ const ButtonContainer = styled.div(
     bottom: 0;
     padding: 0.5rem;
   `,
-  styles.title,
+  styles.head,
 );
 
 const Title = styled.span(
   styles.text,
-  styles.title,
+  styles.head,
   ({ theme }) => css`
     color: ${theme.text.primary};
   `,

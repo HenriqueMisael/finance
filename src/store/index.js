@@ -4,13 +4,14 @@ import createSagaMiddleware from 'redux-saga';
 
 import core from './core';
 import modal from './modal';
+import { entryListSagas } from './entry-list';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 function* rootSagas() {
-  yield all([]);
+  yield all([...entryListSagas]);
 }
 
 export default createStore(

@@ -2,10 +2,13 @@ import React from 'react';
 import { withKnobs, number, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
-import { Background, Centered } from '../../../.storybook/styles';
+import { Background, Centered } from '../../../../.storybook/styles';
 
 import EntryCard from './entry-card';
 import EntryList from './index';
+import EntryNameInput from './entry-name-input';
+import EntryDescriptionInput from './entry-description-input';
+import EntryValueInput from './entry-value-input';
 
 export default { title: 'Entry List', decorators: [withKnobs] };
 
@@ -43,5 +46,23 @@ export const entryCard = () => (
       description={text('Description', 'Compra de celulares Xiaomi')}
       value={number('Value', -1280)}
     />
+  </Centered>
+);
+
+export const entryNameInput = () => (
+  <Centered>
+    <EntryNameInput onChange={action('Changed name')} initialValue="" />
+  </Centered>
+);
+
+export const entryDescriptionInput = () => (
+  <Centered>
+    <EntryDescriptionInput onChange={action('Changed description')} initialValue="" />
+  </Centered>
+);
+
+export const entryValueInput = () => (
+  <Centered>
+    <EntryValueInput onChange={action('Changed description')} initialValue={0} />
   </Centered>
 );

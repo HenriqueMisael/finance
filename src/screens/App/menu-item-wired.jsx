@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router';
 
-import MenuItem from '../components/menu/item';
+import MenuItem from '../../components/menu/item';
 
 function MenuItemWired({title, route}) {
 

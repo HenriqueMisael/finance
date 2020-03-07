@@ -1,5 +1,5 @@
 import React from 'react';
-import { boolean, number, withKnobs } from '@storybook/addon-knobs';
+import { boolean, number, text, withKnobs } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 import { Centered } from '../../../.storybook/styles';
@@ -16,6 +16,7 @@ export default {
 export const textInput = () => (
   <Centered secondary padding>
     <TextInput
+      placeholder="This is a input for text stuff"
       disabled={boolean('Disabled', false)}
       initialValue=""
       onSubmitChange={action('Submitting')}
