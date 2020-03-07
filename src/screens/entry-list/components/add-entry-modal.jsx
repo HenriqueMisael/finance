@@ -9,7 +9,7 @@ import styles from '../../../components/styles';
 const TopRow = styled.div`
   display: grid;
   grid-gap: 0.5rem;
-  grid-template-columns: 65% 35%;
+  grid-template-columns: auto 8rem;
   padding-bottom: 0.5rem;
   width: 100%;
 `;

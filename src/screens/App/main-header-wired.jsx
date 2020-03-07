@@ -17,8 +17,8 @@ function MainHeaderWired() {
   return (
     <>
       <Menu onHide={hideMenu} visible={menuVisible}>
-        <MenuItemWired route="/" title={i18next.t('home.title')} />
-        <MenuItemWired route="/entry-list" title={i18next.t('entryList.title')} />
+        <MenuItemWired hideMenu={hideMenu} route="/" title={i18next.t('home.title')} />
+        <MenuItemWired hideMenu={hideMenu} route="/entry-list" title={i18next.t('entryList.title')} />
       </Menu>
       <Header
         slotButton={

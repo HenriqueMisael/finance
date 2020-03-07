@@ -4,12 +4,15 @@ import { useHistory, useLocation } from 'react-router';
 
 import MenuItem from '../../components/menu/item';
 
-function MenuItemWired({title, route}) {
-
+function MenuItemWired({ title, route, hideMenu }) {
   const history = useHistory();
   const location = useLocation();
 
-  const goTo = useCallback(() => history.push(route), [route, history]);
+  const goTo = useCallback(() => {
+    hideMenu();
+    history.push(route);
+  }, [hideMenu, route, history]);
+
   return (
     <MenuItem onClick={goTo} active={location.pathname === route}>
       {title}
@@ -20,6 +23,7 @@ function MenuItemWired({title, route}) {
 MenuItemWired.propTypes = {
   title: PropTypes.string.isRequired,
   route: PropTypes.string.isRequired,
+  hideMenu: PropTypes.func.isRequired,
 };
 
 export default MenuItemWired;
