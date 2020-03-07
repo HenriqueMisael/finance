@@ -35,8 +35,6 @@ const RightButtonContainer = styled(ButtonContainer)`
   right: 0;
 `;
 
-let timeoutID;
-
 function IntegerInput({ initialValue, minValue, maxValue, disabled, onSubmitChange }) {
   const [value, setValue] = useState(initialValue);
   const [displayValue, setDisplayValue] = useState('');
@@ -75,7 +73,8 @@ function IntegerInput({ initialValue, minValue, maxValue, disabled, onSubmitChan
     setDisplayValue(value.toString());
   }, [value]);
 
-  useDebounce(value, initialValue, onSubmitChange);
+  useDebounce(value, setValue, initialValue, onSubmitChange);
+
   return (
     <Root disabled={disabled}>
       <LeftButtonContainer>

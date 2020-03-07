@@ -24,7 +24,7 @@ function TextInput({ placeholder, initialValue, disabled, onSubmitChange }) {
     [setValue],
   );
 
-  useDebounce(value, initialValue, onSubmitChange);
+  useDebounce(value, setValue, initialValue, onSubmitChange);
 
   return (
     <Root

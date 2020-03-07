@@ -4,7 +4,7 @@ import createSagaMiddleware from 'redux-saga';
 
 import core from './core';
 import modal from './modal';
-import { entryListSagas } from './entry-list';
+import entryList, { entryListSagas } from './entry-list';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -15,7 +15,11 @@ function* rootSagas() {
 }
 
 export default createStore(
-  combineReducers({ core: core.reducers, modal: modal.reducers }),
+  combineReducers({
+    core: core.reducers,
+    modal: modal.reducers,
+    entryList: entryList.reducers,
+  }),
   composeEnhancers(applyMiddleware(sagaMiddleware)),
 );
 

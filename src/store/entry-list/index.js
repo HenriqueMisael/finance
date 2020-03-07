@@ -1,10 +1,14 @@
-import Selectors from './selectors';
-import { Creators } from './insertion/duck';
-import Sagas from './insertion/sagas';
+import { combineReducers } from 'redux';
 
-export const entryListSagas = Sagas;
+import selectors from './selectors';
+import insertion, { insertionSagas, insertionReducers } from './insertion';
+
+export const entryListSagas = [...insertionSagas];
 
 export default {
-  selectors: Selectors,
-  creators: Creators,
+  selectors,
+  insertion,
+  reducers: combineReducers({
+    insertion: insertionReducers,
+  }),
 };

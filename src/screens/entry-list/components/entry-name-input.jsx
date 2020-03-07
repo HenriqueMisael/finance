@@ -5,6 +5,7 @@ import i18next from 'i18next';
 import TextInput from '../../../components/input/text';
 
 function EntryNameInput({ initialValue, onChange }) {
+
   return (
     <TextInput
       placeholder={i18next.t('title')}
