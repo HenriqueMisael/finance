@@ -9,6 +9,7 @@ import PrimaryButton from './primary';
 import LinkButton from './link';
 import IconButton from './icon';
 import ListItemButton from './list-item';
+import ToggleButton from './toggle';
 
 export default { title: 'General Components | Button', decorators: [withKnobs] };
 
@@ -43,5 +44,11 @@ export const listItemButton = () => (
     >
       <MdAdd />
     </ListItemButton>
+  </Centered>
+)
+
+export const toggleButton = () => (
+  <Centered>
+    <ToggleButton value={false} />
   </Centered>
 )
