@@ -1,5 +1,5 @@
 import React from 'react';
-import { boolean, number, text, withKnobs } from '@storybook/addon-knobs';
+import { boolean, number, withKnobs } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 import { Centered } from '../../../.storybook/styles';
