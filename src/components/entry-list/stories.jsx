@@ -31,44 +31,14 @@ export const entryList = () => (
         value={2550}
       />
       <EntryCard
-        title="Açougue Paris 3"
-        description="Carne moída para hambúrguer e maionese"
-        value={-35.9}
+        title="Garagem Sarandi"
+        description="Compra do carro voyage"
+        value={-30000}
       />
       <EntryCard
-        title="Mercado Livre"
-        description="Celulares Xiaomi Redmi 7 x2"
-        value={-1280}
-      />
-      <EntryCard
-        title="Mercado Muffato"
-        description="Salgadinhos, queijo e salada"
-        value={-32.8}
-      />
-      <EntryCard
-        title="Mercado Pago"
-        description="Venda notebook Acer Aspire"
-        value={2550}
-      />
-      <EntryCard
-        title="Açougue Paris 3"
-        description="Carne moída para hambúrguer e maionese"
-        value={-35.9}
-      />
-      <EntryCard
-        title="Mercado Livre"
-        description="Celulares Xiaomi Redmi 7 x2"
-        value={-1280}
-      />
-      <EntryCard
-        title="Mercado Muffato"
-        description="Salgadinhos, queijo e salada"
-        value={-32.8}
-      />
-      <EntryCard
-        title="Mercado Pago"
-        description="Venda notebook Acer Aspire"
-        value={2550}
+        title="Objective Solutions"
+        description="Salário mensal referente a fevereiro"
+        value={1800}
       />
       <EntryCard
         title="Açougue Paris 3"
