@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import entryList from '../../store/entry-list';
 
-import EntryDescriptionInput from './components/entry-description-input';
+import EntryDescriptionInput from '../../components/entry-list/entry-description-input';
 
 const { entryListInsertionSetDescription } = entryList.insertion.creators;
 const { getDescription } = entryList.insertion.selectors;

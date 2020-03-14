@@ -45,10 +45,10 @@ export const listItemButton = () => (
       <MdAdd />
     </ListItemButton>
   </Centered>
-)
+);
 
 export const toggleButton = () => (
   <Centered>
     <ToggleButton value={false} />
   </Centered>
-)
+);

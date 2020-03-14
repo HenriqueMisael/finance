@@ -5,11 +5,11 @@ import styled from 'styled-components';
 const Root = styled.div`
   height: 100%;
   width: 100%;
+  overflow-y: auto;
 `;
 
 const ItemsContainer = styled.div`
   padding: 0.5rem;
-  overflow-y: auto;
 `;
 
 function EntryList({ children }) {

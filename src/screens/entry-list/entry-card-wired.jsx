@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import core from '../../store/core';
 
-import EntryCard from './components/entry-card';
+import EntryCard from '../../components/entry-list/entry-card';
 
 const { getEntryByEntryID } = core.selectors;
 

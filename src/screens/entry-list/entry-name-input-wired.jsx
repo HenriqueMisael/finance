@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import entryList from '../../store/entry-list';
 
-import EntryNameInput from './components/entry-name-input';
+import EntryNameInput from '../../components/entry-list/entry-name-input';
 
 const { entryListInsertionSetName } = entryList.insertion.creators;
 const { getName } = entryList.insertion.selectors;

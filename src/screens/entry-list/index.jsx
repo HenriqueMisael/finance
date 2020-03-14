@@ -7,7 +7,7 @@ import entryList from '../../store/entry-list';
 import modal from '../../store/modal';
 import ListItemButton from '../../components/buttons/list-item';
 
-import EntryList from './components';
+import EntryList from '../../components/entry-list';
 import EntryCardWired from './entry-card-wired';
 
 const { getEntryIDs } = entryList.selectors;

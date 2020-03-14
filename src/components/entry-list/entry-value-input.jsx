@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import MoneyInput from '../../../components/input/money';
+import MoneyInput from '../input/money';
 
 function EntryValueInput({ initialValue, onChange }) {
   return <MoneyInput onSubmitChange={onChange} initialValue={initialValue} />;

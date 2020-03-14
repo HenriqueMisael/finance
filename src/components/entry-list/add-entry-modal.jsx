@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import i18next from 'i18next';
 
-import ConfirmationModal from '../../../components/modal/confirmation';
-import styles from '../../../components/styles';
+import ConfirmationModal from '../modal/confirmation';
+import styles from '../styles';
 
 const TopRow = styled.div`
   display: grid;
