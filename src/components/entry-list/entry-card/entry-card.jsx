@@ -8,8 +8,12 @@ import styles from '../../styles';
 const Root = styled.section`
   display: flex;
   border-radius: 0.25rem;
+  overflow: hidden;
   width: 100%;
   margin-top: 0.5rem;
+  &:first-child {
+    margin-top: 0;
+  }
 `;
 
 const Header = styled.header`

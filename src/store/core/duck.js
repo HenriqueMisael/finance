@@ -53,7 +53,7 @@ const upsertEntry = (state, { entry }) => {
 const deleteEntry = (state, { entryID }) => ({
   ...state,
   entry: state.entry.remove(entryID),
-  spareIDs: state.spareIDs.add(entryID),
+  spareIDs: state.spareIDs.set(entryID, null),
 });
 
 export const { Types, Creators } = createActions({
