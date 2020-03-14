@@ -7,7 +7,7 @@ import { useEffect } from 'react';
  * @param {function(string | number):void} onSubmitChange
  * @param {?number} delay
  */
-function useDebounce(value, setValue, initialValue, onSubmitChange, delay = 0) {
+function useDebounce(value, setValue, initialValue, onSubmitChange, delay = 250) {
   useEffect(() => {
     const handler = setTimeout(() => {
       if (value === initialValue) return;

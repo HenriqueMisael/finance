@@ -7,5 +7,5 @@ export const insertionReducers = Reducers;
 
 export default {
   creators: Creators,
-  selectors: Selectors
-}
+  selectors: Selectors,
+};

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import entryList from '../../store/entry-list';
 
-import EntryValueInput from '../../components/entry-list/add-entry-modal/entry-value-input';
+import EntryValueInput from '../../components/entry-list/entry-modal/entry-value-input';
 
 const { entryListInsertionSetValue } = entryList.insertion.creators;
 const { getValue } = entryList.insertion.selectors;

@@ -1,17 +1,19 @@
-import { all, put, takeLeading, select } from 'redux-saga/effects';
+import { all, put, select, takeLeading } from 'redux-saga/effects';
 
 import core from '../../core';
 import Entry from '../../core/model/entry';
 
 import Selectors from './selectors';
-import { Creators, Types } from './duck';
+import { Types } from './duck';
 
 const { getNextID } = core.selectors;
-const { getName, getDescription, getValue } = Selectors;
+const { getIsInsertion, getID, getName, getDescription, getValue } = Selectors;
 
 function* watchSubmit() {
+  const isInsertion = yield select(getIsInsertion);
+
   const [id, name, description, value] = [
-    yield select(getNextID),
+    yield select(isInsertion ? getNextID : getID),
     yield select(getName),
     yield select(getDescription),
     yield select(getValue),
@@ -20,7 +22,6 @@ function* watchSubmit() {
   yield all([
     put(core.creators.coreUpsertEntry(entry)),
     put(core.creators.coreRegisterId(id)),
-    put(Creators.entryListInsertionClear()),
   ]);
 }
 

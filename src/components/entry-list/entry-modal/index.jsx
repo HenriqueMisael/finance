@@ -28,7 +28,7 @@ const Title = styled.header(
   `,
 );
 
-function AddEntryModal({
+function EntryModal({
   handleConfirm,
   handleDeny,
   nameSlot,
@@ -55,7 +55,7 @@ function AddEntryModal({
   );
 }
 
-AddEntryModal.propTypes = {
+EntryModal.propTypes = {
   visible: PropTypes.bool.isRequired,
   nameSlot: PropTypes.node.isRequired,
   descriptionSlot: PropTypes.node.isRequired,
@@ -64,4 +64,4 @@ AddEntryModal.propTypes = {
   handleDeny: PropTypes.func.isRequired,
 };
 
-export default React.memo(AddEntryModal);
+export default React.memo(EntryModal);
