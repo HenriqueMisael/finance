@@ -3,16 +3,16 @@ import { all, put, select, takeLeading } from 'redux-saga/effects';
 import core from '../core';
 
 import { Types } from './duck';
-import insertion from './insertion';
+import editing from './editing';
 
 const { getEntryByEntryID } = core.selectors;
 
 const {
-  entryListInsertionSetID,
-  entryListInsertionSetName,
-  entryListInsertionSetDescription,
-  entryListInsertionSetValue,
-} = insertion.creators;
+  entryListEditingSetID,
+  entryListEditingSetName,
+  entryListEditingSetDescription,
+  entryListEditingSetValue,
+} = editing.creators;
 
 function* watchDelete({ entryID }) {
   yield put(core.creators.coreDeleteEntry(entryID));
@@ -23,10 +23,10 @@ function* watchEdit({ entryID }) {
   const { title, description, value } = entryByEntryID.get(entryID);
 
   yield all([
-    put(entryListInsertionSetID(entryID)),
-    put(entryListInsertionSetName(title)),
-    put(entryListInsertionSetDescription(description)),
-    put(entryListInsertionSetValue(value)),
+    put(entryListEditingSetID(entryID)),
+    put(entryListEditingSetName(title)),
+    put(entryListEditingSetDescription(description)),
+    put(entryListEditingSetValue(value)),
   ]);
 }
 

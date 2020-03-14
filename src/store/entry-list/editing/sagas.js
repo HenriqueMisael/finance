@@ -7,13 +7,13 @@ import Selectors from './selectors';
 import { Types } from './duck';
 
 const { getNextID } = core.selectors;
-const { getIsInsertion, getID, getName, getDescription, getValue } = Selectors;
+const { getIsEditing, getID, getName, getDescription, getValue } = Selectors;
 
 function* watchSubmit() {
-  const isInsertion = yield select(getIsInsertion);
+  const isEditing = yield select(getIsEditing);
 
   const [id, name, description, value] = [
-    yield select(isInsertion ? getNextID : getID),
+    yield select(isEditing ? getNextID : getID),
     yield select(getName),
     yield select(getDescription),
     yield select(getValue),
@@ -25,4 +25,4 @@ function* watchSubmit() {
   ]);
 }
 
-export default [takeLeading([Types.ENTRY_LIST_INSERTION_SUBMIT_ASYNC], watchSubmit)];
+export default [takeLeading([Types.ENTRY_LIST_EDITING_SUBMIT_ASYNC], watchSubmit)];

@@ -5,8 +5,8 @@ import entryList from '../../store/entry-list';
 
 import EntryNameInput from '../../components/entry-list/entry-modal/entry-name-input';
 
-const { entryListInsertionSetName } = entryList.insertion.creators;
-const { getName } = entryList.insertion.selectors;
+const { entryListEditingSetName } = entryList.editing.creators;
+const { getName } = entryList.editing.selectors;
 
 function EntryNameInputWired() {
   const name = useSelector(getName);
@@ -15,7 +15,7 @@ function EntryNameInputWired() {
 
   const handleNameChange = useCallback(
     (value) => {
-      dispatch(entryListInsertionSetName(value));
+      dispatch(entryListEditingSetName(value));
     },
     [dispatch],
   );

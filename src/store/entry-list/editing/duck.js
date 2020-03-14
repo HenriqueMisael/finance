@@ -19,20 +19,20 @@ const setDescription = (state, { description }) => ({ ...state, description });
 const setValue = (state, { value }) => ({ ...state, value });
 
 export const { Types, Creators } = createActions({
-  entryListInsertionClear: [],
-  entryListInsertionSetID: ['id'],
-  entryListInsertionSetName: ['name'],
-  entryListInsertionSetDescription: ['description'],
-  entryListInsertionSetValue: ['value'],
+  entryListEditingClear: [],
+  entryListEditingSetID: ['id'],
+  entryListEditingSetName: ['name'],
+  entryListEditingSetDescription: ['description'],
+  entryListEditingSetValue: ['value'],
 
-  entryListInsertionSubmitAsync: ['name', 'description', 'value'],
+  entryListEditingSubmitAsync: ['name', 'description', 'value'],
 });
 
 export default createReducer(initialState, {
   [defaulttypes.DEFAULT]: identity,
-  [Types.ENTRY_LIST_INSERTION_CLEAR]: clear,
-  [Types.ENTRY_LIST_INSERTION_SET_ID]: setID,
-  [Types.ENTRY_LIST_INSERTION_SET_NAME]: setName,
-  [Types.ENTRY_LIST_INSERTION_SET_DESCRIPTION]: setDescription,
-  [Types.ENTRY_LIST_INSERTION_SET_VALUE]: setValue,
+  [Types.ENTRY_LIST_EDITING_CLEAR]: clear,
+  [Types.ENTRY_LIST_EDITING_SET_ID]: setID,
+  [Types.ENTRY_LIST_EDITING_SET_NAME]: setName,
+  [Types.ENTRY_LIST_EDITING_SET_DESCRIPTION]: setDescription,
+  [Types.ENTRY_LIST_EDITING_SET_VALUE]: setValue,
 });

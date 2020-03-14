@@ -5,8 +5,8 @@ import entryList from '../../store/entry-list';
 
 import EntryDescriptionInput from '../../components/entry-list/entry-modal/entry-description-input';
 
-const { entryListInsertionSetDescription } = entryList.insertion.creators;
-const { getDescription } = entryList.insertion.selectors;
+const { entryListEditingSetDescription } = entryList.editing.creators;
+const { getDescription } = entryList.editing.selectors;
 
 function EntryDescriptionInputWired() {
   const description = useSelector(getDescription);
@@ -15,7 +15,7 @@ function EntryDescriptionInputWired() {
 
   const handleDescriptionChange = useCallback(
     (value) => {
-      dispatch(entryListInsertionSetDescription(value));
+      dispatch(entryListEditingSetDescription(value));
     },
     [dispatch],
   );

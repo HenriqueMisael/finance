@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 import { Map } from 'immutable';
 
 import modal from '../../store/modal';
-import AddEntryModalWired from '../entry-list/add-entry-modal-wired';
+import EntryModalWired from '../entry-list/entry-modal-wired';
 
 const { getOpenedModals } = modal.selectors;
 
-const modalList = Map([['AddEntryModal', AddEntryModalWired]]);
+const modalList = Map([['AddEntryModal', EntryModalWired]]);
 
 function ModalsWired() {
   const openedModals = useSelector(getOpenedModals);

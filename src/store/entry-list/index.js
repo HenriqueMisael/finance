@@ -3,15 +3,15 @@ import { combineReducers } from 'redux';
 import { Creators } from './duck';
 import selectors from './selectors';
 import Sagas from './sagas';
-import insertion, { insertionSagas, insertionReducers } from './insertion';
+import editing, { editingSagas, editingReducers } from './editing';
 
-export const entryListSagas = [...insertionSagas, ...Sagas];
+export const entryListSagas = [...editingSagas, ...Sagas];
 
 export default {
   selectors,
   creators: Creators,
-  insertion,
+  editing,
   reducers: combineReducers({
-    insertion: insertionReducers,
+    editing: editingReducers,
   }),
 };

@@ -5,8 +5,8 @@ import entryList from '../../store/entry-list';
 
 import EntryValueInput from '../../components/entry-list/entry-modal/entry-value-input';
 
-const { entryListInsertionSetValue } = entryList.insertion.creators;
-const { getValue } = entryList.insertion.selectors;
+const { entryListEditingSetValue } = entryList.editing.creators;
+const { getValue } = entryList.editing.selectors;
 
 function EntryValueInputWired() {
   const value = useSelector(getValue);
@@ -15,7 +15,7 @@ function EntryValueInputWired() {
 
   const handleValueChange = useCallback(
     (newValue) => {
-      dispatch(entryListInsertionSetValue(newValue));
+      dispatch(entryListEditingSetValue(newValue));
     },
     [dispatch],
   );
