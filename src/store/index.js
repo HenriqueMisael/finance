@@ -7,25 +7,28 @@ import core from './core';
 import modal from './modal';
 import entryList, { entryListSagas } from './entry-list';
 import { loadState, saveState } from './local-storage';
+import profile, { profileSagas } from './profile';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 function* rootSagas() {
-  yield all([...entryListSagas]);
+  yield all([...entryListSagas, ...profileSagas]);
 }
 
-const persistedCore = loadState();
+const { core: persistedCore, profile: persistedProfile } = loadState();
 
 const store = createStore(
   combineReducers({
     core: core.reducers,
+    profile: profile.reducers,
     modal: modal.reducers,
     entryList: entryList.reducers,
   }),
   {
     core: persistedCore,
+    profile: persistedProfile,
   },
   composeEnhancers(applyMiddleware(sagaMiddleware)),
 );
@@ -33,8 +36,11 @@ const store = createStore(
 store.subscribe(
   throttle(() => {
     saveState({
-      entry: store.getState().core.entry,
-      spareIDs: store.getState().core.spareIDs,
+      core: {
+        entry: store.getState().core.entry,
+        spareIDs: store.getState().core.spareIDs,
+      },
+      profile: store.getState().profile,
     });
   }),
 );

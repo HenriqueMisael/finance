@@ -8,9 +8,14 @@ import ConfirmationModal from './confirmation';
 
 const Text = styled.span(styles.text, styles.body1);
 
-function ConfirmationMessageModal({ message, onConfirm, onDeny, visible }) {
+function ConfirmationMessageModal({ height, message, onConfirm, onDeny, visible }) {
   return (
-    <ConfirmationModal onConfirm={onConfirm} onDeny={onDeny} visible={visible}>
+    <ConfirmationModal
+      height={height}
+      onConfirm={onConfirm}
+      onDeny={onDeny}
+      visible={visible}
+    >
       <Text>{message}</Text>
     </ConfirmationModal>
   );
@@ -19,6 +24,7 @@ function ConfirmationMessageModal({ message, onConfirm, onDeny, visible }) {
 ConfirmationMessageModal.propTypes = {
   visible: PropTypes.bool.isRequired,
   message: PropTypes.string.isRequired,
+  height: PropTypes.string.isRequired,
   onConfirm: PropTypes.func.isRequired,
   onDeny: PropTypes.func.isRequired,
 };

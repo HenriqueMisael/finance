@@ -7,6 +7,11 @@ const Root = styled.button(
   styles.text,
   styles.button,
   ({ theme }) => css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 6rem;
     padding: 0.5rem 1rem;
     background: transparent;
 

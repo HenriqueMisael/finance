@@ -7,12 +7,12 @@ import { Centered } from '../../../../.storybook/styles';
 import EntryNameInput from './entry-name-input';
 import EntryDescriptionInput from './entry-description-input';
 import EntryValueInput from './entry-value-input';
-import AddEntryModal from './index';
+import EntryModal from './index';
 
 export default { title: 'Entry List | Add Entry Modal', decorators: [withKnobs] };
 
 export const complete = () => (
-  <AddEntryModal
+  <EntryModal
     visible={boolean('Visible', true)}
     handleDeny={action('Clicked deny button')}
     handleConfirm={action('Clicked confirm button')}

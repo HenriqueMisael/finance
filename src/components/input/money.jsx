@@ -62,7 +62,7 @@ function MoneyInput({ initialValue, disabled, onSubmitChange }) {
     setDisplayValue(format.money(value));
   }, [value]);
 
-  useDebounce(value, setValue, initialValue, onSubmitChange);
+  useDebounce(value, setValue, initialValue, onSubmitChange, 0);
   return (
     <Root disabled={disabled}>
       <CurrencyText disabled={disabled}>R$</CurrencyText>

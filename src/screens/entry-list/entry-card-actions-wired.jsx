@@ -18,7 +18,7 @@ function EntryCardActionsWired({ entryID }) {
   }, [dispatch, entryID]);
   const handleEdit = useCallback(() => {
     dispatch(entryListEditAsync(entryID));
-    dispatch(modal.creators.modalOpen('AddEntryModal'));
+    dispatch(modal.creators.modalOpen('EntryModal'));
   }, [dispatch, entryID]);
 
   return (

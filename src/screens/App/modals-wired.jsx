@@ -5,9 +5,14 @@ import { Map } from 'immutable';
 import modal from '../../store/modal';
 import EntryModalWired from '../entry-list/entry-modal-wired';
 
+import ProfileModalWired from './profile-modal-wired';
+
 const { getOpenedModals } = modal.selectors;
 
-const modalList = Map([['AddEntryModal', EntryModalWired]]);
+const modalList = Map([
+  ['EntryModal', EntryModalWired],
+  ['ProfileModal', ProfileModalWired],
+]);
 
 function ModalsWired() {
   const openedModals = useSelector(getOpenedModals);

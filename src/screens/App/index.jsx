@@ -1,14 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import styled, { ThemeProvider } from 'styled-components';
 
 import i18next from '../../i18n';
 import themes from '../../themes';
-import MainHeaderWired from './main-header-wired';
+import modal from '../../store/modal';
+import profile from '../../store/profile';
 import HomeScreen from '../home';
 import EntryListScreen from '../entry-list';
+
 import ModalsWired from './modals-wired';
+import MainHeaderWired from './main-header-wired';
+
+const { getHasProfile, getTheme } = profile.selectors;
+
+const { modalOpen } = modal.creators;
 
 const AppRoot = styled.div`
   position: relative;
@@ -18,8 +26,17 @@ const AppRoot = styled.div`
 `;
 
 function App() {
-  const [selectedTheme] = useState('dark');
+  const selectedTheme = useSelector(getTheme);
+  const hasProfile = useSelector(getHasProfile);
+
   const theme = themes[selectedTheme];
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (hasProfile) return;
+    dispatch(modalOpen('ProfileModal'));
+  }, [dispatch, hasProfile]);
 
   return (
     <ThemeProvider theme={theme}>
