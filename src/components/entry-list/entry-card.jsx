@@ -4,10 +4,11 @@ import styled, { css } from 'styled-components';
 
 import MoneyText from '../money-text';
 import styles from '../styles';
+import EntryCardActions from './entry-card-actions';
 
 const Root = styled.section`
-  background: ${({ theme }) => theme.background.primary};
-  padding: 1rem;
+  display: grid;
+  grid-template-columns: auto 2rem;
   border-radius: 0.25rem;
   width: 100%;
   margin-top: 0.5rem;
@@ -29,14 +30,22 @@ const Title = styled.span(
   `,
 );
 
-function EntryCard({ title, value, description }) {
+const ContentContainer = styled.div`
+  background: ${({ theme }) => theme.background.primary};
+  padding: 1rem;
+`;
+
+function EntryCard({ title, value, description, children }) {
   return (
     <Root>
-      <Header>
-        <Title>{title}</Title>
-        <MoneyText>{value}</MoneyText>
-      </Header>
-      <Text>{description}</Text>
+      <ContentContainer>
+        <Header>
+          <Title>{title}</Title>
+          <MoneyText>{value}</MoneyText>
+        </Header>
+        <Text>{description}</Text>
+      </ContentContainer>
+      {children}
     </Root>
   );
 }
@@ -45,6 +54,11 @@ EntryCard.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   value: PropTypes.number.isRequired,
+  children: PropTypes.node,
+};
+
+EntryCard.defaultProps = {
+  children: null,
 };
 
 export default React.memo(EntryCard);

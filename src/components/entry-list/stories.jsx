@@ -1,14 +1,17 @@
 import React from 'react';
 import { withKnobs, number, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
+import { MdDelete, MdModeEdit } from 'react-icons/md';
 
 import { Background, Centered } from '../../../.storybook/styles';
+import IconButton from '../buttons/icon';
 
 import EntryCard from './entry-card';
 import EntryList from './index';
 import EntryNameInput from './entry-name-input';
 import EntryDescriptionInput from './entry-description-input';
 import EntryValueInput from './entry-value-input';
+import EntryCardActions from './entry-card-actions';
 
 export default { title: 'Entry List', decorators: [withKnobs] };
 
@@ -56,6 +59,25 @@ export const entryCard = () => (
       description={text('Description', 'Compra de celulares Xiaomi')}
       value={number('Value', -1280)}
     />
+  </Centered>
+);
+
+export const entryCardWithActions = () => (
+  <Centered padding>
+    <EntryCard
+      title={text('Title', 'Mercado Livre')}
+      description={text('Description', 'Compra de celulares Xiaomi')}
+      value={number('Value', -1280)}
+    >
+      <EntryCardActions>
+        <IconButton onClick={action('Clicked delete button')}>
+          <MdDelete />
+        </IconButton>
+        <IconButton onClick={action('Clicked edit button')}>
+          <MdModeEdit />
+        </IconButton>
+      </EntryCardActions>
+    </EntryCard>
   </Centered>
 );
 

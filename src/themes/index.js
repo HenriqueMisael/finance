@@ -31,7 +31,7 @@ const dark = createTheme(
   {
     default: colors.black,
     primary: colors.grey900,
-    secondary: colors.grey800,
+    secondary: colors.grey950,
     accent: colors.grey700,
     disabled: colors.grey700,
   },
@@ -54,6 +54,7 @@ const dark = createTheme(
   },
   {
     primary: colors.grey300,
+    detail: colors.black,
     accent: colors.grey100,
   },
 );
@@ -62,8 +63,8 @@ const light = createTheme(
   'light',
   {
     default: colors.grey50,
-    primary: colors.grey200,
-    secondary: colors.grey100,
+    primary: colors.grey300,
+    secondary: colors.grey350,
     accent: colors.grey300,
     disabled: colors.grey400,
   },
@@ -78,9 +79,15 @@ const light = createTheme(
       background: colors.grey400,
     },
   },
-  { primary: colors.grey900, secondary: colors.grey800, disabled: colors.grey700, shadow: colors.deepPurple700 },
+  {
+    primary: colors.grey900,
+    secondary: colors.grey800,
+    disabled: colors.grey700,
+    shadow: colors.deepPurple700,
+  },
   {
     primary: colors.grey700,
+    detail: colors.grey400,
     accent: colors.grey900,
   },
 );
