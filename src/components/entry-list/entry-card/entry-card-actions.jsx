@@ -10,6 +10,8 @@ const Root = styled.div`
   background-color: ${({ theme }) => theme.background.secondary};
   font-size: 0.8rem;
 
+  width: 2rem;
+
   border-left-color: ${({ theme }) => theme.border.detail};
   border-left-width: thin;
   border-left-style: solid;

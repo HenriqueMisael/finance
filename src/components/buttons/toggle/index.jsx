@@ -15,9 +15,9 @@ const Track = styled.div`
   border-radius: 0.5rem;
   border-color: ${({ theme }) => theme.border.primary};
   height: 1em;
-  width: 2.5em;
+  width: 2em;
   overflow: visible;
-  
+
   transition-duration: 0.25s;
   transition-property: background-color;
 `;
@@ -27,7 +27,7 @@ const Indicator = styled.div(
   ({ theme, active }) => css`
     position: absolute;
     top: -25%;
-    left: ${active ? 'calc(100% - 1.5em)' : 0};
+    left: ${active ? 'calc(100% - 0.75em)' : '-0.75em'};
 
     transition-property: left;
     transition-duration: 0.25s;

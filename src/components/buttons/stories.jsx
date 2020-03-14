@@ -1,6 +1,6 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { boolean, number, withKnobs } from '@storybook/addon-knobs';
+import { boolean, text, number, withKnobs } from '@storybook/addon-knobs';
 import { Md3DRotation, MdAdd } from 'react-icons/md';
 
 import { Centered } from '../../../.storybook/styles';
@@ -13,20 +13,30 @@ import ToggleButton from './toggle';
 
 export default { title: 'General Components | Button', decorators: [withKnobs] };
 
-export const standardButtons = () => (
+export const primaryButton = () => (
   <Centered fontSize={number('Font size', 16)}>
     <PrimaryButton
       onClick={action('Clicked primary button')}
       disabled={boolean('Disabled', false)}
     >
-      Primary Button
+      {text('Button text', 'Primary Button')}
     </PrimaryButton>
+  </Centered>
+);
+
+export const linkButton = () => (
+  <Centered fontSize={number('Font size', 16)}>
     <LinkButton
       onClick={action('Clicked link button')}
       disabled={boolean('Disabled', false)}
     >
-      Link Button
+      {text('Button text', 'Link Button')}
     </LinkButton>
+  </Centered>
+);
+
+export const iconButton = () => (
+  <Centered fontSize={number('Font size', 16)}>
     <IconButton
       onClick={action('Clicked icon button')}
       disabled={boolean('Disabled', false)}
@@ -37,7 +47,7 @@ export const standardButtons = () => (
 );
 
 export const listItemButton = () => (
-  <Centered>
+  <Centered fontSize={number('Font size', 16)}>
     <ListItemButton
       onClick={action('Clicked list item button')}
       disabled={boolean('Disabled', false)}
@@ -48,7 +58,7 @@ export const listItemButton = () => (
 );
 
 export const toggleButton = () => (
-  <Centered>
+  <Centered fontSize={number('Font size', 16)}>
     <ToggleButton value={false} />
   </Centered>
 );

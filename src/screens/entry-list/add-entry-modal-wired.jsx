@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import entryList from '../../store/entry-list';
 import modal from '../../store/modal';
 
-import AddEntryModal from '../../components/entry-list/add-entry-modal';
+import AddEntryModal from '../../components/entry-list/add-entry-modal/add-entry-modal';
 import EntryDescriptionInputWired from './entry-description-input-wired';
 import EntryNameInputWired from './entry-name-input-wired';
 import EntryValueInputWired from './entry-value-input-wired';
