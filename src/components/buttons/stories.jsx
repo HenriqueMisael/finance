@@ -59,6 +59,11 @@ export const listItemButton = () => (
 
 export const toggleButton = () => (
   <Centered fontSize={number('Font size', 16)}>
-    <ToggleButton value={false} />
+    <ToggleButton
+      initialValue={false}
+      steps={text('Steps', 'false,true')
+        .split(',')
+        .map((value) => value.trim())}
+    />
   </Centered>
 );
