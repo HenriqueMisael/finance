@@ -4,7 +4,6 @@ import styled, { css } from 'styled-components';
 import styles from '../../styles';
 import PrimaryButton from '../../buttons/primary';
 import i18next from 'i18next';
-import LinkButton from '../../buttons/link';
 
 const Root = styled.div(
   styles.modal,

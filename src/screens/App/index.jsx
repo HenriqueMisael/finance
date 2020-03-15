@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled, { ThemeProvider } from 'styled-components';
@@ -42,7 +42,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <I18nextProvider i18n={i18next}>
         <AppRoot backgroundColor={theme.background.default}>
-          <Router>
+          <Router basename="/finance">
             <ModalsWired />
             <MainHeaderWired />
             <Switch>

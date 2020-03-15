@@ -75,7 +75,7 @@ function ToggleButton({ initialValue, onChange, steps }) {
 
 ToggleButton.propTypes = {
   initialValue: PropTypes.bool.isRequired,
-  steps: PropTypes.arrayOf(PropTypes.string),
+  steps: PropTypes.arrayOf(PropTypes.node),
   onChange: PropTypes.func.isRequired,
 };
 
