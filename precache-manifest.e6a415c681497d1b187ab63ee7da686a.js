@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ada3d99f7bce34ed9535b0fd66ae2381",
+    "revision": "f61c4d1b0127f2b80a34d0c1492cb1d0",
     "url": "/finance/index.html"
   },
   {
-    "revision": "dc64749c9124d8153071",
+    "revision": "6f54c9ff329bf5321acc",
     "url": "/finance/static/css/2.5ea632f0.chunk.css"
   },
   {
-    "revision": "e7139942167a0e779884",
+    "revision": "e432aaee63d013c09c71",
     "url": "/finance/static/css/main.e5de2ec8.chunk.css"
   },
   {
-    "revision": "dc64749c9124d8153071",
-    "url": "/finance/static/js/2.b3d3c9a2.chunk.js"
+    "revision": "6f54c9ff329bf5321acc",
+    "url": "/finance/static/js/2.36e2af25.chunk.js"
   },
   {
     "revision": "928d7b5eb39d16fe9a880722c974b51e",
-    "url": "/finance/static/js/2.b3d3c9a2.chunk.js.LICENSE.txt"
+    "url": "/finance/static/js/2.36e2af25.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "e7139942167a0e779884",
-    "url": "/finance/static/js/main.b42dc9f6.chunk.js"
+    "revision": "e432aaee63d013c09c71",
+    "url": "/finance/static/js/main.ebc7fc2e.chunk.js"
   },
   {
     "revision": "71464d498caf5e6592c0",
