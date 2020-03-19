@@ -9,6 +9,7 @@ import ListItemButton from '../../components/buttons/list-item';
 
 import EntryList from '../../components/entry-list';
 import EntryCardWired from './entry-card-wired';
+import AppTitle from '../../components/app-title';
 
 const { getEntryIDs } = entryList.selectors;
 
@@ -27,6 +28,7 @@ function EntryListScreen() {
 
   return (
     <EntryList>
+      <AppTitle screen="entryList" />
       {entryIDs.map((entryID) => (
         <EntryCardWired key={entryID} entryID={entryID} />
       ))}

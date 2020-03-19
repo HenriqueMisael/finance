@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 import home from '../../store/home';
 import TotalBalance from '../../components/home/total-balance';
+import AppTitle from '../../components/app-title';
 
 const { getBalance } = home.selectors;
 
@@ -16,6 +17,7 @@ function HomeScreen() {
 
   return (
     <Root>
+      <AppTitle screen="home" />
       <TotalBalance totalBalance={balance} />
     </Root>
   );
