@@ -9,7 +9,7 @@ import { identity } from 'lodash-es';
 const initialState = {
   name: '',
   initialBalance: '',
-  theme: 'dark',
+  theme: '',
 };
 
 const clear = () => ({ ...initialState });

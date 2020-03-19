@@ -3,6 +3,7 @@ import { createActions, createReducer, Types as defaultypes } from 'reduxsauce';
 import { identity } from 'lodash-es';
 
 import { normalize } from './model/entry';
+import Profile from './model/profile';
 
 const Strategy = {
   SEQUENTIAL: (current) => (Number.parseInt(current, 10) + 1).toString(),
@@ -12,6 +13,7 @@ const Strategy = {
  * @typedef {Object} CoreState
  * @property {Immutable.Map<string, EntryModel>} entry
  * @property {Map<string, string>} spareIDs
+ * @property {ProfileModel} profile
  */
 
 /**
@@ -20,10 +22,19 @@ const Strategy = {
 export const initialState = {
   entry: Map(),
   spareIDs: Map([['1', 'SEQUENTIAL']]),
+  profile: Profile()
 };
 
+/**
+ * @returns {CoreState}
+ */
 const clear = () => ({ ...initialState });
 
+/**
+ * @param {CoreState} state
+ * @param {string} id
+ * @returns {CoreState}
+ */
 const registerID = (state, { id }) => {
   const generatorStrategy = state.spareIDs.get(id);
   let spareIDs = state.spareIDs.filterNot((_, spareID) => spareID === id);
@@ -39,6 +50,11 @@ const registerID = (state, { id }) => {
   };
 };
 
+/**
+ * @param {CoreState} state
+ * @param {EntryModel} entry
+ * @returns {CoreState}
+ */
 const upsertEntry = (state, { entry }) => {
   const normalized = normalize(entry);
   const id = normalized.result;
@@ -50,17 +66,35 @@ const upsertEntry = (state, { entry }) => {
   };
 };
 
+/**
+ * @param {CoreState} state
+ * @param {string} entryID
+ * @returns {CoreState}
+ */
 const deleteEntry = (state, { entryID }) => ({
   ...state,
   entry: state.entry.remove(entryID),
   spareIDs: state.spareIDs.set(entryID, null),
 });
 
+/**
+ * @param {CoreState} state
+ * @param {ProfileModel} profile
+ * @returns {CoreState}
+ */
+const setProfile = (state, { profile }) => ({
+  ...state,
+  profile
+});
+
 export const { Types, Creators } = createActions({
   coreClear: [],
   coreRegisterId: ['id'],
+
   coreUpsertEntry: ['entry'],
   coreDeleteEntry: ['entryID'],
+
+  coreSetProfile: ['profile'],
 });
 
 export default createReducer(initialState, {
@@ -69,4 +103,5 @@ export default createReducer(initialState, {
   [Types.CORE_REGISTER_ID]: registerID,
   [Types.CORE_UPSERT_ENTRY]: upsertEntry,
   [Types.CORE_DELETE_ENTRY]: deleteEntry,
+  [Types.CORE_SET_PROFILE]: setProfile,
 });

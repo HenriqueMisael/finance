@@ -1,12 +1,12 @@
-import { all, put, takeLeading } from 'redux-saga/effects';
+import { put, takeLeading } from 'redux-saga/effects';
 
-import { Creators, Types } from './duck';
+import core from '../core';
+import Profile from '../core/model/profile';
+
+import { Types } from './duck';
 
 function* watchSave({ name, balance }) {
-  yield all([
-    put(Creators.profileSetName(name)),
-    put(Creators.profileSetInitialBalance(balance)),
-  ]);
+  yield put(core.creators.coreSetProfile(Profile(name, balance)));
 }
 
 export default [takeLeading([Types.PROFILE_SAVE_ASYNC], watchSave)];

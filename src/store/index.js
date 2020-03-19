@@ -17,7 +17,7 @@ function* rootSagas() {
   yield all([...entryListSagas, ...profileSagas]);
 }
 
-const { core: persistedCore, profile: persistedProfile } = loadState();
+const { core: persistedCore } = loadState();
 
 const store = createStore(
   combineReducers({
@@ -28,7 +28,6 @@ const store = createStore(
   }),
   {
     core: persistedCore,
-    profile: persistedProfile,
   },
   composeEnhancers(applyMiddleware(sagaMiddleware)),
 );
@@ -39,8 +38,8 @@ store.subscribe(
       core: {
         entry: store.getState().core.entry,
         spareIDs: store.getState().core.spareIDs,
+        profile: store.getState().core.profile,
       },
-      profile: store.getState().profile,
     });
   }),
 );

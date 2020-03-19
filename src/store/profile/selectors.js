@@ -8,11 +8,8 @@ const getInitialBalance = createSelector([getState], (state) => state.initialBal
 
 const getTheme = createSelector([getState], (state) => state.theme);
 
-const getHasProfile = createSelector([getName], (name) => name !== '');
-
 export default {
   getName,
   getInitialBalance,
   getTheme,
-  getHasProfile,
 };

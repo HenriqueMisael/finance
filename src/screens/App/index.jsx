@@ -7,14 +7,14 @@ import styled, { ThemeProvider } from 'styled-components';
 import i18next from '../../i18n';
 import themes from '../../themes';
 import modal from '../../store/modal';
-import profile from '../../store/profile';
+import core from '../../store/core';
 import HomeScreen from '../home';
 import EntryListScreen from '../entry-list';
 
 import ModalsWired from './modals-wired';
 import MainHeaderWired from './main-header-wired';
 
-const { getHasProfile, getTheme } = profile.selectors;
+const { getHasProfile, getTheme } = core.selectors;
 
 const { modalOpen } = modal.creators;
 

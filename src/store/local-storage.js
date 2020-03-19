@@ -1,23 +1,22 @@
 import { Map } from 'immutable';
 
+import Entry from './core/model/entry';
+import Profile from './core/model/profile';
+
 function parseCore(json) {
   if (!json) return null;
 
-  const entry = Map(json.entry);
+  const entry = Map(json.entry).map(({ description, id, title, value }) =>
+    Entry(id, title, description, value),
+  );
   const spareIDs = Map(json.spareIDs);
+  const { name, initialBalance, theme } = json.profile;
 
   return {
     entry,
     spareIDs,
+    profile: Profile(name, initialBalance, theme),
   };
-}
-
-function parseProfile(json) {
-  if (!json) return null;
-
-  const { name, initialBalance, theme } = json;
-
-  return { name, initialBalance, theme };
 }
 
 export const loadState = () => {
@@ -32,7 +31,6 @@ export const loadState = () => {
 
     return {
       core: parseCore(json.core),
-      profile: parseProfile(json.profile),
     };
   } catch (err) {
     // eslint-disable-next-line no-console
@@ -42,17 +40,19 @@ export const loadState = () => {
 };
 
 /**
- * @param {{core: CoreState, profile: ProfileState}} state
+ * @param {{core: CoreState}} state
  */
 export const saveState = (state) => {
   try {
-    const serializedState = JSON.stringify({
+    const buffer = {
       core: {
         entry: state.core.entry.toJS(),
         spareIDs: state.core.spareIDs.toJS(),
+        profile: state.core.profile,
       },
-      profile: state.profile,
-    });
+    };
+
+    const serializedState = JSON.stringify(buffer);
     localStorage.setItem('state', serializedState);
   } catch (err) {
     // eslint-disable-next-line no-console

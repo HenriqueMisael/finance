@@ -1,9 +1,7 @@
 import { createSelector } from '../util';
-import profile from '../profile';
 import core from '../core';
 
-const { getEntryByEntryID } = core.selectors;
-const { getInitialBalance } = profile.selectors;
+const { getInitialBalance, getEntryByEntryID } = core.selectors;
 
 const getBalance = createSelector(
   [getInitialBalance, getEntryByEntryID],
