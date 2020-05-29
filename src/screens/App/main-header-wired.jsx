@@ -8,10 +8,11 @@ import IconButton from '../../components/buttons/icon';
 import Header from '../../components/header';
 import Menu from '../../components/menu';
 
-import MenuItemWired from './menu-item-wired';
-import OptionTray from '../../components/menu/option-tray';
 import ToggleButton from '../../components/buttons/toggle';
 import profile from '../../store/profile';
+import { OptionTray } from '../../components/menu/styled-wrappers';
+
+import MenuItemWired from './menu-item-wired';
 
 const { getTheme } = profile.selectors;
 const { profileSetTheme } = profile.creators;

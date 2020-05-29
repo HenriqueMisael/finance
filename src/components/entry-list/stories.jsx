@@ -3,7 +3,7 @@ import { withKnobs } from '@storybook/addon-knobs';
 
 import { Background } from '../../../.storybook/styles';
 
-import EntryCard from './entry-card/entry-card';
+import EntryCard from './entry-card';
 import EntryList from './index';
 
 export default { title: 'Entry List | List', decorators: [withKnobs] };

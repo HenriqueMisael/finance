@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 
 import useDebounce from '../../../hooks/use-debounce';
 import styles from '../../styles';
+import { Body2 } from '../../text';
 
 const Root = styled.div`
   padding: 0.125rem;
@@ -11,12 +12,10 @@ const Root = styled.div`
   align-items: center;
 `;
 
-const Text = styled.span(styles.text, styles.body2);
-
-const LeftText = styled(Text)`
+const LeftText = styled(Body2)`
   padding-right: 1rem;
 `;
-const RightText = styled(Text)`
+const RightText = styled(Body2)`
   padding-left: 1rem;
 `;
 

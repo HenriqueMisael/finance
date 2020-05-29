@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import i18next from 'i18next';
 
-import TextInput from '../../input/text';
+import TextInput from '../../../input/text';
 
 function EntryNameInput({ initialValue, onChange }) {
-
   return (
     <TextInput
       placeholder={i18next.t('title')}

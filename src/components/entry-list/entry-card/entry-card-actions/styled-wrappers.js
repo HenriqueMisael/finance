@@ -1,8 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const Root = styled.div`
+// eslint-disable-next-line import/prefer-default-export
+export const Root = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -17,13 +16,3 @@ const Root = styled.div`
   border-left-width: thin;
   border-left-style: solid;
 `;
-
-function EntryCardActions({ children }) {
-  return <Root>{children}</Root>;
-}
-
-EntryCardActions.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-export default EntryCardActions;

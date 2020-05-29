@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import styles from '../styles';
 
-const Root = styled.button(
-  styles.text,
+import styles from '../../styles';
+
+// eslint-disable-next-line import/prefer-default-export
+export const Root = styled.button(
+  styles.body1,
   styles.button,
   ({ theme }) => css`
     display: flex;
@@ -31,23 +31,3 @@ const Root = styled.button(
     }
   `,
 );
-
-function LinkButton({ onClick, children, disabled }) {
-  return (
-    <Root disabled={disabled} onClick={onClick}>
-      {children}
-    </Root>
-  );
-}
-
-LinkButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
-  disabled: PropTypes.bool,
-};
-
-LinkButton.defaultProps = {
-  disabled: false,
-};
-
-export default React.memo(LinkButton);

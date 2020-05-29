@@ -1,12 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
-import styles from '../styles';
-
-import ConfirmationModal from './confirmation';
-
-const Text = styled.span(styles.text, styles.body1);
+import { Body1 } from '../../text';
+import ConfirmationModal from '../confirmation';
 
 function ConfirmationMessageModal({ height, message, onConfirm, onDeny, visible }) {
   return (
@@ -16,7 +12,7 @@ function ConfirmationMessageModal({ height, message, onConfirm, onDeny, visible 
       onDeny={onDeny}
       visible={visible}
     >
-      <Text>{message}</Text>
+      <Body1>{message}</Body1>
     </ConfirmationModal>
   );
 }

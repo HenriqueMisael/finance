@@ -1,30 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
 import i18next from 'i18next';
 
-import styles from '../styles';
-import PrimaryButton from '../buttons/primary';
-import LinkButton from '../buttons/link';
+import PrimaryButton from '../../buttons/primary';
+import LinkButton from '../../buttons/link';
 
-const Root = styled.div(
-  styles.modal,
-  ({ visible, height }) => css`
-    bottom: ${visible ? 0 : `-${height}`};
-    right: 0;
-    left: 0;
-    display: flex;
-    height: ${height};
-    padding-top: 1rem;
-    align-items: center;
-    flex-direction: column;
-  `,
-);
-
-const Footer = styled.footer`
-  display: flex;
-  padding: 1rem 0;
-`;
+import { Footer, Root } from './styled-wrappers';
 
 function ConfirmationModal({ children, onConfirm, onDeny, visible, height }) {
   return (

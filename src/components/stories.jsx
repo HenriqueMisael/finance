@@ -8,7 +8,7 @@ import { Background, Centered } from '../../.storybook/styles';
 
 import IconButton from './buttons/icon';
 import Header from './header';
-import MoneyText from './money-text';
+import MoneyText from './text/money';
 
 export default { title: 'General Components | Other', decorators: [withKnobs] };
 

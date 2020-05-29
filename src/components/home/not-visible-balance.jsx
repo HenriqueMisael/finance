@@ -7,7 +7,6 @@ import IconButton from '../buttons/icon';
 import styles from '../styles';
 
 const Text = styled.span(
-  styles.text,
   styles.body1,
   ({ theme }) => css`
     font-weight: ${theme.font.weight.medium};

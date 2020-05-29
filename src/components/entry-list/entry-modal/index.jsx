@@ -19,7 +19,6 @@ const Form = styled.form`
   padding: 0.5rem;
 `;
 const Title = styled.header(
-  styles.text,
   styles.head,
   css`
     text-align: center;

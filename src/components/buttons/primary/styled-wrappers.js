@@ -1,11 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import styles from '../styles';
 
-const Root = styled.button(
-  styles.text,
+import styles from '../../styles';
+
+// eslint-disable-next-line import/prefer-default-export
+export const Root = styled.button(
   styles.button,
+  styles.body1,
   ({ theme }) => css`
     display: flex;
     align-items: center;
@@ -16,8 +16,6 @@ const Root = styled.button(
     border-radius: 0.25rem;
     background: ${theme.button.primary.background};
 
-    font-size: 1em;
-    font-weight: ${theme.font.weight.medium};
     color: ${theme.button.primary.text};
 
     &:hover {
@@ -39,23 +37,3 @@ const Root = styled.button(
     }
   `,
 );
-
-function PrimaryButton({ onClick, children, disabled }) {
-  return (
-    <Root disabled={disabled} onClick={onClick}>
-      {children}
-    </Root>
-  );
-}
-
-PrimaryButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
-  disabled: PropTypes.bool,
-};
-
-PrimaryButton.defaultProps = {
-  disabled: false,
-};
-
-export default React.memo(PrimaryButton);

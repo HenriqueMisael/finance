@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { MdArrowBack } from 'react-icons/md';
 
-import IconButton from './icon';
+import IconButton from '../icon';
 
 function GoBackButton({ onClick }) {
   return (

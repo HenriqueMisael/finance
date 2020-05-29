@@ -13,6 +13,7 @@ export default {
   grey950: '#111111',
   green700: '#388E3C',
   red700: '#d32f2f',
+  purple400: '#AB47BC',
   purple700: '#7b1fa2',
   purple800: '#6a1b9a',
   purple900: '#4A148C',

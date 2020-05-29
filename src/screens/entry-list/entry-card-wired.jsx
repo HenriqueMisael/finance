@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 import core from '../../store/core';
-import EntryCard from '../../components/entry-list/entry-card/entry-card';
 
 import EntryCardActionsWired from './entry-card-actions-wired';
+import EntryCard from '../../components/entry-list/entry-card';
 
 const { getEntryByEntryID } = core.selectors;
 

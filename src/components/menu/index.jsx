@@ -1,20 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
 import i18next from 'i18next';
 
-import styles from '../styles';
 import Header from '../header';
 import GoBackButton from '../buttons/go-back';
 
-const Root = styled.div(
-  styles.modal,
-  css`
-    width: 90vw;
-    height: 100vh;
-    left: ${({ visible }) => (visible ? 0 : '-100vw')};
-  `,
-);
+import { Root } from './styled-wrappers';
 
 function Menu({ children, visible, onHide }) {
   return (

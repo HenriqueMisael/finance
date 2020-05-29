@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 import styles from '../styles';
 
 export default styled.input(
-  styles.text,
   styles.body1,
   ({ width, textAlign = 'start' }) => css`
     border: none;

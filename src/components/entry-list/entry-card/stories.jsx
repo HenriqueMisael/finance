@@ -6,7 +6,7 @@ import { MdDelete, MdModeEdit } from 'react-icons/md';
 import { Centered } from '../../../../.storybook/styles';
 import IconButton from '../../buttons/icon';
 
-import EntryCard from './entry-card';
+import EntryCard from './index';
 import EntryCardActions from './entry-card-actions';
 
 export default { title: 'Entry List | Entry Card', decorators: [withKnobs] };

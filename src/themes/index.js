@@ -19,7 +19,10 @@ function createTheme(name, background, button, text, border) {
     text: { ...text, positive: colors.green700, negative: colors.red700 },
     font: {
       weight: {
+        light: 300,
+        regular: 400,
         medium: 500,
+        bold: 600,
       },
     },
     border,
@@ -55,7 +58,7 @@ const dark = createTheme(
   {
     primary: colors.grey300,
     detail: colors.black,
-    accent: colors.grey100,
+    accent: colors.purple400,
   },
 );
 
@@ -88,7 +91,7 @@ const light = createTheme(
   {
     primary: colors.grey700,
     detail: colors.grey400,
-    accent: colors.grey900,
+    accent: colors.deepPurple700,
   },
 );
 

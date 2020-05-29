@@ -14,5 +14,4 @@ function AppTitle({ screen }) {
 AppTitle.propTypes = {
   screen: PropTypes.string.isRequired,
 };
-
 export default AppTitle;

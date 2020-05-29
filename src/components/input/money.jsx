@@ -18,7 +18,6 @@ const Root = styled.div(
 );
 
 const CurrencyText = styled.span(
-  styles.text,
   styles.body1,
   css`
     position: absolute;

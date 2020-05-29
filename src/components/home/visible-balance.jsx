@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FaRegEye } from 'react-icons/fa';
 
 import IconButton from '../buttons/icon';
-import MoneyText from '../money-text';
+import MoneyText from '../text/money';
 
 function VisibleBalance({ setVisible, totalBalance }) {
   return (

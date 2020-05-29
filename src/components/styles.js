@@ -1,26 +1,44 @@
 import { css } from 'styled-components';
 
 export default {
-  text: css`
-    font-family: 'Roboto';
-  `,
-  body2: ({ theme }) => css`
-    font-size: 0.75rem;
-    color: ${theme.text.secondary};
+  body1: ({ theme }) => css`
+    font-family: 'Roboto Slab', sans-serif;
+    font-size: 1rem;
+    color: ${theme.text.primary};
+    font-weight: ${theme.font.weight.regular};
 
     &[disabled] {
       color: ${theme.text.disabled};
     }
+
+    > light {
+      font-weight: ${theme.font.weight.light};
+    }
+
+    > strong {
+      font-weight: ${theme.font.weight.bold};
+    }
   `,
-  body1: ({ theme }) => css`
-    font-size: 1rem;
-    color: ${theme.text.primary};
+  body2: ({ theme }) => css`
+    font-family: 'Roboto Slab', sans-serif;
+    font-size: 0.75rem;
+    color: ${theme.text.secondary};
+    font-weight: ${theme.font.weight.regular};
 
     &[disabled] {
       color: ${theme.text.disabled};
+    }
+
+    > light {
+      font-weight: ${theme.font.weight.light};
+    }
+
+    > strong {
+      font-weight: ${theme.font.weight.bold};
     }
   `,
   head: ({ theme }) => css`
+    font-family: 'Roboto Slab', sans-serif;
     font-size: 1.5rem;
     color: ${theme.text.primary};
 
@@ -36,6 +54,7 @@ export default {
     cursor: pointer;
     text-align: center;
     -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
     -moz-appearance: none;
     outline: transparent;
   `,
@@ -57,6 +76,10 @@ export default {
     &:hover,
     :focus-within {
       background-color: ${theme.background.secondary};
+    }
+
+    &:focus-within {
+      border-color: ${theme.border.accent};
     }
 
     &[disabled] {

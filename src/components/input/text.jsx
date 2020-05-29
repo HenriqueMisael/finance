@@ -6,7 +6,6 @@ import useDebounce from '../../hooks/use-debounce';
 import styles from '../styles';
 
 const Root = styled.input(
-  styles.text,
   styles.body1,
   styles.input,
   css`
