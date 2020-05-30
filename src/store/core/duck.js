@@ -22,7 +22,7 @@ const Strategy = {
 export const initialState = {
   entry: Map(),
   spareIDs: Map([['1', 'SEQUENTIAL']]),
-  profile: Profile()
+  profile: Profile(),
 };
 
 /**
@@ -84,7 +84,17 @@ const deleteEntry = (state, { entryID }) => ({
  */
 const setProfile = (state, { profile }) => ({
   ...state,
-  profile
+  profile,
+});
+
+/**
+ * @param {CoreState} state
+ * @param {string} theme
+ * @returns {CoreState}
+ */
+const setProfileTheme = (state, { theme }) => ({
+  ...state,
+  profile: { ...state.profile, theme },
 });
 
 export const { Types, Creators } = createActions({
@@ -95,6 +105,7 @@ export const { Types, Creators } = createActions({
   coreDeleteEntry: ['entryID'],
 
   coreSetProfile: ['profile'],
+  coreSetProfileTheme: ['theme'],
 });
 
 export default createReducer(initialState, {
@@ -104,4 +115,5 @@ export default createReducer(initialState, {
   [Types.CORE_UPSERT_ENTRY]: upsertEntry,
   [Types.CORE_DELETE_ENTRY]: deleteEntry,
   [Types.CORE_SET_PROFILE]: setProfile,
+  [Types.CORE_SET_PROFILE_THEME]: setProfileTheme,
 });

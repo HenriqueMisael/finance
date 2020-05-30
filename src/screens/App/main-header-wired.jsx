@@ -4,18 +4,17 @@ import { MdMenu } from 'react-icons/md';
 import { FaRegMoon, FaSun } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 
+import core from '../../store/core';
 import IconButton from '../../components/buttons/icon';
 import Header from '../../components/header';
 import Menu from '../../components/menu';
-
 import ToggleButton from '../../components/buttons/toggle';
-import profile from '../../store/profile';
 import { OptionTray } from '../../components/menu/styled-wrappers';
 
 import MenuItemWired from './menu-item-wired';
 
-const { getTheme } = profile.selectors;
-const { profileSetTheme } = profile.creators;
+const { getTheme } = core.selectors;
+const { coreSetProfileTheme } = core.creators;
 
 function MainHeaderWired() {
   const selectedTheme = useSelector(getTheme);
@@ -27,7 +26,9 @@ function MainHeaderWired() {
   const showMenu = useCallback(() => setMenuVisible(true), []);
   const hideMenu = useCallback(() => setMenuVisible(false), []);
   const handleChange = useCallback(
-    (value) => dispatch(profileSetTheme(value ? 'light' : 'dark')),
+    (value) => {
+      return dispatch(coreSetProfileTheme(value ? 'light' : 'dark'));
+    },
     [dispatch],
   );
 

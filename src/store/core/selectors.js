@@ -10,13 +10,16 @@ const getNextID = createSelector([getSpareIDs], (spareIDs) => spareIDs.first());
 
 const getEntryByEntryID = createSelector([getState], (state) => state.entry);
 
-const getProfile = createSelector([getState], state => state.profile);
+const getProfile = createSelector([getState], (state) => state.profile);
 
-const getTheme = createSelector([getProfile], profile => profile.theme);
+const getTheme = createSelector([getProfile], (profile) => profile.theme);
 
-const getInitialBalance = createSelector([getProfile], profile => profile.initialBalance);
+const getInitialBalance = createSelector(
+  [getProfile],
+  (profile) => profile.initialBalance,
+);
 
-const getName = createSelector([getProfile], profile => profile.name);
+const getName = createSelector([getProfile], (profile) => profile.name);
 
 const getHasProfile = createSelector([getName], (name) => name !== '');
 
