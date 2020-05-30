@@ -3,9 +3,14 @@ import PropTypes from 'prop-types';
 
 import { Root } from './styled-wrappers';
 
-function IconButton({ onClick, children, disabled }) {
+function IconButton({ ariaLabel, ariaLabelledby, onClick, children, disabled }) {
   return (
-    <Root disabled={disabled} onClick={onClick}>
+    <Root
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledby}
+      disabled={disabled}
+      onClick={onClick}
+    >
       {children}
     </Root>
   );
@@ -14,11 +19,14 @@ function IconButton({ onClick, children, disabled }) {
 IconButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
+  ariaLabel: PropTypes.string.isRequired,
+  ariaLabelledby: PropTypes.string,
   disabled: PropTypes.bool,
 };
 
 IconButton.defaultProps = {
   disabled: false,
+  ariaLabelledby: null,
 };
 
 export default React.memo(IconButton);

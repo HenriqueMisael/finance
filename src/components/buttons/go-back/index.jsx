@@ -4,9 +4,9 @@ import { MdArrowBack } from 'react-icons/md';
 
 import IconButton from '../icon';
 
-function GoBackButton({ onClick }) {
+function GoBackButton({ ariaLabel, onClick }) {
   return (
-    <IconButton onClick={onClick}>
+    <IconButton ariaLabel={ariaLabel} onClick={onClick}>
       <MdArrowBack />
     </IconButton>
   );
@@ -14,6 +14,11 @@ function GoBackButton({ onClick }) {
 
 GoBackButton.propTypes = {
   onClick: PropTypes.func.isRequired,
+  ariaLabel: PropTypes.string,
+};
+
+GoBackButton.defaultProps = {
+  ariaLabel: 'Go back button',
 };
 
 export default React.memo(GoBackButton);

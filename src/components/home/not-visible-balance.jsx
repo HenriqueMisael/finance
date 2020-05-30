@@ -16,7 +16,7 @@ const Text = styled.span(
 function NotVisibleBalance({ setVisible }) {
   return (
     <>
-      <IconButton onClick={() => setVisible(true)}>
+      <IconButton ariaLabel="Show balance" onClick={() => setVisible(true)}>
         <FaRegEyeSlash />
       </IconButton>
       <Text>—</Text>

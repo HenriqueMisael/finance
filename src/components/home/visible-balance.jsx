@@ -8,7 +8,7 @@ import MoneyText from '../text/money';
 function VisibleBalance({ setVisible, totalBalance }) {
   return (
     <>
-      <IconButton onClick={() => setVisible(false)}>
+      <IconButton ariaLabel="Hide balance" onClick={() => setVisible(false)}>
         <FaRegEye />
       </IconButton>
       <MoneyText>{totalBalance}</MoneyText>

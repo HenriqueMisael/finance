@@ -17,7 +17,10 @@ export const header = () => {
     <Background>
       <Header
         slotButton={
-          <IconButton onClick={action('Clicked menu button')}>
+          <IconButton
+            ariaLabel="Header button example"
+            onClick={action('Clicked menu button')}
+          >
             <MdMenu />
           </IconButton>
         }

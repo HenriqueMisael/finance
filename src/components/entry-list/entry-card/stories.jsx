@@ -14,6 +14,7 @@ export default { title: 'Entry List | Entry Card', decorators: [withKnobs] };
 export const readonly = () => (
   <Centered>
     <EntryCard
+      id="Sample entry"
       title={text('Title', 'Mercado Livre')}
       description={text('Description', 'Compra de celulares Xiaomi')}
       value={number('Value', -1280)}
@@ -24,15 +25,16 @@ export const readonly = () => (
 export const withActions = () => (
   <Centered>
     <EntryCard
+      id="Sample entry"
       title={text('Title', 'Mercado Livre')}
       description={text('Description', 'Compra de celulares Xiaomi')}
       value={number('Value', -1280)}
     >
       <EntryCardActions>
-        <IconButton onClick={action('Clicked delete button')}>
+        <IconButton ariaLabel="Delete entry" onClick={action('Clicked delete button')}>
           <MdDelete />
         </IconButton>
-        <IconButton onClick={action('Clicked edit button')}>
+        <IconButton ariaLabel="Edit entry" onClick={action('Clicked edit button')}>
           <MdModeEdit />
         </IconButton>
       </EntryCardActions>

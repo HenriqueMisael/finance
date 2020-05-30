@@ -10,7 +10,7 @@ import { Root } from './styled-wrappers';
 function Menu({ children, visible, onHide }) {
   return (
     <Root visible={visible}>
-      <Header slotButton={<GoBackButton onClick={onHide} />}>
+      <Header slotButton={<GoBackButton ariaLabel="Hide menu" onClick={onHide} />}>
         {i18next.t('app.menu')}
       </Header>
       {children}

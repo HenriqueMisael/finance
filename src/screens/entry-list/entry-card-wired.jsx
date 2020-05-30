@@ -13,7 +13,12 @@ function EntryCardWired({ entryID }) {
   const entry = useSelector(getEntryByEntryID).get(entryID);
 
   return (
-    <EntryCard value={entry.value} description={entry.description} title={entry.title}>
+    <EntryCard
+      id={`entry-${entryID}`}
+      value={entry.value}
+      description={entry.description}
+      title={entry.title}
+    >
       <EntryCardActionsWired entryID={entryID} />
     </EntryCard>
   );

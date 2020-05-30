@@ -24,10 +24,18 @@ function EntryCardActionsWired({ entryID }) {
   return (
     <EntryCardActions>
       <EntryCardActions>
-        <IconButton onClick={handleDelete}>
+        <IconButton
+          ariaLabel="Delete entry"
+          ariaLabelledby={`entry-${entryID}`}
+          onClick={handleDelete}
+        >
           <MdDelete />
         </IconButton>
-        <IconButton onClick={handleEdit}>
+        <IconButton
+          ariaLabel="Edit entry"
+          ariaLabelledby={`entry-${entryID}`}
+          onClick={handleEdit}
+        >
           <MdModeEdit />
         </IconButton>
       </EntryCardActions>

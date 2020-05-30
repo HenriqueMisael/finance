@@ -12,9 +12,9 @@ import {
   Title,
 } from './styled-wrappers';
 
-function EntryCard({ title: name, value, description, children }) {
+function EntryCard({ id, title: name, value, description, children }) {
   return (
-    <Root>
+    <Root id={id}>
       <ContentContainer>
         <Header>
           <Title>{name}</Title>
@@ -30,6 +30,7 @@ function EntryCard({ title: name, value, description, children }) {
 }
 
 EntryCard.propTypes = {
+  id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   value: PropTypes.number.isRequired,

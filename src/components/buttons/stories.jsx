@@ -38,6 +38,7 @@ export const linkButton = () => (
 export const iconButton = () => (
   <Centered fontSize={number('Font size', 16)}>
     <IconButton
+      ariaLabel="Story example"
       onClick={action('Clicked icon button')}
       disabled={boolean('Disabled', false)}
     >
@@ -60,6 +61,7 @@ export const listItemButton = () => (
 export const toggleButton = () => (
   <Centered fontSize={number('Font size', 16)}>
     <ToggleButton
+      onChange={action('Toggled button')}
       initialValue={false}
       steps={text('Steps', 'false,true')
         .split(',')

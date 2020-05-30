@@ -79,6 +79,7 @@ function IntegerInput({ initialValue, minValue, maxValue, disabled, onSubmitChan
     <Root disabled={disabled}>
       <LeftButtonContainer>
         <IconButton
+          ariaLabel="Subtract"
           disabled={disabled || isMinimumValueReached}
           onClick={() => setValue(value - 1)}
         >
@@ -98,6 +99,7 @@ function IntegerInput({ initialValue, minValue, maxValue, disabled, onSubmitChan
       />
       <RightButtonContainer>
         <IconButton
+          ariaLabel="Add"
           disabled={disabled || isMaximumValueReached}
           onClick={() => setValue(value + 1)}
         >

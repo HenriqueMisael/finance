@@ -51,7 +51,7 @@ function MainHeaderWired() {
       </Menu>
       <Header
         slotButton={
-          <IconButton onClick={showMenu}>
+          <IconButton ariaLabel="Open menu" onClick={showMenu}>
             <MdMenu />
           </IconButton>
         }
