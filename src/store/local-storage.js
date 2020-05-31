@@ -2,6 +2,7 @@ import { Map } from 'immutable';
 
 import Entry from './core/model/entry';
 import Profile from './core/model/profile';
+import TransactionMethod from './core/model/transaction-method';
 
 function parseCore(json) {
   if (!json) return null;
@@ -9,11 +10,15 @@ function parseCore(json) {
   const entry = Map(json.entry).map(({ description, id, title, value }) =>
     Entry(id, title, description, value),
   );
+  const transactionMethod = Map(json.transactionMethod).map(({ description, id }) =>
+    TransactionMethod(id, description),
+  );
   const spareIDs = Map(json.spareIDs);
   const { name, initialBalance, theme } = json.profile;
 
   return {
     entry,
+    transactionMethod,
     spareIDs,
     profile: Profile(name, initialBalance, theme),
   };

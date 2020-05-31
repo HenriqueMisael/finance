@@ -10,6 +10,11 @@ const getNextID = createSelector([getSpareIDs], (spareIDs) => spareIDs.first());
 
 const getEntryByEntryID = createSelector([getState], (state) => state.entry);
 
+const getTransactionMethodByTransactionMethodID = createSelector(
+  [getState],
+  (state) => state.transactionMethod,
+);
+
 const getProfile = createSelector([getState], (state) => state.profile);
 
 const getTheme = createSelector([getProfile], (profile) => profile.theme);
@@ -24,6 +29,7 @@ const getName = createSelector([getProfile], (profile) => profile.name);
 const getHasProfile = createSelector([getName], (name) => name !== '');
 
 export default {
+  getTransactionMethodByTransactionMethodID,
   getEntryByEntryID,
   getNextID,
   getProfile,

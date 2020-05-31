@@ -2,7 +2,8 @@ import { Map } from 'immutable';
 import { createActions, createReducer, Types as defaultypes } from 'reduxsauce';
 import { identity } from 'lodash-es';
 
-import { normalize } from './model/entry';
+import { normalize as normalizeEntry } from './model/entry';
+import { normalize as normalizeTransactionMethod } from './model/transaction-method';
 import Profile from './model/profile';
 
 const Strategy = {
@@ -12,6 +13,7 @@ const Strategy = {
 /**
  * @typedef {Object} CoreState
  * @property {Immutable.Map<string, EntryModel>} entry
+ * @property {Immutable.Map<string, TransactionMethodModel>} transactionMethod
  * @property {Map<string, string>} spareIDs
  * @property {ProfileModel} profile
  */
@@ -21,6 +23,7 @@ const Strategy = {
  */
 export const initialState = {
   entry: Map(),
+  transactionMethod: Map(),
   spareIDs: Map([['1', 'SEQUENTIAL']]),
   profile: Profile(),
 };
@@ -56,7 +59,7 @@ const registerID = (state, { id }) => {
  * @returns {CoreState}
  */
 const upsertEntry = (state, { entry }) => {
-  const normalized = normalize(entry);
+  const normalized = normalizeEntry(entry);
   const id = normalized.result;
   const added = Map([[id, normalized.entities.entry[id]]]);
 
@@ -75,6 +78,33 @@ const deleteEntry = (state, { entryID }) => ({
   ...state,
   entry: state.entry.remove(entryID),
   spareIDs: state.spareIDs.set(entryID, null),
+});
+
+/**
+ * @param {CoreState} state
+ * @param {TransactionMethodModel} entry
+ * @returns {CoreState}
+ */
+const upsertTransactionMethod = (state, { transactionMethod }) => {
+  const normalized = normalizeTransactionMethod(transactionMethod);
+  const id = normalized.result;
+  const added = Map([[id, normalized.entities.transactionMethod[id]]]);
+
+  return {
+    ...state,
+    transactionMethod: state.transactionMethod.merge(added),
+  };
+};
+
+/**
+ * @param {CoreState} state
+ * @param {string} transactionMethodID
+ * @returns {CoreState}
+ */
+const deleteTransactionMethod = (state, { transactionMethodID }) => ({
+  ...state,
+  transactionMethod: state.transactionMethod.remove(transactionMethodID),
+  spareIDs: state.spareIDs.set(transactionMethodID, null),
 });
 
 /**
@@ -104,6 +134,9 @@ export const { Types, Creators } = createActions({
   coreUpsertEntry: ['entry'],
   coreDeleteEntry: ['entryID'],
 
+  coreUpsertTransactionMethod: ['transactionMethod'],
+  coreDeleteTransactionMethod: ['transactionMethodID'],
+
   coreSetProfile: ['profile'],
   coreSetProfileTheme: ['theme'],
 });
@@ -114,6 +147,8 @@ export default createReducer(initialState, {
   [Types.CORE_REGISTER_ID]: registerID,
   [Types.CORE_UPSERT_ENTRY]: upsertEntry,
   [Types.CORE_DELETE_ENTRY]: deleteEntry,
+  [Types.CORE_UPSERT_TRANSACTION_METHOD]: upsertTransactionMethod,
+  [Types.CORE_DELETE_TRANSACTION_METHOD]: deleteTransactionMethod,
   [Types.CORE_SET_PROFILE]: setProfile,
   [Types.CORE_SET_PROFILE_THEME]: setProfileTheme,
 });

@@ -6,6 +6,9 @@ import { throttle } from 'lodash-es';
 import core from './core';
 import modal from './modal';
 import entryList, { entryListSagas } from './entry-list';
+import transactionMethodList, {
+  transactionMethodListSagas,
+} from './transaction-method-list';
 import { loadState, saveState } from './local-storage';
 import profile, { profileSagas } from './profile';
 
@@ -14,7 +17,7 @@ const sagaMiddleware = createSagaMiddleware();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 function* rootSagas() {
-  yield all([...entryListSagas, ...profileSagas]);
+  yield all([...entryListSagas, ...transactionMethodListSagas, ...profileSagas]);
 }
 
 const { core: persistedCore } = loadState();
@@ -25,6 +28,7 @@ const store = createStore(
     profile: profile.reducers,
     modal: modal.reducers,
     entryList: entryList.reducers,
+    transactionMethodList: transactionMethodList.reducers,
   }),
   {
     core: persistedCore,
@@ -37,6 +41,7 @@ store.subscribe(
     saveState({
       core: {
         entry: store.getState().core.entry,
+        transactionMethod: store.getState().core.transactionMethod,
         spareIDs: store.getState().core.spareIDs,
         profile: store.getState().core.profile,
       },
