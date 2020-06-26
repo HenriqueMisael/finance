@@ -1,15 +1,15 @@
 import { createSelector } from '../../util';
 
-const getState = (state) => state.transactionMethod.editing;
+const getState = (state) => state.transactionMethodList.editing;
 
 const getID = createSelector([getState], (state) => state.id);
 
-const getIsEditing = createSelector([getID], (id) => id === '');
+const getIsAdding = createSelector([getState], (state) => state.new);
 
 const getDescription = createSelector([getState], (state) => state.description);
 
 export default {
-  getIsEditing,
+  getIsAdding,
   getID,
   getDescription,
 };

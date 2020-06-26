@@ -13,38 +13,44 @@ const Root = styled.input(
   `,
 );
 
-function TextInput({ placeholder, initialValue, disabled, onSubmitChange }) {
-  const [value, setValue] = useState(initialValue);
+const TextInput = React.forwardRef(
+  ({ placeholder, initialValue, disabled, onSubmitChange, onBlur }, ref) => {
+    const [value, setValue] = useState(initialValue);
 
-  const handleChange = useCallback(
-    ({ target }) => {
-      setValue(target.value);
-    },
-    [setValue],
-  );
+    const handleChange = useCallback(
+      ({ target }) => {
+        setValue(target.value);
+      },
+      [setValue],
+    );
 
-  useDebounce(value, setValue, initialValue, onSubmitChange);
+    useDebounce(value, setValue, initialValue, onSubmitChange);
 
-  return (
-    <Root
-      type="text"
-      disabled={disabled}
-      value={value}
-      onChange={handleChange}
-      placeholder={placeholder}
-    />
-  );
-}
+    return (
+      <Root
+        ref={ref}
+        type="text"
+        disabled={disabled}
+        value={value}
+        onChange={handleChange}
+        placeholder={placeholder}
+        onBlur={onBlur}
+      />
+    );
+  },
+);
 
 TextInput.propTypes = {
   disabled: PropTypes.bool,
   initialValue: PropTypes.string.isRequired,
-  onSubmitChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
+  onBlur: PropTypes.func,
+  onSubmitChange: PropTypes.func.isRequired,
 };
 
 TextInput.defaultProps = {
   disabled: false,
+  onBlur: null,
 };
 
 export default TextInput;

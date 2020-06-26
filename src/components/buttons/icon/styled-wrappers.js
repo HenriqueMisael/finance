@@ -21,7 +21,7 @@ export const Root = styled.button(
     transition: background 0.25s ease-in-out;
 
     &:hover {
-      background: ${theme.background.accent};
+      background: ${theme.button.accent};
     }
     &:active {
     }

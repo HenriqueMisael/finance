@@ -5,6 +5,7 @@ export default {
   grey200: '#EEEEEE',
   grey300: '#E0E0E0',
   grey350: '#D0D0D0',
+  grey375: '#C4C4C4',
   grey400: '#BDBDBD',
   grey700: '#616161',
   grey800: '#424242',

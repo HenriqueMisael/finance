@@ -48,6 +48,11 @@ function MainHeaderWired() {
           route="/entry-list"
           title={i18next.t('entryList.title')}
         />
+        <MenuItemWired
+          hideMenu={hideMenu}
+          route="/transaction-method-list"
+          title={i18next.t('transactionMethodList.title')}
+        />
       </Menu>
       <Header
         slotButton={

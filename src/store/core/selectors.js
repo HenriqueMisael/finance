@@ -15,6 +15,12 @@ const getTransactionMethodByTransactionMethodID = createSelector(
   (state) => state.transactionMethod,
 );
 
+const getTransactionMethodIDs = createSelector(
+  [getTransactionMethodByTransactionMethodID],
+  (transactionMethodByTransactionMethodID) =>
+    transactionMethodByTransactionMethodID.toKeyedSeq().toSet(),
+);
+
 const getProfile = createSelector([getState], (state) => state.profile);
 
 const getTheme = createSelector([getProfile], (profile) => profile.theme);
@@ -30,6 +36,7 @@ const getHasProfile = createSelector([getName], (name) => name !== '');
 
 export default {
   getTransactionMethodByTransactionMethodID,
+  getTransactionMethodIDs,
   getEntryByEntryID,
   getNextID,
   getProfile,

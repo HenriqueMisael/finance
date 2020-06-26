@@ -3,9 +3,9 @@ import { combineReducers } from 'redux';
 import { Creators } from './duck';
 import selectors from './selectors';
 import Sagas from './sagas';
-import editing, { editingSagas, editingReducers } from './editing';
+import editing, { editingReducers } from './editing';
 
-export const transactionMethodListSagas = [...editingSagas, ...Sagas];
+export const transactionMethodListSagas = [...Sagas];
 
 export default {
   selectors,

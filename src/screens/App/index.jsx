@@ -13,6 +13,7 @@ import EntryListScreen from '../entry-list';
 
 import ModalsWired from './modals-wired';
 import MainHeaderWired from './main-header-wired';
+import TransactionMethodListScreen from '../transaction-method-list';
 
 const { getHasProfile, getTheme } = core.selectors;
 
@@ -48,6 +49,11 @@ function App() {
             <Switch>
               <Route exact path="/" component={HomeScreen} />
               <Route exact path="/entry-list" component={EntryListScreen} />
+              <Route
+                exact
+                path="/transaction-method-list"
+                component={TransactionMethodListScreen}
+              />
             </Switch>
           </Router>
         </AppRoot>

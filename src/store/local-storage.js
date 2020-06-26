@@ -52,6 +52,7 @@ export const saveState = (state) => {
     const buffer = {
       core: {
         entry: state.core.entry.toJS(),
+        transactionMethod: state.core.transactionMethod.toJS(),
         spareIDs: state.core.spareIDs.toJS(),
         profile: state.core.profile,
       },
