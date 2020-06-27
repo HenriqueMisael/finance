@@ -4,17 +4,20 @@ import styled, { css } from 'styled-components';
 
 import useDebounce from '../../hooks/use-debounce';
 import styles from '../styles';
+import ResetInput from './reset';
 
-const Root = styled.input(
+const Root = styled.div(
   styles.body1,
   styles.input,
   css`
     width: 100%;
+    display: flex;
+    justify-content: space-between;
   `,
 );
 
 const TextInput = React.forwardRef(
-  ({ placeholder, initialValue, disabled, onSubmitChange, onBlur }, ref) => {
+  ({ placeholder, initialValue, disabled, onSubmitChange, onBlur, children }, ref) => {
     const [value, setValue] = useState(initialValue);
 
     const handleChange = useCallback(
@@ -35,7 +38,18 @@ const TextInput = React.forwardRef(
         onChange={handleChange}
         placeholder={placeholder}
         onBlur={onBlur}
-      />
+      >
+        <ResetInput
+          ref={ref}
+          type="text"
+          disabled={disabled}
+          value={value}
+          onChange={handleChange}
+          placeholder={placeholder}
+          onBlur={onBlur}
+        />
+        {children}
+      </Root>
     );
   },
 );
@@ -46,11 +60,13 @@ TextInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   onBlur: PropTypes.func,
   onSubmitChange: PropTypes.func.isRequired,
+  children: PropTypes.node,
 };
 
 TextInput.defaultProps = {
   disabled: false,
   onBlur: null,
+  children: null,
 };
 
 export default TextInput;

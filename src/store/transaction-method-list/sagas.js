@@ -21,7 +21,6 @@ function* watchEdit({ transactionMethodID }) {
   const transactionMethodByTransactionMethodID = yield select(
     getTransactionMethodByTransactionMethodID,
   );
-  console.log(transactionMethodID, transactionMethodByTransactionMethodID.toJS());
   const { description } = transactionMethodByTransactionMethodID.get(transactionMethodID);
 
   yield all([
@@ -31,6 +30,8 @@ function* watchEdit({ transactionMethodID }) {
 }
 
 function* watchAdd() {
+  yield put(editing.creators.transactionMethodListEditingClear());
+
   const newID = yield select(core.selectors.getNextID);
 
   yield all([
@@ -49,8 +50,8 @@ function* watchSave() {
   yield all([
     ...(isAdding ? [core.creators.coreRegisterId(id)] : []),
     put(core.creators.coreUpsertTransactionMethod({ id, description })),
-    put(editing.creators.transactionMethodListEditingClear()),
   ]);
+  yield put(editing.creators.transactionMethodListEditingClear());
 }
 
 export default [

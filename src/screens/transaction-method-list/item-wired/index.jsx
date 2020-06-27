@@ -10,16 +10,19 @@ import TransactionMethodListItemPreviewWired from './preview-wired';
 
 const { getIsSelectedByTransactionMethodID } = transactionMethodList.selectors;
 const { transactionMethodListEditAsync } = transactionMethodList.creators;
+const { getID } = transactionMethodList.editing.selectors;
 
 function TransactionMethodListItemWired({ transactionMethodID }) {
   const isSelected = useSelector((state) =>
     getIsSelectedByTransactionMethodID(state).get(transactionMethodID),
   );
+  const selectedTransactionMethodID = useSelector((state) => getID(state));
 
   const dispatch = useDispatch();
   const handleSelect = useCallback(() => {
-    return dispatch(transactionMethodListEditAsync(transactionMethodID));
-  }, [dispatch, transactionMethodID]);
+    if (selectedTransactionMethodID === transactionMethodID) return;
+    dispatch(transactionMethodListEditAsync(transactionMethodID));
+  }, [dispatch, transactionMethodID, selectedTransactionMethodID]);
 
   return (
     <TransactionMethodListItemWrapper onClick={handleSelect} selected={isSelected}>

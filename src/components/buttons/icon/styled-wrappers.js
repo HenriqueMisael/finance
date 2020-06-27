@@ -6,12 +6,13 @@ import styles from '../../styles';
 export const Root = styled.button(
   styles.body1,
   styles.button,
-  ({ theme }) => css`
+  ({ theme, noPadding }) => css`
     display: flex;
     justify-content: center;
     align-items: center;
 
-    padding: 0.25rem 0.25rem;
+    padding: ${noPadding ? '0' : '0.25rem 0.25rem'};
+
     border-radius: 50%;
     background: transparent;
 

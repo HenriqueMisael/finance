@@ -2,11 +2,13 @@ import React from 'react';
 import { boolean, number, withKnobs } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
+import { MdCheck } from 'react-icons/md';
 import { Centered } from '../../../.storybook/styles';
 
 import TextInput from './text';
 import IntegerInput from './integer';
 import MoneyInput from './money';
+import IconButton from '../buttons/icon';
 
 export default {
   title: 'General Components | Input',
@@ -21,6 +23,25 @@ export const textInput = () => (
       initialValue=""
       onSubmitChange={action('Submitting')}
     />
+  </Centered>
+);
+
+export const textInputWithButton = () => (
+  <Centered secondary padding>
+    <TextInput
+      placeholder="This is a input for text stuff"
+      disabled={boolean('Disabled', false)}
+      initialValue=""
+      onSubmitChange={action('Submitting')}
+    >
+      <IconButton
+        disabled={boolean('Input button disabled', false)}
+        ariaLabel="Input button sample"
+        onClick={action('Input button clicked')}
+      >
+        <MdCheck />
+      </IconButton>
+    </TextInput>
   </Centered>
 );
 

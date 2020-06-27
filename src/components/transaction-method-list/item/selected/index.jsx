@@ -7,7 +7,12 @@ import TextInput from '../../../input/text';
 
 import { Root } from './styled-wrappers';
 
-function TransactionMethodListItemSelected({ description, onSave, onBlur }) {
+function TransactionMethodListItemSelected({
+  slotSaveButton,
+  description,
+  onChange,
+  onBlur,
+}) {
   /**
    * @type {React.MutableRefObject<HTMLInputElement>}
    */
@@ -24,16 +29,18 @@ function TransactionMethodListItemSelected({ description, onSave, onBlur }) {
         ref={inputRef}
         placeholder={i18next.t('transactionMethodList.descriptionSample')}
         initialValue={description}
-        onSubmitChange={onSave}
-        onBlur={onBlur}
-      />
+        onSubmitChange={onChange}
+      >
+        {slotSaveButton}
+      </TextInput>
     </Root>
   );
 }
 
 TransactionMethodListItemSelected.propTypes = {
+  slotSaveButton: PropTypes.node.isRequired,
   description: PropTypes.string.isRequired,
-  onSave: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired,
 };
 

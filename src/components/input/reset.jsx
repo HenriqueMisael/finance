@@ -4,7 +4,7 @@ import styles from '../styles';
 
 export default styled.input(
   styles.body1,
-  ({ width, textAlign = 'start' }) => css`
+  ({ width = '100%', textAlign = 'start' }) => css`
     border: none;
     outline: none;
     background: none;
