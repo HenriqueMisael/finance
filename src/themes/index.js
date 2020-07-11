@@ -57,6 +57,7 @@ const dark = createTheme(
   },
   {
     primary: colors.grey300,
+    secondary: colors.grey700,
     detail: colors.black,
     accent: colors.purple400,
   },

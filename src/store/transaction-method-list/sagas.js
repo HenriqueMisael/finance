@@ -26,6 +26,7 @@ function* watchEdit({ transactionMethodID }) {
   yield all([
     put(transactionMethodListEditingSetID(transactionMethodID)),
     put(transactionMethodListEditingSetDescription(description)),
+    put(transactionMethodListEditingSetNew(false)),
   ]);
 }
 
@@ -36,7 +37,7 @@ function* watchAdd() {
 
   yield all([
     put(transactionMethodListEditingSetID(newID)),
-    put(transactionMethodListEditingSetNew()),
+    put(transactionMethodListEditingSetNew(true)),
   ]);
 }
 
@@ -48,7 +49,7 @@ function* watchSave() {
   ];
 
   yield all([
-    ...(isAdding ? [core.creators.coreRegisterId(id)] : []),
+    ...(isAdding ? [put(core.creators.coreRegisterId(id))] : []),
     put(core.creators.coreUpsertTransactionMethod({ id, description })),
   ]);
   yield put(editing.creators.transactionMethodListEditingClear());

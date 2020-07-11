@@ -13,13 +13,13 @@ const setID = (state, { id }) => ({ ...state, id });
 
 const setDescription = (state, { description }) => ({ ...state, description });
 
-const setNew = (state) => ({ ...state, new: true });
+const setNew = (state, { isNew }) => ({ ...state, new: isNew });
 
 export const { Types, Creators } = createActions({
   transactionMethodListEditingClear: [],
   transactionMethodListEditingSetID: ['id'],
   transactionMethodListEditingSetDescription: ['description'],
-  transactionMethodListEditingSetNew: [],
+  transactionMethodListEditingSetNew: ['isNew'],
 });
 
 export default createReducer(initialState, {

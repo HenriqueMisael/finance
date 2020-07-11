@@ -6,10 +6,10 @@ import transactionMethodList from '../../../store/transaction-method-list';
 import TransactionMethodListItemSelected from '../../../components/transaction-method-list/item/selected';
 
 import TransactionMethodListItemSaveButtonWired from './save-button-wired';
+import TransactionMethodListItemCancelButtonWired from './cancel-button-wired';
 
 const { getDescriptionByTransactionMethodID } = transactionMethodList.selectors;
 const {
-  transactionMethodListEditingClear,
   transactionMethodListEditingSetDescription,
 } = transactionMethodList.editing.creators;
 
@@ -26,16 +26,13 @@ function TransactionMethodListItemSelectedWired({ transactionMethodID }) {
     },
     [dispatch],
   );
-  const handleUnselect = useCallback(() => {
-    return dispatch(transactionMethodListEditingClear());
-  }, [dispatch]);
 
   return (
     <TransactionMethodListItemSelected
       slotSaveButton={<TransactionMethodListItemSaveButtonWired />}
+      slotCancelButton={<TransactionMethodListItemCancelButtonWired />}
       description={description}
       onChange={handleChange}
-      onBlur={handleUnselect}
     />
   );
 }

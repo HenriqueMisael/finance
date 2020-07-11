@@ -46,6 +46,15 @@ export default {
       color: ${theme.text.disabled};
     }
   `,
+  head2: ({ theme }) => css`
+    font-family: 'Roboto Slab', sans-serif;
+    font-size: 1.125rem;
+    color: ${theme.text.primary};
+
+    &[disabled] {
+      color: ${theme.text.disabled};
+    }
+  `,
   button: css`
     display: inline-block;
     border: none;

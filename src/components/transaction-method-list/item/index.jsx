@@ -13,8 +13,10 @@ function TransactionMethodListItemWrapper({ selected, onClick, children }) {
 
 TransactionMethodListItemWrapper.propTypes = {
   children: PropTypes.node.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   selected: PropTypes.bool.isRequired,
 };
+
+TransactionMethodListItemWrapper.defaultProps = { onClick: null };
 
 export default TransactionMethodListItemWrapper;

@@ -16,6 +16,13 @@ const Root = styled.div(
   `,
 );
 
+const ButtonsContainer = styled.div(
+  css`
+    display: flex;
+    align-items: center;
+  `,
+);
+
 const TextInput = React.forwardRef(
   ({ placeholder, initialValue, disabled, onSubmitChange, onBlur, children }, ref) => {
     const [value, setValue] = useState(initialValue);
@@ -48,7 +55,7 @@ const TextInput = React.forwardRef(
           placeholder={placeholder}
           onBlur={onBlur}
         />
-        {children}
+        <ButtonsContainer>{children}</ButtonsContainer>
       </Root>
     );
   },

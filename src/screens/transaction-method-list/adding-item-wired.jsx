@@ -2,13 +2,16 @@ import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import transactionMethodList from '../../store/transaction-method-list';
+import TransactionMethodListItemSelected from '../../components/transaction-method-list/item/selected';
 import TransactionMethodListItemWrapper from '../../components/transaction-method-list/item';
+
+import TransactionMethodListItemSaveButtonWired from './item-wired/save-button-wired';
+import TransactionMethodListItemCancelButtonWired from './item-wired/cancel-button-wired';
 
 const { getIsAdding, getDescription } = transactionMethodList.editing.selectors;
 const {
   transactionMethodListEditingSetDescription,
 } = transactionMethodList.editing.creators;
-const { transactionMethodListSaveAsync } = transactionMethodList.creators;
 
 function TransactionMethodListAddingItemWired() {
   const isAdding = useSelector(getIsAdding);
@@ -16,22 +19,23 @@ function TransactionMethodListAddingItemWired() {
 
   const dispatch = useDispatch();
 
-  const handleSave = useCallback(
+  const handleChange = useCallback(
     (newDescription) => {
-      dispatch(transactionMethodListEditingSetDescription(newDescription));
-      dispatch(transactionMethodListSaveAsync());
+      return dispatch(transactionMethodListEditingSetDescription(newDescription));
     },
     [dispatch],
   );
 
   return (
     isAdding && (
-      <TransactionMethodListItemWrapper
-        description={description}
-        onSave={handleSave}
-        onClick={() => false}
-        selected
-      />
+      <TransactionMethodListItemWrapper selected>
+        <TransactionMethodListItemSelected
+          slotSaveButton={<TransactionMethodListItemSaveButtonWired />}
+          slotCancelButton={<TransactionMethodListItemCancelButtonWired />}
+          description={description}
+          onChange={handleChange}
+        />
+      </TransactionMethodListItemWrapper>
     )
   );
 }

@@ -9,9 +9,9 @@ import { Root } from './styled-wrappers';
 
 function TransactionMethodListItemSelected({
   slotSaveButton,
+  slotCancelButton,
   description,
   onChange,
-  onBlur,
 }) {
   /**
    * @type {React.MutableRefObject<HTMLInputElement>}
@@ -32,6 +32,7 @@ function TransactionMethodListItemSelected({
         onSubmitChange={onChange}
       >
         {slotSaveButton}
+        {slotCancelButton}
       </TextInput>
     </Root>
   );
@@ -39,9 +40,13 @@ function TransactionMethodListItemSelected({
 
 TransactionMethodListItemSelected.propTypes = {
   slotSaveButton: PropTypes.node.isRequired,
+  slotCancelButton: PropTypes.node,
   description: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired,
+};
+
+TransactionMethodListItemSelected.defaultProps = {
+  slotCancelButton: null,
 };
 
 export default TransactionMethodListItemSelected;
