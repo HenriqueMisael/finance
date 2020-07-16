@@ -12,10 +12,16 @@ const getDescription = createSelector([getState], (state) => state.description);
 
 const getValue = createSelector([getState], (state) => state.value);
 
+const getTransactionMethod = createSelector(
+  [getState],
+  (state) => state.transactionMethod,
+);
+
 export default {
   getIsEditing,
   getID,
   getName,
   getDescription,
   getValue,
+  getTransactionMethod,
 };

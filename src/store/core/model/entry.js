@@ -6,6 +6,7 @@ import { normalize as normalizeEntity, schema } from 'normalizr';
  * @property {string} title
  * @property {string} description
  * @property {number} value
+ * @property {string} transactionMethod
  */
 
 const entrySchema = new schema.Entity('entry');
@@ -15,15 +16,17 @@ const entrySchema = new schema.Entity('entry');
  * @param {string} title
  * @param {string} description
  * @param {number} value
+ * @param {string} transactionMethod
  * @returns {EntryModel}
  * @constructor
  */
-function Entry(id, title, description, value) {
+function Entry(id, title, description, value, transactionMethod) {
   return {
     id,
     title,
     description,
     value,
+    transactionMethod,
   };
 }
 

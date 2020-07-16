@@ -10,14 +10,19 @@ const TopRow = styled.div`
   display: grid;
   grid-gap: 0.5rem;
   grid-template-columns: auto 8rem;
-  padding-bottom: 0.5rem;
   width: 100%;
 `;
+
 const Form = styled.form`
   width: 100%;
   height: 100%;
-  padding: 0.5rem;
+  padding: 0 0.5rem;
+
+  display: grid;
+  grid-template-rows: auto auto auto;
+  grid-gap: 0.5rem;
 `;
+
 const Title = styled.header(
   styles.head,
   css`
@@ -32,6 +37,7 @@ function EntryModal({
   handleDeny,
   nameSlot,
   descriptionSlot,
+  transactionMethodSlot,
   valueSlot,
   visible,
 }) {
@@ -40,15 +46,16 @@ function EntryModal({
       onConfirm={handleConfirm}
       onDeny={handleDeny}
       visible={visible}
-      height="13rem"
+      height="15rem"
     >
+      <Title>{i18next.t('entryList.addingNewEntry')}</Title>
       <Form>
-        <Title>{i18next.t('entryList.addingNewEntry')}</Title>
         <TopRow>
           {nameSlot}
           {valueSlot}
         </TopRow>
         {descriptionSlot}
+        {transactionMethodSlot}
       </Form>
     </ConfirmationModal>
   );
@@ -59,6 +66,7 @@ EntryModal.propTypes = {
   nameSlot: PropTypes.node.isRequired,
   descriptionSlot: PropTypes.node.isRequired,
   valueSlot: PropTypes.node.isRequired,
+  transactionMethodSlot: PropTypes.node.isRequired,
   handleConfirm: PropTypes.func.isRequired,
   handleDeny: PropTypes.func.isRequired,
 };

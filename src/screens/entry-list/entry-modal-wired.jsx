@@ -9,6 +9,7 @@ import EntryModal from '../../components/entry-list/entry-modal';
 import EntryDescriptionInputWired from './entry-description-input-wired';
 import EntryNameInputWired from './entry-name-input-wired';
 import EntryValueInputWired from './entry-value-input-wired';
+import EntryTransactionMethodWired from './entry-transaction-method-wired';
 
 const { entryListEditingClear } = entryList.editing.creators;
 
@@ -33,6 +34,7 @@ function EntryModalWired({ visible }) {
       handleConfirm={handleConfirm}
       nameSlot={<EntryNameInputWired />}
       descriptionSlot={<EntryDescriptionInputWired />}
+      transactionMethodSlot={<EntryTransactionMethodWired />}
       valueSlot={<EntryValueInputWired />}
     />
   );

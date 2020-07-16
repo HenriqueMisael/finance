@@ -12,6 +12,7 @@ const {
   entryListEditingSetName,
   entryListEditingSetDescription,
   entryListEditingSetValue,
+  entryListEditingSetTransactionMethod,
 } = editing.creators;
 
 function* watchDelete({ entryID }) {
@@ -20,13 +21,14 @@ function* watchDelete({ entryID }) {
 
 function* watchEdit({ entryID }) {
   const entryByEntryID = yield select(getEntryByEntryID);
-  const { title, description, value } = entryByEntryID.get(entryID);
+  const { title, description, value, transactionMethod } = entryByEntryID.get(entryID);
 
   yield all([
     put(entryListEditingSetID(entryID)),
     put(entryListEditingSetName(title)),
     put(entryListEditingSetDescription(description)),
     put(entryListEditingSetValue(value)),
+    put(entryListEditingSetTransactionMethod(transactionMethod)),
   ]);
 }
 

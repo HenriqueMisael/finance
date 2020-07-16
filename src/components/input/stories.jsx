@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { boolean, number, withKnobs } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
@@ -9,6 +9,7 @@ import TextInput from './text';
 import IntegerInput from './integer';
 import MoneyInput from './money';
 import IconButton from '../buttons/icon';
+import Select from './Select';
 
 export default {
   title: 'General Components | Input',
@@ -66,3 +67,20 @@ export const moneyInput = () => (
     />
   </Centered>
 );
+
+export const select = () => {
+  return (
+    <Centered>
+      <Select
+        options={[
+          { id: '1', label: 'Option one' },
+          { id: '2', label: 'Option two' },
+          { id: '3', label: 'Option three' },
+          { id: '4', label: 'Option four' },
+        ]}
+        onSelect={action('Selected an option')}
+        selected=""
+      />
+    </Centered>
+  );
+};
