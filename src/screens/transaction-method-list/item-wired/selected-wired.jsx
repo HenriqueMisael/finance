@@ -5,12 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import transactionMethodList from '../../../store/transaction-method-list';
 import TransactionMethodListItemSelected from '../../../components/transaction-method-list/item/selected';
 
-import TransactionMethodListItemSaveButtonWired from './save-button-wired';
-import TransactionMethodListItemCancelButtonWired from './cancel-button-wired';
-
 const { getDescriptionByTransactionMethodID } = transactionMethodList.selectors;
+const { transactionMethodListSaveAsync } = transactionMethodList.creators;
 const {
   transactionMethodListEditingSetDescription,
+  transactionMethodListEditingClear,
 } = transactionMethodList.editing.creators;
 
 function TransactionMethodListItemSelectedWired({ transactionMethodID }) {
@@ -27,10 +26,18 @@ function TransactionMethodListItemSelectedWired({ transactionMethodID }) {
     [dispatch],
   );
 
+  const handleSave = useCallback(() => {
+    dispatch(transactionMethodListSaveAsync());
+  }, [dispatch]);
+
+  const handleCancel = useCallback(() => {
+    dispatch(transactionMethodListEditingClear());
+  }, [dispatch]);
+
   return (
     <TransactionMethodListItemSelected
-      slotSaveButton={<TransactionMethodListItemSaveButtonWired />}
-      slotCancelButton={<TransactionMethodListItemCancelButtonWired />}
+      onSave={handleSave}
+      onCancel={handleCancel}
       description={description}
       onChange={handleChange}
     />

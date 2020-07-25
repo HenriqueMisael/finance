@@ -5,13 +5,12 @@ import transactionMethodList from '../../store/transaction-method-list';
 import TransactionMethodListItemSelected from '../../components/transaction-method-list/item/selected';
 import TransactionMethodListItemWrapper from '../../components/transaction-method-list/item';
 
-import TransactionMethodListItemSaveButtonWired from './item-wired/save-button-wired';
-import TransactionMethodListItemCancelButtonWired from './item-wired/cancel-button-wired';
-
 const { getIsAdding, getDescription } = transactionMethodList.editing.selectors;
 const {
   transactionMethodListEditingSetDescription,
+  transactionMethodListEditingClear,
 } = transactionMethodList.editing.creators;
+const { transactionMethodListSaveAsync } = transactionMethodList.creators;
 
 function TransactionMethodListAddingItemWired() {
   const isAdding = useSelector(getIsAdding);
@@ -26,13 +25,21 @@ function TransactionMethodListAddingItemWired() {
     [dispatch],
   );
 
+  const handleSave = useCallback(() => {
+    dispatch(transactionMethodListSaveAsync());
+  }, [dispatch]);
+
+  const handleCancel = useCallback(() => {
+    dispatch(transactionMethodListEditingClear());
+  }, [dispatch]);
+
   return (
     isAdding && (
       <TransactionMethodListItemWrapper selected>
         <TransactionMethodListItemSelected
-          slotSaveButton={<TransactionMethodListItemSaveButtonWired />}
-          slotCancelButton={<TransactionMethodListItemCancelButtonWired />}
           description={description}
+          onSave={handleSave}
+          onCancel={handleCancel}
           onChange={handleChange}
         />
       </TransactionMethodListItemWrapper>

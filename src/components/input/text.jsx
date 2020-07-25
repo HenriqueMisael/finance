@@ -23,56 +23,82 @@ const ButtonsContainer = styled.div(
   `,
 );
 
-const TextInput = React.forwardRef(
-  ({ placeholder, initialValue, disabled, onSubmitChange, onBlur, children }, ref) => {
-    const [value, setValue] = useState(initialValue);
+const TextInput = ({
+  id,
+  placeholder,
+  initialValue,
+  disabled,
+  onPressEnter,
+  onPressEscape,
+  onSubmitChange,
+  onBlur,
+  children,
+}) => {
+  const [value, setValue] = useState(initialValue);
 
-    const handleChange = useCallback(
-      ({ target }) => {
-        setValue(target.value);
-      },
-      [setValue],
-    );
+  const handleChange = useCallback(
+    ({ target }) => {
+      setValue(target.value);
+    },
+    [setValue],
+  );
 
-    useDebounce(value, setValue, initialValue, onSubmitChange);
+  const handleKeyDown = useCallback(
+    ({ key }) => {
+      if (onPressEnter && key === 'Enter') {
+        onPressEnter();
+      }
+      if (onPressEscape && key === 'Escape') {
+        onPressEscape();
+      }
+    },
+    [onPressEnter, onPressEscape],
+  );
 
-    return (
-      <Root
-        ref={ref}
+  useDebounce(value, setValue, initialValue, onSubmitChange);
+
+  return (
+    <Root
+      type="text"
+      disabled={disabled}
+      value={value}
+      onChange={handleChange}
+      placeholder={placeholder}
+      onBlur={onBlur}
+    >
+      <ResetInput
+        id={id}
         type="text"
         disabled={disabled}
         value={value}
         onChange={handleChange}
         placeholder={placeholder}
         onBlur={onBlur}
-      >
-        <ResetInput
-          ref={ref}
-          type="text"
-          disabled={disabled}
-          value={value}
-          onChange={handleChange}
-          placeholder={placeholder}
-          onBlur={onBlur}
-        />
-        <ButtonsContainer>{children}</ButtonsContainer>
-      </Root>
-    );
-  },
-);
+        onKeyDown={handleKeyDown}
+      />
+      <ButtonsContainer>{children}</ButtonsContainer>
+    </Root>
+  );
+};
 
 TextInput.propTypes = {
+  id: PropTypes.string,
   disabled: PropTypes.bool,
   initialValue: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   onBlur: PropTypes.func,
   onSubmitChange: PropTypes.func.isRequired,
+  onPressEnter: PropTypes.func,
+  onPressEscape: PropTypes.func,
   children: PropTypes.node,
 };
 
 TextInput.defaultProps = {
+  id: null,
   disabled: false,
   onBlur: null,
+  onPressEnter: null,
+  onPressEscape: null,
   children: null,
 };
 

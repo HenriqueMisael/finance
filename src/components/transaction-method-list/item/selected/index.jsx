@@ -1,52 +1,46 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import i18next from 'i18next';
+import { MdBlock, MdCheck } from 'react-icons/md';
 
 import { Body2 } from '../../../text';
 import TextInput from '../../../input/text';
+import IconButton from '../../../buttons/icon';
 
 import { Root } from './styled-wrappers';
 
-function TransactionMethodListItemSelected({
-  slotSaveButton,
-  slotCancelButton,
-  description,
-  onChange,
-}) {
-  /**
-   * @type {React.MutableRefObject<HTMLInputElement>}
-   */
-  const inputRef = useRef(null);
-
+function TransactionMethodListItemSelected({ onSave, onCancel, description, onChange }) {
   useEffect(() => {
-    if (inputRef.current) inputRef.current.focus();
+    document.getElementById('transaction-method-description-input').focus();
   }, []);
 
   return (
     <Root>
       <Body2>{i18next.t('description')}</Body2>
       <TextInput
-        ref={inputRef}
+        id="transaction-method-description-input"
         placeholder={i18next.t('transactionMethodList.descriptionSample')}
         initialValue={description}
         onSubmitChange={onChange}
+        onPressEnter={onSave}
+        onPressEscape={onCancel}
       >
-        {slotSaveButton}
-        {slotCancelButton}
+        <IconButton onClick={onSave} ariaLabel="Save transaction method" noPadding>
+          <MdCheck />
+        </IconButton>
+        <IconButton ariaLabel="Cancel transaction method" onClick={onCancel} noPadding>
+          <MdBlock />
+        </IconButton>
       </TextInput>
     </Root>
   );
 }
 
 TransactionMethodListItemSelected.propTypes = {
-  slotSaveButton: PropTypes.node.isRequired,
-  slotCancelButton: PropTypes.node,
   description: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-};
-
-TransactionMethodListItemSelected.defaultProps = {
-  slotCancelButton: null,
+  onSave: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
 };
 
 export default TransactionMethodListItemSelected;

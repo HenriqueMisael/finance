@@ -21,11 +21,9 @@ export const selected = () => (
       <TransactionMethodListItemSelected
         description={text('Description', 'Bank transfer')}
         onChange={action('Change text')}
-      >
-        <IconButton onClick={action('Save')}>
-          <MdCheck />
-        </IconButton>
-      </TransactionMethodListItemSelected>
+        onSave={action('Clicked save')}
+        onCancel={action('Clicked cancel')}
+      />
     </TransactionMethodListItemWrapper>
   </Background>
 );

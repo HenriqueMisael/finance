@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { MdAdd } from 'react-icons/md';
 import i18next from 'i18next';
@@ -14,6 +14,15 @@ function AddButtonWired() {
   const handleAdd = useCallback(() => {
     dispatch(transactionMethodListAddAsync());
   }, [dispatch]);
+
+  useEffect(() => {
+    window.addEventListener('keydown', ({ key }) => {
+      console.log(key);
+      if (key === 'Insert') {
+        handleAdd();
+      }
+    });
+  }, [handleAdd]);
 
   return (
     <IconButton onClick={handleAdd} ariaLabel={i18next.t('transactionMethodList.add')}>
