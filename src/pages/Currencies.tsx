@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Button,
   Group,
@@ -9,9 +9,11 @@ import {
   TextInput,
   Title,
   ActionIcon,
+  Kbd,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useCurrencyStore } from "@/stores/currencies";
+import { useShortcuts } from "@/hooks/useShortcuts";
 import type { Currency } from "@/types";
 
 export function CurrenciesPage() {
@@ -23,6 +25,8 @@ export function CurrenciesPage() {
   const [name, setName] = useState("");
   const [symbol, setSymbol] = useState("");
   const [decimalPlaces, setDecimalPlaces] = useState<number>(2);
+
+  useShortcuts(useMemo(() => [{ key: "n", action: () => openNew() }], []));
 
   function openNew() {
     setEditing(null);
@@ -56,7 +60,7 @@ export function CurrenciesPage() {
     <Stack>
       <Group justify="space-between">
         <Title order={2}>Currencies</Title>
-        <Button onClick={openNew}>Add Currency</Button>
+        <Button onClick={openNew}>Add Currency <Kbd size="xs" ml="xs">N</Kbd></Button>
       </Group>
 
       <Table striped highlightOnHover>

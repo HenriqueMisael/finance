@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Button,
   Group,
+  Kbd,
   Modal,
   MultiSelect,
   NumberInput,
@@ -18,6 +19,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { useTransactionStore } from "@/stores/transactions";
 import { useAccountStore } from "@/stores/accounts";
 import { useCategoryStore } from "@/stores/categories";
+import { useShortcuts } from "@/hooks/useShortcuts";
 import { useTagStore } from "@/stores/tags";
 import { useCurrencyStore } from "@/stores/currencies";
 import type { Transaction } from "@/types";
@@ -30,6 +32,8 @@ export function TransactionsPage() {
   const { currencies } = useCurrencyStore();
   const [opened, { open, close }] = useDisclosure(false);
   const [editing, setEditing] = useState<Transaction | null>(null);
+
+  useShortcuts(useMemo(() => [{ key: "n", action: () => openNew() }], []));
 
   const [description, setDescription] = useState("");
   const [date, setDate] = useState<Date | null>(new Date());
@@ -120,7 +124,7 @@ export function TransactionsPage() {
       <Group justify="space-between">
         <Title order={2}>Transactions</Title>
         <Button onClick={openNew} disabled={accounts.length < 2}>
-          Add Transaction
+          Add Transaction <Kbd size="xs" ml="xs">N</Kbd>
         </Button>
       </Group>
 

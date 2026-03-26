@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Button,
   Group,
+  Kbd,
   Modal,
   Stack,
   Table,
@@ -11,6 +12,7 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useTagStore } from "@/stores/tags";
+import { useShortcuts } from "@/hooks/useShortcuts";
 import type { Tag } from "@/types";
 
 export function TagsPage() {
@@ -18,6 +20,8 @@ export function TagsPage() {
   const [opened, { open, close }] = useDisclosure(false);
   const [editing, setEditing] = useState<Tag | null>(null);
   const [name, setName] = useState("");
+
+  useShortcuts(useMemo(() => [{ key: "n", action: () => openNew() }], []));
 
   function openNew() {
     setEditing(null);
@@ -44,7 +48,7 @@ export function TagsPage() {
     <Stack>
       <Group justify="space-between">
         <Title order={2}>Tags</Title>
-        <Button onClick={openNew}>Add Tag</Button>
+        <Button onClick={openNew}>Add Tag <Kbd size="xs" ml="xs">N</Kbd></Button>
       </Group>
 
       <Table striped highlightOnHover>

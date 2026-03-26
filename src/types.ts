@@ -1,4 +1,4 @@
-export type AccountType = "asset" | "liability" | "tracking";
+export type AccountType = "checking" | "savings" | "investment";
 
 export interface Currency {
   id: string;

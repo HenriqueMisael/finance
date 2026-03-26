@@ -24,15 +24,14 @@ A transaction is defined by:
 An account is defined by:
 * A name
 * A currency
-* A type (asset, liability, or tracking)
+* A type (checking, savings, or investment)
 
 Transactions will be associated with accounts. With this we are able to verify balance and transactions for each account.
 
 Accounts are flexible enough to model many financial concepts:
-* **Checking/savings** (asset) - regular bank accounts
-* **Credit cards** (liability) - balance goes negative with purchases, returns to 0 when the bill is paid
-* **Investments** (tracking) - track how much money was put into an apartment, stocks, etc.
-* **Fee sinks** (liability) - destination accounts for fees (e.g., bank fees, government taxes)
+* **Checking** - regular bank accounts, credit cards (negative balance), wallets, fee sinks
+* **Savings** - interest-bearing accounts, money kept for later
+* **Investment** - real estate, stock portfolios, long-term assets
 
 ### Category
 

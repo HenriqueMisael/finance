@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Button,
   Group,
+  Kbd,
   Modal,
   Select,
   Stack,
@@ -13,12 +14,13 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { useAccountStore } from "@/stores/accounts";
 import { useCurrencyStore } from "@/stores/currencies";
+import { useShortcuts } from "@/hooks/useShortcuts";
 import type { Account, AccountType } from "@/types";
 
 const ACCOUNT_TYPES: { value: AccountType; label: string }[] = [
-  { value: "asset", label: "Asset" },
-  { value: "liability", label: "Liability" },
-  { value: "tracking", label: "Tracking" },
+  { value: "checking", label: "Checking" },
+  { value: "savings", label: "Savings" },
+  { value: "investment", label: "Investment" },
 ];
 
 export function AccountsPage() {
@@ -29,13 +31,15 @@ export function AccountsPage() {
 
   const [name, setName] = useState("");
   const [currencyId, setCurrencyId] = useState<string | null>(null);
-  const [type, setType] = useState<AccountType>("asset");
+  const [type, setType] = useState<AccountType>("checking");
+
+  useShortcuts(useMemo(() => [{ key: "n", action: () => openNew() }], []));
 
   function openNew() {
     setEditing(null);
     setName("");
     setCurrencyId(currencies[0]?.id ?? null);
-    setType("asset");
+    setType("checking");
     open();
   }
 
@@ -67,7 +71,7 @@ export function AccountsPage() {
       <Group justify="space-between">
         <Title order={2}>Accounts</Title>
         <Button onClick={openNew} disabled={currencies.length === 0}>
-          Add Account
+          Add Account <Kbd size="xs" ml="xs">N</Kbd>
         </Button>
       </Group>
 
@@ -128,7 +132,7 @@ export function AccountsPage() {
             label="Type"
             data={ACCOUNT_TYPES}
             value={type}
-            onChange={(v) => setType((v as AccountType) ?? "asset")}
+            onChange={(v) => setType((v as AccountType) ?? "checking")}
             required
           />
           <Select

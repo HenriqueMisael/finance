@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Button,
   Group,
+  Kbd,
   Modal,
   Select,
   Stack,
@@ -12,6 +13,7 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useCategoryStore } from "@/stores/categories";
+import { useShortcuts } from "@/hooks/useShortcuts";
 import type { Category } from "@/types";
 
 export function CategoriesPage() {
@@ -21,6 +23,8 @@ export function CategoriesPage() {
 
   const [name, setName] = useState("");
   const [parentId, setParentId] = useState<string | null>(null);
+
+  useShortcuts(useMemo(() => [{ key: "n", action: () => openNew() }], []));
 
   function openNew(presetParentId: string | null = null) {
     setEditing(null);
@@ -65,7 +69,7 @@ export function CategoriesPage() {
     <Stack>
       <Group justify="space-between">
         <Title order={2}>Categories</Title>
-        <Button onClick={() => openNew()}>Add Category</Button>
+        <Button onClick={() => openNew()}>Add Category <Kbd size="xs" ml="xs">N</Kbd></Button>
       </Group>
 
       <Table striped highlightOnHover>
