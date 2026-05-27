@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
   Button,
   Group,
@@ -8,59 +8,50 @@ import {
   Table,
   TextInput,
   Title,
-  ActionIcon,
   Kbd,
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 import { useCurrencyStore } from "@/stores/currencies";
-import { useShortcuts } from "@/hooks/useShortcuts";
+import { useCrudModal } from "@/hooks/useCrudModal";
+import { CrudActions } from "@/components/molecules/CrudActions";
 import type { Currency } from "@/types";
 
 export function CurrenciesPage() {
   const { currencies, add, update, remove } = useCurrencyStore();
-  const [opened, { open, close }] = useDisclosure(false);
-  const [editing, setEditing] = useState<Currency | null>(null);
-
   const [code, setCode] = useState("");
   const [name, setName] = useState("");
   const [symbol, setSymbol] = useState("");
   const [decimalPlaces, setDecimalPlaces] = useState<number>(2);
 
-  useShortcuts(useMemo(() => [{ key: "n", action: () => openNew() }], []));
-
-  function openNew() {
-    setEditing(null);
-    setCode("");
-    setName("");
-    setSymbol("");
-    setDecimalPlaces(2);
-    open();
-  }
-
-  function openEdit(currency: Currency) {
-    setEditing(currency);
-    setCode(currency.code);
-    setName(currency.name);
-    setSymbol(currency.symbol);
-    setDecimalPlaces(currency.decimalPlaces);
-    open();
-  }
-
-  function handleSubmit() {
-    const data = { code, name, symbol, decimalPlaces };
-    if (editing) {
-      update(editing.id, data);
-    } else {
-      add(data);
-    }
-    close();
-  }
+  const crud = useCrudModal<Currency>("Currency", {
+    onOpenNew: () => {
+      setCode("");
+      setName("");
+      setSymbol("");
+      setDecimalPlaces(2);
+    },
+    onOpenEdit: (c) => {
+      setCode(c.code);
+      setName(c.name);
+      setSymbol(c.symbol);
+      setDecimalPlaces(c.decimalPlaces);
+    },
+    onSubmit: () => {
+      const data = { code, name, symbol, decimalPlaces };
+      if (crud.editing) {
+        update(crud.editing.id, data);
+      } else {
+        add(data);
+      }
+    },
+  });
 
   return (
     <Stack>
       <Group justify="space-between">
         <Title order={2}>Currencies</Title>
-        <Button onClick={openNew}>Add Currency <Kbd size="xs" ml="xs">N</Kbd></Button>
+        <Button onClick={crud.openNew}>
+          Add Currency <Kbd size="xs" ml="xs">Alt+N</Kbd>
+        </Button>
       </Group>
 
       <Table striped highlightOnHover>
@@ -81,61 +72,37 @@ export function CurrenciesPage() {
               <Table.Td>{c.symbol}</Table.Td>
               <Table.Td>{c.decimalPlaces}</Table.Td>
               <Table.Td>
-                <Group gap="xs">
-                  <ActionIcon variant="subtle" onClick={() => openEdit(c)}>
-                    ✏
-                  </ActionIcon>
-                  <ActionIcon
-                    variant="subtle"
-                    color="red"
-                    onClick={() => remove(c.id)}
-                  >
-                    ✕
-                  </ActionIcon>
-                </Group>
+                <CrudActions
+                  onEdit={() => crud.openEdit(c)}
+                  onDelete={() => remove(c.id)}
+                />
               </Table.Td>
             </Table.Tr>
           ))}
         </Table.Tbody>
       </Table>
 
-      <Modal
-        opened={opened}
-        onClose={close}
-        title={editing ? "Edit Currency" : "New Currency"}
-      >
+      <Modal opened={crud.opened} onClose={crud.close} title={crud.modalTitle}>
         <Stack>
           <TextInput
-            label="Code"
-            placeholder="USD"
-            value={code}
-            onChange={(e) => setCode(e.currentTarget.value)}
-            required
+            label="Code" placeholder="USD" value={code}
+            onChange={(e) => setCode(e.currentTarget.value)} required
           />
           <TextInput
-            label="Name"
-            placeholder="Dollar"
-            value={name}
-            onChange={(e) => setName(e.currentTarget.value)}
-            required
+            label="Name" placeholder="Dollar" value={name}
+            onChange={(e) => setName(e.currentTarget.value)} required
           />
           <TextInput
-            label="Symbol"
-            placeholder="$"
-            value={symbol}
-            onChange={(e) => setSymbol(e.currentTarget.value)}
-            required
+            label="Symbol" placeholder="$" value={symbol}
+            onChange={(e) => setSymbol(e.currentTarget.value)} required
           />
           <NumberInput
-            label="Decimal Places"
-            value={decimalPlaces}
+            label="Decimal Places" value={decimalPlaces}
             onChange={(v) => setDecimalPlaces(Number(v))}
-            min={0}
-            max={18}
-            required
+            min={0} max={18} required
           />
-          <Button onClick={handleSubmit}>
-            {editing ? "Save" : "Create"}
+          <Button onClick={crud.handleSubmit}>
+            {crud.submitLabel} <Kbd size="xs" ml="xs">Ctrl+Enter</Kbd>
           </Button>
         </Stack>
       </Modal>

@@ -9,6 +9,8 @@ interface AccountState {
   update: (id: string, data: Partial<Omit<Account, "id">>) => void;
   remove: (id: string) => void;
   getById: (id: string) => Account | undefined;
+  findByExternalId: (externalId: string) => Account | undefined;
+  addExternalId: (accountId: string, externalId: string) => void;
 }
 
 export const useAccountStore = create<AccountState>()(
@@ -16,7 +18,7 @@ export const useAccountStore = create<AccountState>()(
     (set, get) => ({
       accounts: [],
       add: (account) => {
-        const newAccount = { ...account, id: uuid() };
+        const newAccount = { ...account, externalIds: account.externalIds ?? [], id: uuid() };
         set((s) => ({ accounts: [...s.accounts, newAccount] }));
         return newAccount;
       },
@@ -29,6 +31,23 @@ export const useAccountStore = create<AccountState>()(
       remove: (id) =>
         set((s) => ({ accounts: s.accounts.filter((a) => a.id !== id) })),
       getById: (id) => get().accounts.find((a) => a.id === id),
+      findByExternalId: (externalId) =>
+        get().accounts.find((a) =>
+          (a.externalIds ?? []).some(
+            (eid) => eid.toLowerCase() === externalId.toLowerCase()
+          )
+        ),
+      addExternalId: (accountId, externalId) =>
+        set((s) => ({
+          accounts: s.accounts.map((a) =>
+            a.id === accountId &&
+            !(a.externalIds ?? []).some(
+              (eid) => eid.toLowerCase() === externalId.toLowerCase()
+            )
+              ? { ...a, externalIds: [...(a.externalIds ?? []), externalId] }
+              : a
+          ),
+        })),
     }),
     { name: "finance-accounts" }
   )

@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
+  ActionIcon,
   Button,
   Group,
   Kbd,
@@ -9,67 +10,58 @@ import {
   Table,
   TextInput,
   Title,
-  ActionIcon,
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 import { useCategoryStore } from "@/stores/categories";
-import { useShortcuts } from "@/hooks/useShortcuts";
+import { useCrudModal } from "@/hooks/useCrudModal";
+import { CrudActions } from "@/components/molecules/CrudActions";
+import { buildCategoryPath } from "@/lib/categories";
 import type { Category } from "@/types";
 
 export function CategoriesPage() {
   const { categories, add, update, remove } = useCategoryStore();
-  const [opened, { open, close }] = useDisclosure(false);
-  const [editing, setEditing] = useState<Category | null>(null);
 
   const [name, setName] = useState("");
   const [parentId, setParentId] = useState<string | null>(null);
 
-  useShortcuts(useMemo(() => [{ key: "n", action: () => openNew() }], []));
+  const crud = useCrudModal<Category>("Category", {
+    onOpenNew: () => {
+      setName("");
+      setParentId(null);
+    },
+    onOpenEdit: (c) => {
+      setName(c.name);
+      setParentId(c.parentId);
+    },
+    onSubmit: () => {
+      if (crud.editing) {
+        update(crud.editing.id, { name, parentId });
+      } else {
+        add({ name, parentId });
+      }
+    },
+  });
 
-  function openNew(presetParentId: string | null = null) {
-    setEditing(null);
+  function openNewWithParent(presetParentId: string) {
     setName("");
     setParentId(presetParentId);
-    open();
-  }
-
-  function openEdit(category: Category) {
-    setEditing(category);
-    setName(category.name);
-    setParentId(category.parentId);
-    open();
-  }
-
-  function handleSubmit() {
-    if (editing) {
-      update(editing.id, { name, parentId });
-    } else {
-      add({ name, parentId });
-    }
-    close();
-  }
-
-  function buildPath(category: Category): string {
-    const parts: string[] = [category.name];
-    let current = category;
-    while (current.parentId) {
-      const parent = categories.find((c) => c.id === current.parentId);
-      if (!parent) break;
-      parts.unshift(parent.name);
-      current = parent;
-    }
-    return parts.join(" → ");
+    crud.openNew();
+    // Override the parentId that openNew just set to null
+    setParentId(presetParentId);
   }
 
   const sortedCategories = [...categories].sort((a, b) =>
-    buildPath(a).localeCompare(buildPath(b))
+    buildCategoryPath(a.id, categories).localeCompare(
+      buildCategoryPath(b.id, categories)
+    )
   );
 
   return (
     <Stack>
       <Group justify="space-between">
         <Title order={2}>Categories</Title>
-        <Button onClick={() => openNew()}>Add Category <Kbd size="xs" ml="xs">N</Kbd></Button>
+        <Button onClick={crud.openNew}>
+          Add Category <Kbd size="xs" ml="xs">Alt+N</Kbd>
+        </Button>
       </Group>
 
       <Table striped highlightOnHover>
@@ -82,58 +74,45 @@ export function CategoriesPage() {
         <Table.Tbody>
           {sortedCategories.map((c) => (
             <Table.Tr key={c.id}>
-              <Table.Td>{buildPath(c)}</Table.Td>
+              <Table.Td>{buildCategoryPath(c.id, categories)}</Table.Td>
               <Table.Td>
-                <Group gap="xs">
-                  <ActionIcon
-                    variant="subtle"
-                    title="Add subcategory"
-                    onClick={() => openNew(c.id)}
-                  >
-                    +
-                  </ActionIcon>
-                  <ActionIcon variant="subtle" onClick={() => openEdit(c)}>
-                    ✏
-                  </ActionIcon>
-                  <ActionIcon
-                    variant="subtle"
-                    color="red"
-                    onClick={() => remove(c.id)}
-                  >
-                    ✕
-                  </ActionIcon>
-                </Group>
+                <CrudActions
+                  onEdit={() => crud.openEdit(c)}
+                  onDelete={() => remove(c.id)}
+                  extra={
+                    <ActionIcon
+                      variant="subtle"
+                      title="Add subcategory"
+                      onClick={() => openNewWithParent(c.id)}
+                    >
+                      +
+                    </ActionIcon>
+                  }
+                />
               </Table.Td>
             </Table.Tr>
           ))}
         </Table.Tbody>
       </Table>
 
-      <Modal
-        opened={opened}
-        onClose={close}
-        title={editing ? "Edit Category" : "New Category"}
-      >
+      <Modal opened={crud.opened} onClose={crud.close} title={crud.modalTitle}>
         <Stack>
           <TextInput
-            label="Name"
-            placeholder="Leisure"
-            value={name}
-            onChange={(e) => setName(e.currentTarget.value)}
-            required
+            label="Name" placeholder="Leisure" value={name}
+            onChange={(e) => setName(e.currentTarget.value)} required
           />
           <Select
             label="Parent Category"
             placeholder="None (top-level)"
             data={categories
-              .filter((c) => c.id !== editing?.id)
-              .map((c) => ({ value: c.id, label: buildPath(c) }))}
+              .filter((c) => c.id !== crud.editing?.id)
+              .map((c) => ({ value: c.id, label: buildCategoryPath(c.id, categories) }))}
             value={parentId}
             onChange={setParentId}
             clearable
           />
-          <Button onClick={handleSubmit}>
-            {editing ? "Save" : "Create"}
+          <Button onClick={crud.handleSubmit}>
+            {crud.submitLabel} <Kbd size="xs" ml="xs">Ctrl+Enter</Kbd>
           </Button>
         </Stack>
       </Modal>

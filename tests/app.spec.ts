@@ -1,4 +1,9 @@
 import { test, expect, type Page } from "@playwright/test";
+import {
+  waitForSplash,
+  completeOnboarding,
+  navigateToSettings,
+} from "./helpers";
 
 // Clear localStorage before each test so each one starts fresh
 test.beforeEach(async ({ page }) => {
@@ -6,63 +11,6 @@ test.beforeEach(async ({ page }) => {
   await page.evaluate(() => localStorage.clear());
   await page.goto("/");
 });
-
-// ─── Helpers ──────────────────────────────────────────────
-
-async function waitForSplash(page: Page) {
-  await expect(page.getByText("Personal finance & budgeting")).toBeVisible();
-  await expect(page.getByText("Personal finance & budgeting")).toBeHidden({
-    timeout: 5000,
-  });
-}
-
-async function completeOnboarding(page: Page) {
-  await waitForSplash(page);
-
-  // Step 0: Name
-  await expect(page.getByText("What should we call you?")).toBeVisible();
-  await page.getByPlaceholder("Your name").fill("Test User");
-  await page.getByRole("button", { name: "Next" }).click();
-
-  // Step 1: Currencies — add BRL and USD
-  await expect(
-    page.getByText("Pick from common currencies or add your own.")
-  ).toBeVisible();
-  await page.getByRole("button", { name: /BRL/ }).click();
-  await page.getByRole("button", { name: /USD/ }).click();
-  await page.getByRole("button", { name: "Next" }).click();
-
-  // Step 2: Accounts — need at least 2
-  await expect(page.getByText(/Add your bank accounts/)).toBeVisible();
-
-  // Add first account — select currency first
-  await page.getByRole("textbox", { name: "Currency" }).click();
-  await page.getByRole("option", { name: /BRL/ }).click();
-  await page.getByPlaceholder("Checking Account").fill("Wallet");
-  await page.getByRole("button", { name: "Add" }).click();
-
-  // Should show warning about needing one more
-  await expect(page.getByText("Add at least one more account")).toBeVisible();
-
-  // Next should be disabled with only 1 account
-  await expect(page.getByRole("button", { name: "Next" })).toBeDisabled();
-
-  // Add second account — currency is still selected from first add
-  await page.getByPlaceholder("Checking Account").fill("Bank");
-  await page.getByRole("button", { name: "Add" }).click();
-
-  // Next should now be enabled
-  await expect(page.getByRole("button", { name: "Next" })).toBeEnabled();
-
-  await page.getByRole("button", { name: "Next" }).click();
-
-  // Completed step
-  await expect(page.getByText("You're all set, Test User!")).toBeVisible();
-  await page.getByRole("button", { name: "Open Finance" }).click();
-
-  // Main app should show
-  await expect(page.getByText("Hi, Test User")).toBeVisible();
-}
 
 // ─── Splash Screen ───────────────────────────────────────
 
@@ -162,9 +110,9 @@ test.describe("Onboarding", () => {
   test("full onboarding flow", async ({ page }) => {
     await completeOnboarding(page);
 
-    // Verify we're in the app
+    // Verify we're in the app — "All Transactions" heading
     await expect(
-      page.getByRole("heading", { name: "Transactions" })
+      page.getByRole("heading", { name: /Transactions/ })
     ).toBeVisible();
   });
 });
@@ -177,7 +125,7 @@ test.describe("Currencies", () => {
   });
 
   test("can navigate to currencies page", async ({ page }) => {
-    await page.locator("nav").getByText("Currencies").click();
+    await navigateToSettings(page, "Currencies");
     await expect(
       page.getByRole("heading", { name: "Currencies" })
     ).toBeVisible();
@@ -191,7 +139,7 @@ test.describe("Currencies", () => {
   });
 
   test("can create a new currency", async ({ page }) => {
-    await page.locator("nav").getByText("Currencies").click();
+    await navigateToSettings(page, "Currencies");
     await page.getByRole("button", { name: /Add Currency/ }).click();
 
     await page.getByLabel("Code").fill("GBP");
@@ -205,7 +153,7 @@ test.describe("Currencies", () => {
   });
 
   test("can edit a currency", async ({ page }) => {
-    await page.locator("nav").getByText("Currencies").click();
+    await navigateToSettings(page, "Currencies");
 
     // Click edit on first currency row
     const firstRow = page.getByRole("row").nth(1);
@@ -220,7 +168,7 @@ test.describe("Currencies", () => {
   });
 
   test("can delete a currency", async ({ page }) => {
-    await page.locator("nav").getByText("Currencies").click();
+    await navigateToSettings(page, "Currencies");
     const usdRow = page.getByRole("row").filter({ hasText: "USD" });
     await usdRow.getByRole("button", { name: "✕" }).click();
 
@@ -229,9 +177,11 @@ test.describe("Currencies", () => {
     ).not.toBeVisible();
   });
 
-  test("N shortcut opens new currency modal", async ({ page }) => {
-    await page.locator("nav").getByText("Currencies").click();
-    await page.keyboard.press("n");
+  test("Alt+N shortcut opens new currency modal", async ({ page }) => {
+    await navigateToSettings(page, "Currencies");
+    // Click the body to ensure focus is not on a menu/input
+    await page.locator("body").click();
+    await page.keyboard.press("Alt+n");
     await expect(page.getByText("New Currency")).toBeVisible();
   });
 });
@@ -246,7 +196,7 @@ test.describe("Accounts", () => {
   test("can navigate to accounts page and see onboarding accounts", async ({
     page,
   }) => {
-    await page.locator("nav").getByText("Accounts").click();
+    await navigateToSettings(page, "Accounts");
     await expect(
       page.getByRole("heading", { name: "Accounts" })
     ).toBeVisible();
@@ -255,7 +205,7 @@ test.describe("Accounts", () => {
   });
 
   test("can create a new account", async ({ page }) => {
-    await page.locator("nav").getByText("Accounts").click();
+    await navigateToSettings(page, "Accounts");
     await page.getByRole("button", { name: /Add Account/ }).click();
 
     await page.getByLabel("Name").fill("Credit Card");
@@ -268,7 +218,7 @@ test.describe("Accounts", () => {
   });
 
   test("can edit an account", async ({ page }) => {
-    await page.locator("nav").getByText("Accounts").click();
+    await navigateToSettings(page, "Accounts");
     const walletRow = page.getByRole("row").filter({ hasText: "Wallet" });
     await walletRow.getByRole("button", { name: "✏" }).click();
 
@@ -281,16 +231,17 @@ test.describe("Accounts", () => {
   });
 
   test("can delete an account", async ({ page }) => {
-    await page.locator("nav").getByText("Accounts").click();
+    await navigateToSettings(page, "Accounts");
     const bankRow = page.getByRole("row").filter({ hasText: "Bank" });
     await bankRow.getByRole("button", { name: "✕" }).click();
 
     await expect(page.getByRole("cell", { name: "Bank" })).not.toBeVisible();
   });
 
-  test("N shortcut opens new account modal", async ({ page }) => {
-    await page.locator("nav").getByText("Accounts").click();
-    await page.keyboard.press("n");
+  test("Alt+N shortcut opens new account modal", async ({ page }) => {
+    await navigateToSettings(page, "Accounts");
+    await page.locator("body").click();
+    await page.keyboard.press("Alt+n");
     await expect(page.getByText("New Account")).toBeVisible();
   });
 });
@@ -303,7 +254,7 @@ test.describe("Categories", () => {
   });
 
   test("can create a top-level category", async ({ page }) => {
-    await page.locator("nav").getByText("Categories").click();
+    await navigateToSettings(page, "Categories");
     await page.getByRole("button", { name: /Add Category/ }).click();
 
     await page.getByLabel("Name").fill("Leisure");
@@ -313,7 +264,7 @@ test.describe("Categories", () => {
   });
 
   test("can create a subcategory", async ({ page }) => {
-    await page.locator("nav").getByText("Categories").click();
+    await navigateToSettings(page, "Categories");
 
     // Create parent
     await page.getByRole("button", { name: /Add Category/ }).click();
@@ -333,7 +284,7 @@ test.describe("Categories", () => {
   });
 
   test("can edit a category", async ({ page }) => {
-    await page.locator("nav").getByText("Categories").click();
+    await navigateToSettings(page, "Categories");
     await page.getByRole("button", { name: /Add Category/ }).click();
     await page.getByLabel("Name").fill("Food");
     await page.getByRole("button", { name: "Create" }).click();
@@ -349,7 +300,7 @@ test.describe("Categories", () => {
   });
 
   test("can delete a category", async ({ page }) => {
-    await page.locator("nav").getByText("Categories").click();
+    await navigateToSettings(page, "Categories");
     await page.getByRole("button", { name: /Add Category/ }).click();
     await page.getByLabel("Name").fill("Temp");
     await page.getByRole("button", { name: "Create" }).click();
@@ -369,7 +320,7 @@ test.describe("Tags", () => {
   });
 
   test("can create a tag", async ({ page }) => {
-    await page.locator("nav").getByText("Tags").click();
+    await navigateToSettings(page, "Tags");
     await page.getByRole("button", { name: /Add Tag/ }).click();
     await page.getByLabel("Name").fill("vacation");
     await page.getByRole("button", { name: "Create" }).click();
@@ -378,7 +329,7 @@ test.describe("Tags", () => {
   });
 
   test("can edit a tag", async ({ page }) => {
-    await page.locator("nav").getByText("Tags").click();
+    await navigateToSettings(page, "Tags");
     await page.getByRole("button", { name: /Add Tag/ }).click();
     await page.getByLabel("Name").fill("trip");
     await page.getByRole("button", { name: "Create" }).click();
@@ -392,7 +343,7 @@ test.describe("Tags", () => {
   });
 
   test("can delete a tag", async ({ page }) => {
-    await page.locator("nav").getByText("Tags").click();
+    await navigateToSettings(page, "Tags");
     await page.getByRole("button", { name: /Add Tag/ }).click();
     await page.getByLabel("Name").fill("remove-me");
     await page.getByRole("button", { name: "Create" }).click();
@@ -405,14 +356,15 @@ test.describe("Tags", () => {
     ).not.toBeVisible();
   });
 
-  test("N shortcut opens new tag modal", async ({ page }) => {
-    await page.locator("nav").getByText("Tags").click();
-    await page.keyboard.press("n");
+  test("Alt+N shortcut opens new tag modal", async ({ page }) => {
+    await navigateToSettings(page, "Tags");
+    await page.locator("body").click();
+    await page.keyboard.press("Alt+n");
     await expect(page.getByText("New Tag")).toBeVisible();
   });
 });
 
-// ─── Transactions CRUD ───────────────────────────────────
+// ─── Transactions (Inline Editing) ──────────────────────
 
 test.describe("Transactions", () => {
   test.beforeEach(async ({ page }) => {
@@ -423,85 +375,51 @@ test.describe("Transactions", () => {
     page,
   }) => {
     await expect(
-      page.getByRole("heading", { name: "Transactions" })
+      page.getByRole("heading", { name: /Transactions/ })
     ).toBeVisible();
   });
 
-  test("can create a transaction", async ({ page }) => {
-    await page.getByRole("button", { name: /Add Transaction/ }).click();
+  test("can create a transaction via inline editing", async ({ page }) => {
+    // Click the new row placeholder
+    await page.getByText("+ New transaction").click();
 
-    await page.getByLabel("Description").fill("Grocery shopping");
-    await page.getByLabel("Value (smallest unit)").fill("5000");
-    // Payer and Payee are pre-selected from openNew (first two accounts)
-    await page.getByRole("button", { name: "Create" }).click();
+    // Fill in the description and value cells
+    await page.getByPlaceholder("Description").fill("Grocery shopping");
+    await page.getByLabel("Value").fill("5000");
+    // Commit with Ctrl+Enter
+    await page.keyboard.press("Control+Enter");
 
     await expect(
       page.getByRole("cell", { name: "Grocery shopping" })
     ).toBeVisible();
   });
 
-  test("can create a transaction with category and tags", async ({ page }) => {
-    // First create a category
-    await page.locator("nav").getByText("Categories").click();
-    await page.getByRole("button", { name: /Add Category/ }).click();
-    await page.getByLabel("Name").fill("Food");
-    await page.getByRole("button", { name: "Create" }).click();
+  test("can edit a transaction inline", async ({ page }) => {
+    // Create a transaction first
+    await page.getByText("+ New transaction").click();
+    await page.getByPlaceholder("Description").fill("Lunch");
+    await page.getByLabel("Value").fill("2000");
+    await page.keyboard.press("Control+Enter");
+    await expect(page.getByRole("cell", { name: "Lunch" })).toBeVisible();
 
-    // Create a tag
-    await page.locator("nav").getByText("Tags").click();
-    await page.getByRole("button", { name: /Add Tag/ }).click();
-    await page.getByLabel("Name").fill("essential");
-    await page.getByRole("button", { name: "Create" }).click();
-
-    // Now create a transaction
-    await page.locator("nav").getByText("Transactions").click();
-    await page.getByRole("button", { name: /Add Transaction/ }).click();
-
-    await page.getByLabel("Description").fill("Supermarket");
-    await page.getByLabel("Value (smallest unit)").fill("3500");
-    // Payer and Payee are pre-selected
-    await page.getByRole("textbox", { name: "Category" }).click();
-    await page.getByRole("option", { name: "Food" }).click();
-    // MultiSelect: click the wrapper div which holds the input
-    await page.locator(".mantine-MultiSelect-input").click();
-    await page.getByRole("option", { name: "essential" }).click();
-    // Click outside to close the dropdown
-    await page.getByLabel("Description").click();
-    await page.getByRole("button", { name: "Create" }).click();
-
-    await expect(
-      page.getByRole("cell", { name: "Supermarket" })
-    ).toBeVisible();
-    await expect(
-      page.getByRole("cell", { name: "Food", exact: true })
-    ).toBeVisible();
-  });
-
-  test("can edit a transaction", async ({ page }) => {
-    // Create
-    await page.getByRole("button", { name: /Add Transaction/ }).click();
-    await page.getByLabel("Description").fill("Lunch");
-    await page.getByLabel("Value (smallest unit)").fill("2000");
-    await page.getByRole("button", { name: "Create" }).click();
-
-    // Edit
+    // Click the row to edit
     const lunchRow = page.getByRole("row").filter({ hasText: "Lunch" });
-    await lunchRow.getByRole("button", { name: "✏" }).click();
-    await page.getByLabel("Description").fill("Dinner");
-    await page.getByRole("button", { name: "Save" }).click();
+    await lunchRow.click();
+
+    // Modify description
+    await page.getByPlaceholder("Description").fill("Dinner");
+    await page.keyboard.press("Control+Enter");
 
     await expect(page.getByRole("cell", { name: "Dinner" })).toBeVisible();
-    await expect(
-      page.getByRole("cell", { name: "Lunch" })
-    ).not.toBeVisible();
+    await expect(page.getByRole("cell", { name: "Lunch" })).not.toBeVisible();
   });
 
   test("can delete a transaction", async ({ page }) => {
     // Create
-    await page.getByRole("button", { name: /Add Transaction/ }).click();
-    await page.getByLabel("Description").fill("To delete");
-    await page.getByLabel("Value (smallest unit)").fill("100");
-    await page.getByRole("button", { name: "Create" }).click();
+    await page.getByText("+ New transaction").click();
+    await page.getByPlaceholder("Description").fill("To delete");
+    await page.getByLabel("Value").fill("100");
+    await page.keyboard.press("Control+Enter");
 
     const row = page.getByRole("row").filter({ hasText: "To delete" });
     await row.getByRole("button", { name: "✕" }).click();
@@ -512,13 +430,65 @@ test.describe("Transactions", () => {
   });
 
   test("displays formatted value with currency symbol", async ({ page }) => {
-    await page.getByRole("button", { name: /Add Transaction/ }).click();
-    await page.getByLabel("Description").fill("Formatted test");
-    await page.getByLabel("Value (smallest unit)").fill("1050");
-    await page.getByRole("button", { name: "Create" }).click();
+    await page.getByText("+ New transaction").click();
+    await page.getByPlaceholder("Description").fill("Formatted test");
+    await page.getByLabel("Value").fill("1050");
+    await page.keyboard.press("Control+Enter");
 
     // 1050 cents in BRL (2 decimals) = R$ 10.50
     await expect(page.getByRole("cell", { name: "R$ 10.50" })).toBeVisible();
+  });
+
+  test("Escape cancels inline editing", async ({ page }) => {
+    await page.getByText("+ New transaction").click();
+    // Verify editing row is visible
+    await expect(
+      page.getByRole("row").filter({ has: page.locator("input") })
+    ).toBeVisible();
+
+    await page.keyboard.press("Escape");
+
+    // Should be back to placeholder
+    await expect(page.getByText("+ New transaction")).toBeVisible();
+  });
+});
+
+// ─── Sidebar Account Navigation ─────────────────────────
+
+test.describe("Sidebar Navigation", () => {
+  test.beforeEach(async ({ page }) => {
+    await completeOnboarding(page);
+  });
+
+  test("sidebar shows accounts from onboarding", async ({ page }) => {
+    // The sidebar should show our two accounts
+    const sidebar = page.locator("nav");
+    await expect(sidebar.getByText("Wallet")).toBeVisible();
+    await expect(sidebar.getByText("Bank")).toBeVisible();
+    await expect(sidebar.getByText("All Transactions")).toBeVisible();
+  });
+
+  test("clicking an account filters transactions", async ({ page }) => {
+    // Create a transaction first
+    await page.getByText("+ New transaction").click();
+    await page.getByPlaceholder("Description").fill("Test tx");
+    await page.getByLabel("Value").fill("100");
+    await page.keyboard.press("Control+Enter");
+    await expect(page.getByRole("cell", { name: "Test tx" })).toBeVisible();
+
+    // Click "Wallet" in sidebar — should show the transaction (Wallet is payer)
+    await page.locator("nav").getByText("Wallet").click();
+    await expect(
+      page.getByRole("heading", { name: /Wallet.*Transactions/ })
+    ).toBeVisible();
+    await expect(page.getByRole("cell", { name: "Test tx" })).toBeVisible();
+
+    // Click "All Transactions" — should also show it
+    await page.locator("nav").getByText("All Transactions").click();
+    await expect(
+      page.getByRole("heading", { name: /All Transactions/ })
+    ).toBeVisible();
+    await expect(page.getByRole("cell", { name: "Test tx" })).toBeVisible();
   });
 });
 
@@ -529,38 +499,12 @@ test.describe("Keyboard Shortcuts", () => {
     await completeOnboarding(page);
   });
 
-  test("Alt+1-5 navigates between pages", async ({ page }) => {
-    await page.keyboard.press("Alt+2");
-    await expect(
-      page.getByRole("heading", { name: "Accounts" })
-    ).toBeVisible();
-
-    await page.keyboard.press("Alt+3");
-    await expect(
-      page.getByRole("heading", { name: "Categories" })
-    ).toBeVisible();
-
-    await page.keyboard.press("Alt+4");
-    await expect(page.getByRole("heading", { name: "Tags" })).toBeVisible();
-
-    await page.keyboard.press("Alt+5");
-    await expect(
-      page.getByRole("heading", { name: "Currencies" })
-    ).toBeVisible();
-
-    await page.keyboard.press("Alt+1");
-    await expect(
-      page.getByRole("heading", { name: "Transactions" })
-    ).toBeVisible();
-  });
-
-  test("Alt+D toggles dark mode", async ({ page }) => {
-    // Get initial color scheme
+  test("dark mode toggle button works", async ({ page }) => {
     const initialScheme = await page.evaluate(() =>
       document.documentElement.getAttribute("data-mantine-color-scheme")
     );
 
-    await page.keyboard.press("Alt+d");
+    await page.getByTitle("Toggle color scheme").click();
 
     const newScheme = await page.evaluate(() =>
       document.documentElement.getAttribute("data-mantine-color-scheme")
@@ -569,12 +513,263 @@ test.describe("Keyboard Shortcuts", () => {
     expect(newScheme).not.toBe(initialScheme);
   });
 
-  test("Escape closes modals", async ({ page }) => {
-    await page.keyboard.press("n");
-    await expect(page.getByText("New Transaction")).toBeVisible();
+  test("Ctrl+Enter submits settings modal forms", async ({ page }) => {
+    await navigateToSettings(page, "Tags");
+    await page.locator("body").click();
+    await page.keyboard.press("Alt+n");
+    await expect(page.getByText("New Tag")).toBeVisible();
+    await page.getByLabel("Name").fill("shortcut-tag");
+    await page.keyboard.press("Control+Enter");
 
-    await page.keyboard.press("Escape");
-    await expect(page.getByText("New Transaction")).not.toBeVisible();
+    // Modal should close and tag should appear
+    await expect(page.getByText("New Tag")).not.toBeVisible();
+    await expect(
+      page.getByRole("cell", { name: "shortcut-tag" })
+    ).toBeVisible();
+  });
+
+  test("Alt+N starts new transaction row", async ({ page }) => {
+    await page.locator("body").click();
+    await page.keyboard.press("Alt+n");
+    // An editing row should appear with input fields
+    await expect(page.getByPlaceholder("Description")).toBeVisible();
+  });
+});
+
+// ─── Auto-Create Entities ───────────────────────────────
+
+test.describe("Auto-Create", () => {
+  test.beforeEach(async ({ page }) => {
+    await completeOnboarding(page);
+  });
+
+  test("can create a category inline from transaction editor", async ({
+    page,
+  }) => {
+    await page.getByText("+ New transaction").click();
+
+    await page.getByPlaceholder("Description").fill("Cat test");
+    await page.getByLabel("Value").fill("100");
+
+    // Click the category cell and type a new category name
+    await page.getByPlaceholder("Category").click();
+    await page.getByPlaceholder("Category").fill("Groceries");
+    // Select the "Create" option
+    await page.getByText('+ Create "Groceries"').click();
+
+    await page.keyboard.press("Control+Enter");
+
+    await expect(page.getByRole("cell", { name: "Groceries" })).toBeVisible();
+  });
+
+  test("can create a tag inline from transaction editor", async ({
+    page,
+  }) => {
+    await page.getByText("+ New transaction").click();
+
+    await page.getByPlaceholder("Description").fill("Tag test");
+    await page.getByLabel("Value").fill("200");
+
+    // Click the tags cell and type a new tag name
+    await page.getByPlaceholder("Tags").click();
+    await page.getByPlaceholder("Tags").fill("newtag");
+    await page.getByText('+ Create "newtag"').click();
+
+    await page.keyboard.press("Control+Enter");
+
+    await expect(page.getByRole("cell", { name: "newtag" })).toBeVisible();
+  });
+});
+
+// ─── Line Items ─────────────────────────────────────────
+
+test.describe("Line Items", () => {
+  test.beforeEach(async ({ page }) => {
+    await completeOnboarding(page);
+  });
+
+  test("can add line items to a new transaction", async ({ page }) => {
+    await page.getByText("+ New transaction").click();
+    await page.getByPlaceholder("Description").fill("Supermarket");
+    await page.getByLabel("Value").fill("3500");
+
+    // Open items modal
+    await page.getByRole("button", { name: "Items" }).click();
+    await expect(
+      page.getByRole("heading", { name: "Line Items" })
+    ).toBeVisible();
+
+    // Add first item
+    await page.getByRole("button", { name: "+ Add item" }).click();
+    await page.getByLabel("Item description").fill("Milk");
+    await page.getByLabel("Item quantity").fill("2");
+    await page.getByLabel("Item unit value").fill("500");
+
+    // Verify total is computed (2 * 500 = 1000)
+    await expect(page.getByText("= 1000")).toBeVisible();
+    await expect(page.getByText("Total: 1000")).toBeVisible();
+
+    // Close modal
+    await page.getByRole("button", { name: "Done" }).click();
+
+    // Items button should show count
+    await expect(
+      page.getByRole("button", { name: "Items (1)" })
+    ).toBeVisible();
+
+    // Commit
+    await page.keyboard.press("Control+Enter");
+    await expect(
+      page.getByRole("cell", { name: /Supermarket/ })
+    ).toBeVisible();
+
+    // Badge should appear
+    await expect(page.getByText("1 items")).toBeVisible();
+  });
+
+  test("can add multiple line items", async ({ page }) => {
+    await page.getByText("+ New transaction").click();
+    await page.getByPlaceholder("Description").fill("Groceries");
+    await page.getByLabel("Value").fill("2500");
+
+    await page.getByRole("button", { name: "Items" }).click();
+
+    // Add first item
+    await page.getByRole("button", { name: "+ Add item" }).click();
+    const descs = page.getByLabel("Item description");
+    const qtys = page.getByLabel("Item quantity");
+    const units = page.getByLabel("Item unit value");
+    await descs.first().fill("Bread");
+    await qtys.first().fill("1");
+    await units.first().fill("800");
+
+    // Add second item
+    await page.getByRole("button", { name: "+ Add item" }).click();
+    await descs.nth(1).fill("Eggs");
+    await qtys.nth(1).fill("2");
+    await units.nth(1).fill("600");
+
+    // Total: 800 + 1200 = 2000
+    await expect(page.getByText("Total: 2000")).toBeVisible();
+
+    await page.getByRole("button", { name: "Done" }).click();
+    await expect(
+      page.getByRole("button", { name: "Items (2)" })
+    ).toBeVisible();
+
+    await page.keyboard.press("Control+Enter");
+
+    // Badge should show 2 items
+    await expect(page.getByText("2 items")).toBeVisible();
+  });
+
+  test("can remove a line item", async ({ page }) => {
+    await page.getByText("+ New transaction").click();
+    await page.getByPlaceholder("Description").fill("Test remove");
+    await page.getByLabel("Value").fill("1000");
+
+    await page.getByRole("button", { name: "Items" }).click();
+
+    // Add two items
+    await page.getByRole("button", { name: "+ Add item" }).click();
+    const descs = page.getByLabel("Item description");
+    const units = page.getByLabel("Item unit value");
+    await descs.first().fill("Item A");
+    await units.first().fill("500");
+
+    await page.getByRole("button", { name: "+ Add item" }).click();
+    await descs.nth(1).fill("Item B");
+    await units.nth(1).fill("300");
+
+    await expect(page.getByText("Total: 800")).toBeVisible();
+
+    // Remove first item
+    await page.getByRole("button", { name: "Remove item" }).first().click();
+
+    await expect(page.getByText("Total: 300")).toBeVisible();
+
+    await page.getByRole("button", { name: "Done" }).click();
+    await expect(
+      page.getByRole("button", { name: "Items (1)" })
+    ).toBeVisible();
+  });
+
+  test("line items badge tooltip shows product details", async ({ page }) => {
+    // Create transaction with items
+    await page.getByText("+ New transaction").click();
+    await page.getByPlaceholder("Description").fill("Store purchase");
+    await page.getByLabel("Value").fill("1500");
+
+    await page.getByRole("button", { name: "Items" }).click();
+    await page.getByRole("button", { name: "+ Add item" }).click();
+    await page.getByLabel("Item description").fill("Coffee beans");
+    await page.getByLabel("Item quantity").fill("3");
+    await page.getByLabel("Item unit value").fill("500");
+    await page.getByRole("button", { name: "Done" }).click();
+    await page.keyboard.press("Control+Enter");
+
+    // Hover over the items badge to see tooltip
+    await page.getByText("1 items").hover();
+    await expect(page.getByText("3x Coffee beans")).toBeVisible();
+  });
+
+  test("line items persist when editing a transaction", async ({ page }) => {
+    // Create transaction with items
+    await page.getByText("+ New transaction").click();
+    await page.getByPlaceholder("Description").fill("Persist test");
+    await page.getByLabel("Value").fill("2000");
+
+    await page.getByRole("button", { name: "Items" }).click();
+    await page.getByRole("button", { name: "+ Add item" }).click();
+    await page.getByLabel("Item description").fill("Saved item");
+    await page.getByLabel("Item unit value").fill("2000");
+    await page.getByRole("button", { name: "Done" }).click();
+    await page.keyboard.press("Control+Enter");
+
+    await expect(page.getByText("1 items")).toBeVisible();
+
+    // Click row to edit
+    const row = page.getByRole("row").filter({ hasText: "Persist test" });
+    await row.click();
+
+    // Open items modal — should still have the item
+    await page.getByRole("button", { name: "Items (1)" }).click();
+    await expect(page.getByLabel("Item description")).toHaveValue("Saved item");
+
+    await page.getByRole("button", { name: "Done" }).click();
+    await page.keyboard.press("Control+Enter");
+
+    // Badge still visible
+    await expect(page.getByText("1 items")).toBeVisible();
+  });
+
+  test("line items survive page reload", async ({ page }) => {
+    // Create transaction with items
+    await page.getByText("+ New transaction").click();
+    await page.getByPlaceholder("Description").fill("Reload test");
+    await page.getByLabel("Value").fill("4000");
+
+    await page.getByRole("button", { name: "Items" }).click();
+    await page.getByRole("button", { name: "+ Add item" }).click();
+    await page.getByLabel("Item description").fill("Durable item");
+    await page.getByLabel("Item unit value").fill("4000");
+    await page.getByRole("button", { name: "Done" }).click();
+    await page.keyboard.press("Control+Enter");
+
+    await expect(page.getByText("1 items")).toBeVisible();
+
+    // Reload
+    await page.reload();
+    await expect(page.getByText("Hi, Test User")).toBeVisible({
+      timeout: 5000,
+    });
+
+    // Items badge should still be there
+    await expect(page.getByText("1 items")).toBeVisible();
+
+    // Hover to verify content
+    await page.getByText("1 items").hover();
+    await expect(page.getByText("1x Durable item")).toBeVisible();
   });
 });
 
@@ -585,7 +780,7 @@ test.describe("Data Persistence", () => {
     await completeOnboarding(page);
 
     // Create a tag
-    await page.locator("nav").getByText("Tags").click();
+    await navigateToSettings(page, "Tags");
     await page.getByRole("button", { name: /Add Tag/ }).click();
     await page.getByLabel("Name").fill("persistent");
     await page.getByRole("button", { name: "Create" }).click();
@@ -600,7 +795,7 @@ test.describe("Data Persistence", () => {
     await expect(page.getByText("Hi, Test User")).toBeVisible({
       timeout: 5000,
     });
-    await page.locator("nav").getByText("Tags").click();
+    await navigateToSettings(page, "Tags");
     await expect(
       page.getByRole("cell", { name: "persistent" })
     ).toBeVisible();

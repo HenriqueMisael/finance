@@ -12,7 +12,7 @@ export function Splash({ onFinished }: SplashProps) {
     const timer = setTimeout(() => {
       setVisible(false);
       setTimeout(onFinished, 300);
-    }, 1500);
+    }, 1000);
     return () => clearTimeout(timer);
   }, [onFinished]);
 

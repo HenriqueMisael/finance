@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
   Button,
   Group,
@@ -8,47 +8,35 @@ import {
   Table,
   TextInput,
   Title,
-  ActionIcon,
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 import { useTagStore } from "@/stores/tags";
-import { useShortcuts } from "@/hooks/useShortcuts";
+import { useCrudModal } from "@/hooks/useCrudModal";
+import { CrudActions } from "@/components/molecules/CrudActions";
 import type { Tag } from "@/types";
 
 export function TagsPage() {
   const { tags, add, update, remove } = useTagStore();
-  const [opened, { open, close }] = useDisclosure(false);
-  const [editing, setEditing] = useState<Tag | null>(null);
   const [name, setName] = useState("");
 
-  useShortcuts(useMemo(() => [{ key: "n", action: () => openNew() }], []));
-
-  function openNew() {
-    setEditing(null);
-    setName("");
-    open();
-  }
-
-  function openEdit(tag: Tag) {
-    setEditing(tag);
-    setName(tag.name);
-    open();
-  }
-
-  function handleSubmit() {
-    if (editing) {
-      update(editing.id, name);
-    } else {
-      add(name);
-    }
-    close();
-  }
+  const crud = useCrudModal<Tag>("Tag", {
+    onOpenNew: () => setName(""),
+    onOpenEdit: (tag) => setName(tag.name),
+    onSubmit: () => {
+      if (crud.editing) {
+        update(crud.editing.id, name);
+      } else {
+        add(name);
+      }
+    },
+  });
 
   return (
     <Stack>
       <Group justify="space-between">
         <Title order={2}>Tags</Title>
-        <Button onClick={openNew}>Add Tag <Kbd size="xs" ml="xs">N</Kbd></Button>
+        <Button onClick={crud.openNew}>
+          Add Tag <Kbd size="xs" ml="xs">Alt+N</Kbd>
+        </Button>
       </Group>
 
       <Table striped highlightOnHover>
@@ -63,29 +51,17 @@ export function TagsPage() {
             <Table.Tr key={t.id}>
               <Table.Td>{t.name}</Table.Td>
               <Table.Td>
-                <Group gap="xs">
-                  <ActionIcon variant="subtle" onClick={() => openEdit(t)}>
-                    ✏
-                  </ActionIcon>
-                  <ActionIcon
-                    variant="subtle"
-                    color="red"
-                    onClick={() => remove(t.id)}
-                  >
-                    ✕
-                  </ActionIcon>
-                </Group>
+                <CrudActions
+                  onEdit={() => crud.openEdit(t)}
+                  onDelete={() => remove(t.id)}
+                />
               </Table.Td>
             </Table.Tr>
           ))}
         </Table.Tbody>
       </Table>
 
-      <Modal
-        opened={opened}
-        onClose={close}
-        title={editing ? "Edit Tag" : "New Tag"}
-      >
+      <Modal opened={crud.opened} onClose={crud.close} title={crud.modalTitle}>
         <Stack>
           <TextInput
             label="Name"
@@ -94,8 +70,8 @@ export function TagsPage() {
             onChange={(e) => setName(e.currentTarget.value)}
             required
           />
-          <Button onClick={handleSubmit}>
-            {editing ? "Save" : "Create"}
+          <Button onClick={crud.handleSubmit}>
+            {crud.submitLabel} <Kbd size="xs" ml="xs">Ctrl+Enter</Kbd>
           </Button>
         </Stack>
       </Modal>

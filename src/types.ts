@@ -13,6 +13,7 @@ export interface Account {
   name: string;
   currencyId: string;
   type: AccountType;
+  externalIds: string[]; // identifiers from imported statements (ACCTID, CNPJ, etc.)
 }
 
 export interface Category {
@@ -26,6 +27,13 @@ export interface Tag {
   name: string;
 }
 
+export interface LineItem {
+  description: string;
+  quantity: number;
+  unitValue: number; // smallest currency unit
+  totalValue: number; // smallest currency unit
+}
+
 export interface Transaction {
   id: string;
   description: string;
@@ -36,4 +44,12 @@ export interface Transaction {
   payerId: string;
   payeeId: string;
   parentTransactionId: string | null;
+  items: LineItem[];
+  fitId?: string; // OFX FITID for deduplication on import
+}
+
+export interface DescriptionMapping {
+  id: string;
+  originalDescription: string;
+  mappedDescription: string;
 }

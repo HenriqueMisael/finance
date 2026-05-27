@@ -6,10 +6,12 @@ import type { Transaction } from "@/types";
 interface TransactionState {
   transactions: Transaction[];
   add: (transaction: Omit<Transaction, "id">) => Transaction;
+  bulkAdd: (transactions: Omit<Transaction, "id">[]) => void;
   update: (id: string, data: Partial<Omit<Transaction, "id">>) => void;
   remove: (id: string) => void;
   getById: (id: string) => Transaction | undefined;
   getByAccount: (accountId: string) => Transaction[];
+  getByFitId: (fitId: string, accountId: string) => Transaction | undefined;
   getChildren: (parentId: string) => Transaction[];
 }
 
@@ -23,6 +25,12 @@ export const useTransactionStore = create<TransactionState>()(
           transactions: [...s.transactions, newTransaction],
         }));
         return newTransaction;
+      },
+      bulkAdd: (transactions) => {
+        const newTransactions = transactions.map((t) => ({ ...t, id: uuid() }));
+        set((s) => ({
+          transactions: [...s.transactions, ...newTransactions],
+        }));
       },
       update: (id, data) =>
         set((s) => ({
@@ -38,6 +46,12 @@ export const useTransactionStore = create<TransactionState>()(
       getByAccount: (accountId) =>
         get().transactions.filter(
           (t) => t.payerId === accountId || t.payeeId === accountId
+        ),
+      getByFitId: (fitId, accountId) =>
+        get().transactions.find(
+          (t) =>
+            t.fitId === fitId &&
+            (t.payerId === accountId || t.payeeId === accountId)
         ),
       getChildren: (parentId) =>
         get().transactions.filter((t) => t.parentTransactionId === parentId),
